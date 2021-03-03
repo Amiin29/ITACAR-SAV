@@ -1,0 +1,27 @@
+
+
+  <div class="accordion panel inverse" data-options="{allowOnePane: true, rerouteOnLinkClick: false}">
+    <div class="searchfield-wrapper">
+      <label class="audible" for="application-menu-searchfield-roles">Search</label>
+      <input id="application-menu-searchfield-roles" class="searchfield" data-options='{ "clearable": true }' placeholder="Search this menu"/>
+    </div>
+
+    <div class="accordion-header list-item" data-options="{'allowOnePane': false}" >
+      <svg soho-icon icon="phone-linear"></svg>
+      <a [routerLink]="['calendar-monthview']"><span>Rendez-vous</span></a>
+    </div>
+    <div class="accordion-header list-item">
+      <svg soho-icon icon="tools-addons"></svg>
+      <a [routerLink]="['wizard']"><span>Services</span></a>
+    </div>
+    <div class="accordion-header list-item">
+      <svg soho-icon icon="truck"></svg>
+      <a [routerLink]="['wizard']"><span>Véhicule</span></a>
+    </div>
+  </div>
+
+  <div class="branding">
+    <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+      <use href="#icon-logo"></use>
+    </svg>
+  </div>

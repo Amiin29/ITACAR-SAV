@@ -1,0 +1,74 @@
+<nav id="applicationMenuLazy" soho-application-menu
+     [triggers]="triggers"breakpoint="desktop"
+     class="has-searchfield"
+     [dismissOnClickMobile]=true
+     [style.height]="'100%'"
+     data-options="{filterable: true}"
+>
+  <div class="application-menu-content">
+    <div class="searchfield-wrapper">
+      <label class="audible" for="application-menu-searchfield-roles">Search</label>
+      <input id="application-menu-searchfield-roles" class="searchfield" data-options='{ "clearable": true }' placeholder="Search this menu"/>
+    </div>
+
+    <div class="accordion panel inverse" data-options="{'allowOnePane': false}" >
+      <ng-container *ngIf="menuItems.length == 0">
+        <div class="accordion-header list-item" data-options="{'allowOnePane': false}" >
+          <svg soho-icon icon="phone-linear"></svg>
+          <a [routerLink]="['wizard']"><span>Rendez-vous</span></a>
+        </div>
+        <div class="accordion-header list-item">
+          <svg soho-icon icon="tools-addons"></svg>
+          <a [routerLink]="['wizard']"><span>Services</span></a>
+        </div>
+        <div class="accordion-header list-item">
+          <svg soho-icon icon="truck"></svg>
+          <a [routerLink]="['wizard']"><span>Véhicule</span></a>
+        </div>
+      </ng-container>
+
+      <div *ngFor="let menuItem of menuItems" class="accordion-header">
+        <a href="#"><span>{{menuItem}}</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="application-menu-footer">
+    <div class="application-menu-toolbar">
+      <div class="flex-toolbar">
+        <div class="toolbar-section buttonset">
+
+          <ng-container>
+            <!--
+            SETTINGS BUTTON
+            -->
+            <button
+                    soho-button="btn" type="button" id="Settings_button" class="btn l-pull-left"
+                    [icon]="'settings'"
+            >Settings</button>
+
+            <!--
+            HELP BUTTON
+            -->
+            <button
+                    soho-button="icon" type="button" class="btn" id="Help_button"
+                    [icon]="'help'"
+                    soho-tooltip content="Help"
+            ></button>
+
+            <!--
+            LOGOUT BUTTON
+            -->
+            <button
+                    soho-button="icon" type="button" [ngClass]="{'btn l-pull-right' : hasChangePasswordLink }" id="Logout_button"
+                    [icon]="'logout'"
+                    soho-tooltip content="Logout"
+            ></button>
+
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</nav>
