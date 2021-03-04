@@ -1,8 +1,8 @@
 import {
   Component,
-  ViewChild,
+  ViewChild,Output, EventEmitter 
 } from '@angular/core';
-
+import { MIRecord } from '@infor-up/m3-odin';
 import { SohoWizardComponent } from 'ids-enterprise-ng';
 
 @Component({
@@ -11,8 +11,11 @@ import { SohoWizardComponent } from 'ids-enterprise-ng';
 })
 export class WizardDemoComponent {
   @ViewChild(SohoWizardComponent, { static: true }) wizard!: SohoWizardComponent;
-
+  @Output() newItemEventSend = new EventEmitter<MIRecord>();
   customerIsSelected = false ;
+  currentItemSelected ;
+  selectboolean = false ;
+
 
   public buttons = [
     {
@@ -52,9 +55,19 @@ export class WizardDemoComponent {
   }
 
   customerSelectedEvent(event: boolean){
-    this.customerIsSelected = event;
-    console.log('outputSElected '+event)
+    if(event){
+      this.customerIsSelected = true;
+      console.log('wizar - outputSElected '+event['OKCUNO'])
+      
+      this.currentItemSelected =event['OKCUNO'] ;
+    }
+    else{
+      this.customerIsSelected = false;
+    }
+    console.log('this.customerIsSelected:'+this.customerIsSelected)
   }
+  
+ 
   nextButtonDisabled() {
     return this.wizard.currentTickId === 'confirmation';
   }
@@ -72,5 +85,8 @@ export class WizardDemoComponent {
   onAfterActivated(e: SohoWizardEvent) {
     console.log(`onAfterActivated: The tick with the label ${e.tick.text()}`);
     console.log(e);
+  }
+  addNewItemToSend(value: MIRecord) {
+    this.newItemEventSend.emit(value);
   }
 }

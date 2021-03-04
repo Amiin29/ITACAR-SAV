@@ -6,18 +6,18 @@
     <div soho-wizard-header>
       <a soho-wizard-tick tickId="app-customer" shortLabel="app-customer" current="true">Client</a>
       <a soho-wizard-tick tickId="app-vehicule" shortLabel="Target" [disabled]="!customerIsSelected">Véhicule</a>
-      <a soho-wizard-tick tickId="backup-rule" shortLabel="Backup" [disabled]="true">Backup Rule</a>
-      <a soho-wizard-tick tickId="validation-rule" shortLabel="Rule" [disabled]="true">Validation Rule</a>
-      <a soho-wizard-tick tickId="confirmation" shortLabel="Conf." [disabled]="true">Confirmation</a>
-      <a soho-wizard-tick tickId="result" shortLabel="Res." [disabled]="true">Result</a>
+      <a soho-wizard-tick tickId="backup-rule" shortLabel="Backup" [disabled]="true">Inspection</a>
+      <a soho-wizard-tick tickId="validation-rule" shortLabel="Rule" [disabled]="true">Devis</a>
+      <a soho-wizard-tick tickId="confirmation" shortLabel="Conf." [disabled]="true">Ordre de réparation</a>
+      <a soho-wizard-tick tickId="result" shortLabel="Res." [disabled]="true">Work center Planning</a>
     </div>
     <div soho-wizard-pages>
       <div soho-wizard-page tickId="app-customer" style="overflow:  hidden;">
         <!--<app-select-files-page (newItemEvent)="customerSelectedEvent($event)" ></app-select-files-page>-->
-        <customer></customer>
+        <customer (newItemEvent)="customerSelectedEvent($event)"></customer>
       </div>
       <div soho-wizard-page tickId="app-vehicule" >
-        <vehicule></vehicule>
+        <vehicule [CUNO]="currentItemSelected"></vehicule>
       </div>
       <div soho-wizard-page tickId="backup-rule">
       <!--<app-backup-rule-page></app-backup-rule-page>--->  

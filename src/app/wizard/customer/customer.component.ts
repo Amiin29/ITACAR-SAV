@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,Output, EventEmitter } from '@angular/core';
 import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
+
 @Component({
    templateUrl: './customer.component.html',
    styleUrls: ['./customer.css'],
@@ -13,17 +14,25 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    gridOptions: any = null;
    @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
    @ViewChild('customersDatagrid') datagrid: SohoDataGridComponent;
-
-   display:boolean
+   @Output() newItemEvent = new EventEmitter<MIRecord>();
+   display=false;
 
    datagridOptions: SohoDataGridOptions;
+   DCUNO :any;
+   DCUNM : any;
+   DPONO : any ;
+   DTOWN : any ;
+   DTFNO : any ;
+   DCSCD : any ;
+   DCUA1 : any ;
+   DPHNO : any ;
    items: any[] = [];
    villee: any[] = [];
    Area: any[] = [];
    customerIsSelected =false;
    new: any[] = [];
    detailItem: any;
-   detailItemInfoByCustomer:any;
+  
    detailFinancialoByCustomer:any;
    BLCD : string ;
    CUCD : string ;
@@ -167,7 +176,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
                if (!response.hasError()) 
                {
                   this.items = response.items;
-                  console.log( this.items);
+                  //console.log( this.items);
                   this.updateGridData();
                } 
                else
@@ -196,18 +205,20 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
          const newCount = args.length;
          const selected = args && newCount === 1 ? args[0].data : null;
          this.hasSelected = !!selected;
-         console.log(selected)
+        
+        // console.log(selected)
       if (this.hasSelected)
          {
-            this.customerIsSelected=true
-           
+         this.customerIsSelected=true
+         
+         this.addNewItem(selected);
          this.GetBasicInfoByCustomer(selected);
          this.GetDetailsByCustomer(selected);
          this.GetFinancialInfoByCustomer(selected);
          }
          else {
             this.customerIsSelected=false;
-           
+            this.addNewItem(null);
          }
    } 
 closemodal(){
@@ -248,18 +259,27 @@ closemodal(){
          this.setBusy(false, true);
             if (!responseInfoByCustomer.hasError()) 
             {
-               this.detailItemInfoByCustomer = responseInfoByCustomer.item; 
-               //console.log(' this.detailItemInfoByCustomer:'+ this.detailItemInfoByCustomer);
+              
+               this.DCUNO = responseInfoByCustomer.item['CUNO'];
+               this.DCUNM = responseInfoByCustomer.item['CUNM'];
+               this.DTOWN = responseInfoByCustomer.item['TOWN'];
+               this.DPHNO = responseInfoByCustomer.item['PHNO'];
+               this.DCSCD = responseInfoByCustomer.item['CSCD'];
+               this.DTFNO = responseInfoByCustomer.item['TFNO'];
+               this.DCUA1 = responseInfoByCustomer.item['CUA1'];
+               this.DPONO = responseInfoByCustomer.item['PONO'];
+              
+             
             } 
                else 
                {
-                  this.detailItemInfoByCustomer = undefined;
+                 
                   this.handleError('Failed to get details');
                }
       }, (error) => 
       {
          this.setBusy(false, true);
-         this.detailItemInfoByCustomer = undefined;
+        
          this.handleError('Failed to get details', error);
       });
    }
@@ -285,7 +305,7 @@ closemodal(){
                if (!response.hasError()) 
                {
                   this.detailItem = response.item;
-                  console.log('detailItem'+this.detailItem)
+                 // console.log('detailItem'+this.detailItem)
                } 
                else 
                   {
@@ -413,7 +433,7 @@ closemodal(){
       }
       else {
          this.handleError2(response,'***');
-         console.log('------' + this.setBusy);
+        // console.log('------' + this.setBusy);
       }
    }, (response) => {
       this.setBusy(false);
@@ -439,12 +459,12 @@ closemodal(){
       if (!response.hasError()) {
          this.villee = response.items;
          const name = this.villee["CSCD"];
-         console.log('///////////////'+ this.villee);
+        // console.log('///////////////'+ this.villee);
          //this.logInfo("Address 2 " + address2);
       }
       else {
          this.handleError2(response,'***');
-         console.log('------' + this.setBusy);
+        // console.log('------' + this.setBusy);
       }
       // Handle error
    }, (response) => {
@@ -458,7 +478,7 @@ closemodal(){
  getcustomercountry(args  : any[]){
       const inputRecord = new MIRecord();
    inputRecord.setString('CSCD', this.selectedValue2);
-   console.log("CSCD--------------------", this.selectedValue2);
+   //console.log("CSCD--------------------", this.selectedValue2);
    const request: IMIRequest = {
 
       program: "CRS046MI",
@@ -473,11 +493,11 @@ closemodal(){
       if (!response.hasError()) {
          this.Area = response.items;
        //  const name = this.Area["ECAR"];
-         console.log('/////////////++++//'+ this.Area);
+       //  console.log('/////////////++++//'+ this.Area);
       }
       else {
          this.handleError2(response,'***');
-         console.log('------' + this.setBusy);
+        // console.log('------' + this.setBusy);
       }
       // Handle error
    }, (response) => {
@@ -522,9 +542,9 @@ closemodal(){
          this.setBusy(true, true);
 
          request.record = inputRecord;
-         console.log('selectedValue ----------:'+this.Custmername);
+      //   console.log('selectedValue ----------:'+this.Custmername);
 
-         console.log(' ----------:'+this.items);
+         //console.log(' ----------:'+this.items);
 
          this.miService.execute(request).subscribe((response: IMIResponse) => 
          {
@@ -532,7 +552,7 @@ closemodal(){
             if (!response.hasError()) 
             {
                this.detailItem = response.item;
-               console.log('detailItem'+this.detailItem)
+               //console.log('detailItem'+this.detailItem)
             } 
             else 
                {
@@ -555,7 +575,7 @@ onSelected2(args  : any[] ){
 
  onBeforeActivated(e: SohoWizardEvent) {
    console.log(`onBeforeActivated: The tick with the label ${e.tick.text()}`);
-   console.log(e);
+  // console.log(e);
  }
 
  
@@ -564,7 +584,10 @@ onSelected2(args  : any[] ){
    console.log(`onAfterActivated: The tick with the label ${e.tick.text()}`);
    console.log(e);
  }
- 
+ addNewItem(value: MIRecord) {
+   this.newItemEvent.emit(value);
+ }
+
  
 }
 
