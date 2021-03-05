@@ -55,6 +55,7 @@ export class WizardDemoComponent {
   }
 
   customerSelectedEvent(event: boolean){
+    console.log(event)
     if(event){
       this.customerIsSelected = true;
       console.log('wizar - outputSElected '+event['OKCUNO'])
@@ -62,14 +63,26 @@ export class WizardDemoComponent {
       this.currentItemSelected =event['OKCUNO'] ;
     }
     else{
+
       this.customerIsSelected = false;
     }
     console.log('this.customerIsSelected:'+this.customerIsSelected)
+const newbutton=[...this.buttons]
+newbutton[2].disabled()
+this.buttons=newbutton
   }
   
  
   nextButtonDisabled() {
-    return this.wizard.currentTickId === 'confirmation';
+    // return this.wizard.currentTickId !== 'confirmation';
+    if(this.wizard.currentTickId=="app-customer"){
+      console.log(this.customerIsSelected)
+      if(this.customerIsSelected){
+                    return false
+      }
+      else{return true}
+
+    }
   }
 
   onBeforeActivated(e: SohoWizardEvent) {
