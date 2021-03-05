@@ -213,7 +213,7 @@
          </div>
 
   <div #vehiculeDatagrid class="grid" id="gridVehicules" soho-datagrid [gridOptions]="datagridOptions" 
-soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
+soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (selected)="onSelected($event.rows)">
 </div>
 
 <div soho-tabs>
@@ -230,112 +230,35 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
            <a soho-tab-title tabId="tab-003">Vehicle Adress</a>
         </li>
         <li soho-tab>
-           <a soho-tab-title tabId="tab-004">Meter Reading</a>
+           <a soho-tab-title tabId="tab-004">Lecture Compteur</a>
         </li>
         <li soho-tab>
           <a soho-tab-title tabId="tab-005">AS-blt Struct</a>
        </li>
-       
-     
-    
-  </ul>
- </div>
-   </div>
-   <div>
-      <div soho-tabs>
-
-         <div soho-tab-list-container>
-   <ul soho-tab-list>
-      <li soho-tab>
+       <li soho-tab>
          <a soho-tab-title tabId="tab-006">Historique des services (facturé)</a>
-      </li>
-      <li soho-tab>
-   <a soho-tab-title tabId="tab-007">Historique des services (non facturé)</a>
-   </li>
-   <li soho-tab>
-      <a soho-tab-title tabId="tab-008">Service spécial ouvert</a>
-   </li>
-   <li soho-tab>
-      <a soho-tab-title tabId="tab-009">Service spécial fermé</a>
-   </li>
+       </li>
+       <li soho-tab>
+         <a soho-tab-title tabId="tab-007">Historique des services (non facturé)</a>
+       </li>
+       <li soho-tab>
+         <a soho-tab-title tabId="tab-008">Service spécial ouvert</a>
+       </li>
+       <li soho-tab>
+         <a soho-tab-title tabId="tab-009">Service spécial fermé</a>
+       </li>
+      </ul>
+     </div>
+     </div>
    
-  
-  </ul>
-   </div>
-  </div>
- </div>
  <!--------------------------------------------Meter reading------------------------------->
  <div soho-tab-panel-container>
                    
    <div soho-tab-panel tabId="tab-004">
-      <div soho-busyindicator  [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0" >
-         <div  class="row card" >
-            <div class="twelve columns"></div>
-            <div class="num">
-              <div class="six columns">
-                 <div class="field">Meter
-                    <label for="di-meso"><input id="meter"  [(ngModel)]="MESO"/></label>                                     
-                 </div>
-              </div>
-         </div>
-              <div class="cle">
-              <div class="six columns">
-                  <div class="field">Since New 
-                     <label for="di-mvao"><input id="since" [(ngModel)]="MVAO"/></label>                                      
-                  </div>
-               </div>                              
-         </div>                 
-           <div class="">
-              <div class="six columns">
-                 <div class="field">Est
-                    <label for="di-know"><input id="est" [(ngModel)]="KNOW"/></label>                                     
-                 </div>
-              </div>                                
-           </div>                    
-           <div class="">
-              <div class="six columns">
-                 <div class="field">At Comp ins
-                    <label for="di-mvai"><input id="comp" [(ngModel)]="MVAI" /></label>                                      
-                 </div>
-              </div>
-              <div class="six columns">
-                 <div class="field">ins op unt
-                    <label for="di-mvom"> <input id="insOp" [(ngModel)]="MVOM"/></label>
-                 </div>
-              </div>
-           </div>   
-           <div class="">
-              <div class="six columns">
-                 <div class="field">ins dt
-                    <label for="di-inda"> <input id="insDt" [(ngModel)]="INDA"/></label>
-                 </div>
-              </div>
-              <div class="six columns">
-                  <div class="field">Since install
-                     <label for="di-ttsi"><input id="SinceIns"[(ngModel)]="TTSI"/></label>
-                  </div>
-               </div>
-              <div class="six columns">
-                 <div class="field">Log date
-                    <label for="di-stdt"> <input id="LogDate" [(ngModel)]="STDT"/></label>
-                 </div>
-              </div>
-              <div class="six columns">
-               <div class="field">Time
-                  <label for="di-stti"> <input id="Time"[(ngModel)]="STTI"/></label>
-               </div>
-            </div>
-            <div class="six columns">
-               <div class="field">Repl mtr val
-                  <label for="di-repl"> <input id="MVAX" [(ngModel)]="MVAX"   /></label>
-               </div>
-            </div>
-           </div>
-  
-            
-   
-           
-         </div>
+      <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+         <div #vehiculeDatagridMeters class="grid"  id="gridMeters" soho-datagrid [gridOptions]="datagridOptionsMeters" 
+         soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
+         
       </div>
    </div>
   </div>

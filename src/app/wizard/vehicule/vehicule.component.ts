@@ -13,9 +13,7 @@ export class VehiculeComponent extends CoreBase implements OnInit {
 
   @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
   @ViewChild('vehiculeDatagrid') datagrid: SohoDataGridComponent;
-
-
-
+  @ViewChild('vehiculeDatagridMeters') datagridMeters: SohoDataGridComponent;
   MESO : any;
   MVAO: any;
   KNOW: any;
@@ -26,13 +24,13 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   STDT: any;
   STTI: any;
   MVAX: any;
-
-
+  ITNO :any
+  SERN :any
   datagridOptions: SohoDataGridOptions;
+  datagridOptionsMeters: SohoDataGridOptions;
   private maxRecords = 50000;
   private pageSize = 7;
   isBusy = false;
-  detailItem: any;
   VehiculeIsSelected = false
   display=false;
   fadeout:string;
@@ -42,26 +40,86 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   fadeout2:string;
   isDetailBusy = false;
   Vehiculs: any[] = [];
-  Zero : any[];
-  detailMeter : any[];
+  meters : any[] = [];
   hasSelected: boolean;
   
   constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService) {
    super('VehiculeComponent');
  
    this.initGrid();
+   this.initMeterGrid();
 }
 ngOnChanges(changes) {
    this.listVehicule(); 
  }
-  ngOnInit(): void {
- 
- console.log("init")
-   
+  ngOnInit(): void {  
    this.listVehicule(); 
    this.updateGridData();
   
   }
+  initMeterGrid() {
+    
+   const optionsMeter: SohoDataGridOptions = {
+     selectable: 'single' as SohoDataGridSelectable,
+     disableRowDeactivation: true,
+     clickToSelect: false,
+     alternateRowShading: true,
+     cellNavigation: false,
+     idProperty: 'col-cuno',
+     paging: true,
+     rowHeight:'small' ,
+     pagesize: this.pageSize,
+     indeterminate: false,
+     editable: true,
+     
+     showDirty: true,
+     stretchColumn: 'favorite',
+    
+     columns: [
+       
+         {
+           width: 'auto', id: 'col-meso', field: 'MES0', name: 'Meter',
+           resizable: true, filterType: 'text', sortable: true
+        },
+      
+        {
+           width: 'auto', id: 'col-mva0', field: 'MVA0', name: 'Depuis nouveau',
+           resizable: true, filterType: 'text', sortable: true
+        },
+        {
+           width: 'auto', id: 'col-mvai', field: 'MVAI', name: 'Valeur compteur à linstallation du composant',
+           resizable: true, filterType: 'text', sortable: true
+        },
+        {
+         width: 'auto', id: 'col-inda', field: 'INDA', name: 'date de linstallation',
+         resizable: true, filterType: 'text', sortable: true
+      },
+        {
+           width: 'auto', id: 'col-know', field: 'KNOW', name: 'valeur estimée compteur',
+           resizable: true, filterType: 'text', sortable: true
+        },
+        {
+         width: 'auto', id: 'col-mv0m', field: 'MV0M', name: 'valeur compteur à linstallation Op',
+         resizable: true, filterType: 'text', sortable: true
+       },
+      {
+         width: 'auto', id: 'col-aagn', field: 'RPTP', name: 'Type de rapport',
+         resizable: true, filterType: 'text', sortable: true
+      },
+      {
+         width: 'auto', id: 'col-aagn', field: 'LMDT', name: 'Date de modification',
+         resizable: true, filterType: 'text', sortable: true
+      },
+       
+     ],
+     dataset: [],
+     emptyMessage: {
+        title: 'No Vehicul available',
+        icon: 'icon-empty-no-data'
+     }
+  };
+  this.datagridOptionsMeters = optionsMeter;
+ }
   initGrid() {
     
    const options: SohoDataGridOptions = {
@@ -177,9 +235,10 @@ ngOnChanges(changes) {
    updateGridData() {
       this.datagrid ? this.datagrid.dataset = this.Vehiculs : this.datagridOptions.dataset = this.Vehiculs;
    }
-   DeleteGridData() {
-      this.datagrid ? this.datagrid.dataset = this.Zero : this.datagridOptions.dataset = this.Zero;
+   updateGridDataMeters() {
+      this.datagridMeters ? this.datagridMeters.dataset = this.meters : this.datagridOptionsMeters.dataset = this.meters;
    }
+  
    private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
       isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
@@ -188,6 +247,9 @@ ngOnChanges(changes) {
 
     console.log('wizar - outputSElected '+event['OKCUNO'])
   }
+
+
+  
   onSelected(args: any[], isSingleSelect?: boolean) 
   {
      if (this.isBusy)
@@ -202,7 +264,7 @@ ngOnChanges(changes) {
      if (this.hasSelected)
         {
          this.VehiculeIsSelected=true
-         this.GetMetere(selected);
+         this.GetMetereVehicule(selected);
        
         }
         else {
@@ -238,49 +300,53 @@ this.fadeout2="";
 this.display2=false;
 },1000)
 }
-private refreshGridItem(detailItem: any) 
-   {
-      const selected = this.datagrid.getSelectedRows()[0];
-      const clone = Object.assign(selected.data, detailItem);
-      this.datagrid.updateRow(selected.idx, clone);
-   }
+
   
   //----------------------------------------Meter reading ---------------------------------------
-  GetMetere(selectedVehicule: MIRecord){
-     console.log('-----------------------------------')
-   this.setBusy(true, true);
-   const requestInfoByMeter: IMIRequest = 
-      {
-         program: 'MMS241MI',
-         transaction: 'LstMeters',
-         outputFields: ['MESO', 'MVAO', 'KNOW', 'MVAI', 'MVOM', 'INDA', 'TTSI', 'STDT','STTI','MVAX']
-      };
-      const inputRecord : MIRecord = new MIRecord();
-           const ITNO = selectedVehicule['ITNO'];
-            inputRecord.setString('CUNO',ITNO);
-            const SERN = selectedVehicule['SERN'];
-            inputRecord.setString('SERN',SERN);
-            requestInfoByMeter.record = inputRecord;
-         this.miService.execute(requestInfoByMeter).subscribe((responseByMeter: IMIResponse) => 
-      {
-         this.setBusy(false, true);
-            if (!responseByMeter.hasError()) 
+  GetMetereVehicule(selectedVehicule: MIRecord){
+    
+   this.initMeterGrid();
+   this.setBusy(true);
+  
+         const requestInfoByMeter: IMIRequest = 
+         {
+            program: 'MMS241MI',
+            transaction: 'LstMeters',
+            outputFields: ['MES0','MVA0','MVAI','INDA','KNOW','MV0M','RPTP','LMDT'],
+            
+         };
+         const inputrecord :MIRecord= new MIRecord();
+
+         inputrecord.setString('ITNO',selectedVehicule ['ITNO']); 
+         console.log(selectedVehicule ['ITNO'])
+
+         inputrecord.setString('SERN',selectedVehicule ['SERN']);
+         console.log(selectedVehicule ['SERN'])
+         requestInfoByMeter.record = inputrecord;
+
+         this.miService.execute(requestInfoByMeter).subscribe((response: IMIResponse) => 
+         {
+            if (!response.hasError()) 
             {
-              
-               this.detailItem = responseByMeter.item;
-             
+               this.meters = response.items;
+               console.log( this.meters);
+               this.updateGridDataMeters();
             } 
-               else 
-               {
-                 
-                  this.handleError('Failed to get details');
-               }
-      }, (error) => 
-      {
-         this.setBusy(false, true);
-        
-         this.handleError('Failed to get details', error);
-      });
+            else
+            {
+               this.handleError('Failed to list meters');
+            }
+            this.setBusy(false);
+         }, (error) => 
+         {
+            this.setBusy(false);
+            this.handleError('Failed to list items', error);
+         });
+   
+ 
+
+           
+         
 } 
 
 
