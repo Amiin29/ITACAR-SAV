@@ -28,3 +28,7 @@ soho-masthead {
 .render-row > p {
   padding-left: 15px;
 }
+.icon-car{fill: #a1a3ac;}
+.list-item:hover .icon-car{
+   fill:white
+}

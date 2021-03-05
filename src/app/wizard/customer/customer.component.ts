@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild,Output, EventEmitter } from '@angular/core';
 import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import { Console } from 'console';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 
 @Component({
@@ -210,7 +211,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
       if (this.hasSelected)
          {
          this.customerIsSelected=true
-         
+         console.log(selected)
          this.addNewItem(selected);
          this.GetBasicInfoByCustomer(selected);
          this.GetDetailsByCustomer(selected);
