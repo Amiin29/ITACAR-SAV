@@ -51,50 +51,50 @@
                         <div class="num">
                           <div class="six columns">
                              <div class="field">Numéro
-                                <label for="di-cuno"><input id="di-cuno" [(ngModel)]="CUNO" readonly /></label>                                     
+                                <label for="di-cuno"><input id="di-cuno" [(ngModel)]="DCUNO" readonly /></label>                                     
                              </div>
                           </div>
                      </div>
                           <div class="cle">
                           <div class="six columns">
                               <div class="field">clé de recherche 
-                                 <label for="di-cua2"><input id="di-cua2" [(ngModel)]="PONO" readonly /></label>                                      
+                                 <label for="di-cua2"><input id="di-cua2" [(ngModel)]="DPONO" readonly /></label>                                      
                               </div>
                            </div>                              
                      </div>                 
                        <div class="">
                           <div class="six columns">
                              <div class="field">Nom
-                                <label for="di-cumn"><input id="di-cunm" [(ngModel)]="CUNM"  readonly/></label>                                     
+                                <label for="di-cumn"><input id="di-cunm" [(ngModel)]="DCUNM"  readonly/></label>                                     
                              </div>
                           </div>                                
                        </div>                    
                        <div class="">
                           <div class="six columns">
                              <div class="field">Ville
-                                <label for="di-town"><input id="di-town" [(ngModel)]="TOWN" readonly /></label>                                      
+                                <label for="di-town"><input id="di-town" [(ngModel)]="DTOWN" readonly /></label>                                      
                              </div>
                           </div>
                           <div class="six columns">
                              <div class="field">Matricule Fiscale
-                                <label for="di-cua3"> <input id="di-cua3" [(ngModel)]="TFNO" readonly /></label>
+                                <label for="di-cua3"> <input id="di-cua3" [(ngModel)]="DTFNO" readonly /></label>
                              </div>
                           </div>
                        </div>   
                        <div class="">
                           <div class="six columns">
                              <div class="field">Pays
-                                <label for="di-cscd"> <input id="di-cscd" [(ngModel)]="CSCD" readonly /></label>
+                                <label for="di-cscd"> <input id="di-cscd" [(ngModel)]="DCSCD" readonly /></label>
                              </div>
                           </div>
                           <div class="six columns">
                               <div class="field">Adresse 1 
-                                 <label for="di-cua1"><input id="di-cua1" [(ngModel)]="CUA1" readonly /></label>
+                                 <label for="di-cua1"><input id="di-cua1" [(ngModel)]="DCUA1" readonly /></label>
                               </div>
                            </div>
                           <div class="six columns">
                              <div class="field">Telephone
-                                <label for="di-cua4"> <input id="di-cua4" [(ngModel)]="PHNO" readonly /></label>
+                                <label for="di-cua4"> <input id="di-cua4" [(ngModel)]="DPHNO" readonly /></label>
                              </div>
                           </div>
                        </div>
@@ -174,7 +174,7 @@
                           </div>
                           <div class="six columns">
                              <div class="field"><label>summary invoice</label>
-                             <select class="select-1 field"  required [(ngModel)]="detailItem.OKAICD">
+                             <select class="select-1 field"  required [(ngModel)]="detailItem.OKAICD"readonly>
                                 <!-- <option id="di-lang"  selected disabled  >Template</option> -->
                                 <option value="saab" disabled selected>   </option>
                                 <option value="0">0-One Order/Dely</option>
@@ -196,12 +196,12 @@
 
                <div soho-tab-panel tabId="tab-3">
                             
-                           <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+                           <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0"readonly>
                               <div *ngIf="hasSelected" class="row card"> 
                                  
                                  <div class="six columns">
                                     <div class="field"><label>Arrêt client </label>
-                                    <select class="select-1 field"  required [(ngModel)]="BLCD">
+                                    <select class="select-1 field"  required [(ngModel)]="BLCD" readonly>
                                        <!-- <option id="di-lang"  selected disabled  >Template</option> -->
                                        <option value="0">0-Non bloquer</option>
                                        <option value="1">1-Bloquer partiellement</option>
@@ -212,7 +212,7 @@
                                 
                                  <div class="six columns">
                                     <div class="field"><label>Taxe applicable   </label>
-                                    <select class="select-1 field"  required [(ngModel)]="TXAP">
+                                    <select class="select-1 field"  required [(ngModel)]="TXAP" readonly>
                                        <!-- <option id="di-lang"  selected disabled  >Template</option> -->
                                        <option value="0">0-Non</option>
                                        <option value="1">1-Oui</option>
@@ -280,25 +280,26 @@
             <svg class="icon" (click)="closemodal()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
          </div>
             <div class="form-container">
-               <select [(ngModel)]="selectedValue" >
-               <option  *ngFor="let item of items" value="{{item['CUNO']}}" >{{item["CUNM"]}}</option>
+               <select [(ngModel)]="ValueOfTemplateSelected">
+               <option [selected]="item.CUNO" *ngFor="let item of items" value="{{item['CUNO']}}" >{{item["CUNM"]}}</option>
                </select>
             
        
-         <input id="di-lang" [(ngModel)]="Custmername" ngModel ng-model="Nom Client"placeholder="Nom Client" required />
+         <input  id="di-lang" [(ngModel)]="Custmername" ngModel ng-model="Nom Client"placeholder="Nom Client" required />
          <input  [(ngModel)]="Adresse1" ngModel ng-model="Adresse1" placeholder="Adresse 1" required />
          <input  [(ngModel)]="Adresse2" ngModel ng-model="Adresse2" placeholder="Adresse 2"/>
 
-         <select [(ngModel)]="selectedValue2" >
-            <option  *ngFor="let vil of villee" value="{{vil['CSCD']}}"  >{{vil["TX40"]}}</option>
+         <select [(ngModel)]="ValueOfTownSelected" (change)=" onChangeCountry($event)">
+            <option [selected]="vil.CSCD" *ngFor="let vil of villee" value="{{vil['CSCD']}}"  >{{vil["TX40"]}}</option>
          </select>
 
-            <input  [(ngModel)]="codePos" ngModel ng-model="codePos" placeholder="code Postale"/>
+            <input  [(ngModel)]="codePostale" ngModel ng-model="codePos" placeholder="code Postale"/>
 
-         <select [(ngModel)]="selectedValue3" ngModel (ngModelclick)="getcustomercountry()" *ngIf="selectedValue2" >
-            <option  *ngFor="let Ar of Area" value="{{Ar['ECAR']}}"  >{{Ar["TX15"]}}</option>
-         </select>
          
+         <select [(ngModel)]="ValueOfAreaSelected"  *ngIf="ValueOfTownSelected" (change)=" onChangeState($event)" >
+            <option  *ngFor="let Ar of Area" value="{{Ar['ECAR']}}" >{{Ar["TX15"]}}</option>
+            </select>
+
          <input  [(ngModel)]="MobileNumber" ngModel ng-model="Téléphone" placeholder="Mobile Number" required />
          <input [(ngModel)]="FaxNumber" ngModel ng-model="FaxNumber" placeholder="Numéro Faxe"/>
          <input [(ngModel)]="Email" ngModel ng-model="Email" placeholder="E-mail"/>

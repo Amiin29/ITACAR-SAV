@@ -44,9 +44,9 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    fadeout : string
    private maxRecords = 50000;
    private pageSize = 7;
-   selectedValue : any ;
-   selectedValue2 : any ;
-   selectedValue3 : any ;
+   ValueOfTemplateSelected : any ;
+   ValueOfTownSelected : any ;
+   ValueOfAreaSelected : any ;
 
    Custmername: string;
    Adresse1: string;
@@ -54,9 +54,9 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    Ville: string;
    pays: string;
    codePostale: string;
-   num1: string;
+   MobileNumber: string;
    num2: string;
-   numFaxe: string;
+   FaxNumber: string;
    Email: string;
    Compagnie: string;
 
@@ -85,7 +85,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
       this.logError(message + " " + errorMessage);
    }
   
-
+   
 
    private initGrid() 
    {
@@ -269,8 +269,8 @@ closemodal(){
                this.DCUA1 = responseInfoByCustomer.item['CUA1'];
                this.DPONO = responseInfoByCustomer.item['PONO'];
               
-             
-            } 
+                 console.log('-------'+this.DCUNO)
+               } 
                else 
                {
                  
@@ -428,7 +428,7 @@ closemodal(){
       if (!response.hasError()) {
          this.items = response.items;
          const name = this.items[1]["CUNM"];
-         //console.log('///////////////'+ this.items[1]['CUNO']);
+        
          //this.logInfo("Address 2 " + address2);
       }
       else {
@@ -438,9 +438,11 @@ closemodal(){
    }, (response) => {
       this.setBusy(false);
       this.handleError2(response, 'customer');
-   });   
+   });  
+   
+   //console.log('!!!!'+ this.selectedValue);
  }
-
+ 
 
  //-------------------------------chargement de Ville--------------------------------------------------------------------
  GetcustomerVille(){
@@ -459,8 +461,7 @@ closemodal(){
       if (!response.hasError()) {
          this.villee = response.items;
          const name = this.villee["CSCD"];
-        // console.log('///////////////'+ this.villee);
-         //this.logInfo("Address 2 " + address2);
+         console.log('///////////////---------------'+ this.villee[0]["TX40"]);
       }
       else {
          this.handleError2(response,'***');
@@ -471,40 +472,62 @@ closemodal(){
       this.setBusy(false);
       this.handleError2(response, 'customer');
    }); 
-  // this.getcustomercountry();  
+
+ }
+
+
+ //-------------------------------------------------------------------------------------
+ 
+ onChangeCountry(event): void { 
+   const newVal = event.target.value;
+   console.log("//////////////////Country/////////////////",newVal)
+   this.getCountry(newVal)
+   
+   
+ }
+ onChangeState(event): void { 
+   const newVal = event.target.value;
+   this.ValueOfAreaSelected = newVal;
+   console.log("////////////////State///////////////////",newVal)
+   
+   
  }
  //-------------------------------chargement de country-------------------------------------------------------
 
- getcustomercountry(args  : any[]){
+   getCountry(ville :string){
       const inputRecord = new MIRecord();
-   inputRecord.setString('CSCD', this.selectedValue2);
-   //console.log("CSCD--------------------", this.selectedValue2);
-   const request: IMIRequest = {
-
+      inputRecord.setString('CSCD', ville);
+      const request: IMIRequest = {
       program: "CRS046MI",
       transaction: "LstAreaCodes",
       outputFields: ["ECAR", "TX15", "TX40"]
 
-   };
-   request.record = inputRecord;
-   this.setBusy(true);
-   this.miService.execute(request).subscribe((response: IMIResponse) => {
-      this.setBusy(false);
-      if (!response.hasError()) {
-         this.Area = response.items;
-       //  const name = this.Area["ECAR"];
-       //  console.log('/////////////++++//'+ this.Area);
-      }
-      else {
-         this.handleError2(response,'***');
-        // console.log('------' + this.setBusy);
-      }
-      // Handle error
-   }, (response) => {
-      this.setBusy(false);
-      this.handleError2(response, 'customer');
-   });  
+         };
+         request.record = inputRecord;
+         this.setBusy(true);
+         this.miService.execute(request).subscribe((response: IMIResponse) => {
+            this.setBusy(false);
+            if (!response.hasError()) {
+               this.Area = response.items;
+            //  const name = this.Area["ECAR"];
+            //  console.log('TX40:'+ this.Area[0]['TX40']);
+            console.log('ECAR:'+ this.Area[0]['ECAR']);
+            this.ValueOfAreaSelected = this.Area[0]['ECAR'];
 
+            
+
+
+            }
+            else {
+               this.handleError2(response,'***');
+            // console.log('------' + this.setBusy);
+            }
+            // Handle error
+         }, (response) => {
+            this.setBusy(false);
+            this.handleError2(response, 'customer');
+         });  
+      //this.AddCustomer(ville)
 
  }
 
@@ -512,47 +535,49 @@ closemodal(){
  ajouter_client(){
    this.display=true;
    this.Getcustomertemplate();
-   this.GetcustomerVille();
+  this.GetcustomerVille()
    
 
   }
+  
  AddCustomer(){
   
-     const inputRecord = new MIRecord();
-     inputRecord.setString("CUTM", this.selectedValue);
-     inputRecord.setString("CUNM", this.Custmername);
-     inputRecord.setString("CUA1", this.Adresse1);
-     inputRecord.setString("CUA2", this.Adresse2);
-     inputRecord.setString("TOWN", this.selectedValue2);
-     inputRecord.setString("PONO", this.codePostale);
-     inputRecord.setString("CSCD", this.selectedValue3);
-     inputRecord.setString("PHNO", this.num1);
-     inputRecord.setString("TFNO", this.numFaxe);
-     inputRecord.setString("MAIL", this.Email);
-     inputRecord.setString("STAT", '20');
-     inputRecord.setString("LHCD", 'FR');
-    
+   console.log('1***ValueOfTemplateSelected*****'+this.ValueOfTemplateSelected)
+   console.log('2 ***ValueOfTownSelected*****'+this.ValueOfTownSelected)
+   console.log('3****ValueOfAreaSelected***'+this.ValueOfAreaSelected)
+   console.log('3****codePostale***'+this.codePostale)
 
+
+         const inputRecord = new MIRecord();
          const request: IMIRequest = 
          {
             program: 'CRS610MI',
             transaction: 'Add',
             record : inputRecord,
          };
+        
+         inputRecord.setString("CUTM", this.ValueOfTemplateSelected);
+         inputRecord.setString("CUNM", this.Custmername);
+         inputRecord.setString("CUA1", this.Adresse1);
+         inputRecord.setString("CUA2", this.Adresse2);
+         inputRecord.setString("CSCD", this.ValueOfTownSelected);
+         inputRecord.setString("PONO", this.codePostale);
+         inputRecord.setString("ECAR", this.ValueOfAreaSelected);
+         inputRecord.setString("PHNO", this.MobileNumber);
+         inputRecord.setString("TFNO", this.FaxNumber);
+         inputRecord.setString("MAIL", this.Email);
+
+         request.record = inputRecord;
          this.setBusy(true, true);
 
          request.record = inputRecord;
-      //   console.log('selectedValue ----------:'+this.Custmername);
-
-         //console.log(' ----------:'+this.items);
-
          this.miService.execute(request).subscribe((response: IMIResponse) => 
          {
             this.setBusy(false, true);
             if (!response.hasError()) 
             {
                this.detailItem = response.item;
-               //console.log('detailItem'+this.detailItem)
+               console.log('***********CUNO**************'+this.detailItem['CUNO'])
             } 
             else 
                {
@@ -566,8 +591,7 @@ closemodal(){
             this.handleError('Failed to get details', error);
          });
 
-
-
+         this.listItems();
 }
 onSelected2(args  : any[] ){
    
