@@ -212,7 +212,7 @@
             </div>
          </div>
 
-  <div #vehiculeDatagrid class="grid" id="gridVehicules" soho-datagrid [gridOptions]="datagridOptions" 
+  <div #vehiculeDatagrid class="grid" id="gridVehicules" soho-datagrid [gridOptions]="datagridOptions" (selected)="onSelected($event.rows)"
 soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
 </div>
 
@@ -220,9 +220,9 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
     
   <div soho-tab-list-container>
      <ul soho-tab-list>
-        <li soho-tab>
-           <a soho-tab-title tabId="tab-001">prévu PM</a>
-        </li>
+      <li soho-tab>
+         <a soho-tab-title tabId="tab-001">prévu PM</a>
+      </li>
         <li soho-tab>
            <a soho-tab-title tabId="tab-002">Garantie Véhicule</a>
         </li>
@@ -235,41 +235,29 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
         <li soho-tab>
           <a soho-tab-title tabId="tab-005">AS-blt Struct</a>
        </li>
-       
-     
-    
-  </ul>
- </div>
-   </div>
-   <div>
-      <div soho-tabs>
-
-         <div soho-tab-list-container>
-   <ul soho-tab-list>
-      <li soho-tab>
+       <li soho-tab>
          <a soho-tab-title tabId="tab-006">Historique des services (facturé)</a>
       </li>
       <li soho-tab>
-   <a soho-tab-title tabId="tab-007">Historique des services (non facturé)</a>
-   </li>
-   <li soho-tab>
-      <a soho-tab-title tabId="tab-008">Service spécial ouvert</a>
-   </li>
-   <li soho-tab>
-      <a soho-tab-title tabId="tab-009">Service spécial fermé</a>
-   </li>
-   
-  
+         <a soho-tab-title tabId="tab-007">Historique des services (non facturé)</a>
+         </li>
+         <li soho-tab>
+            <a soho-tab-title tabId="tab-008">Service spécial ouvert</a>
+         </li>
+         <li soho-tab>
+            <a soho-tab-title tabId="tab-009">Service spécial fermé</a>
+         </li>
   </ul>
-   </div>
-  </div>
  </div>
+   </div>
+  
+
  <!--------------------------------------------Meter reading------------------------------->
  <div soho-tab-panel-container>
                    
    <div soho-tab-panel tabId="tab-004">
       <div soho-busyindicator  [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0" >
-         <div  class="row card" >
+         <div *ngIf="hasSelected" class="row card" >
             <div class="twelve columns"></div>
             <div class="num">
               <div class="six columns">
@@ -340,4 +328,45 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
    </div>
   </div>
 
-  <!------------------------------------------prévu PM---------------------------------------->
+  <!------------------------------------------GetVehiculeWarranty---------------------------------------->
+<div soho-tab-panel tabId="tab-002">
+   <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+      <div></div>
+      <div *ngIf="hasSelected" class="row card">
+         <div class="six columns">
+            <div class="field">Item Number
+               <label for="di-repl"> <input id="MVAX" [(ngModel)]="ITNO"   /></label>
+            </div>
+         </div><div class="six columns">
+         <div class="field">Serial Number 
+            <label for="Serial"> <input id="MVAX" [(ngModel)]="SERN"   /></label>
+         </div>
+            </div>
+            <div class="six columns">
+                <div class="field">Sno
+                   <label for="sno"> <input id="sno" [(ngModel)]="MSEQ"   /></label>
+                  </div>
+               </div>
+               <div class="six columns">
+                  <div class="field">Wty dt
+                     <label for="wtydt"> <input id="wtydt" [(ngModel)]="WADT"   /></label>
+                    </div>
+                 </div><div class="six columns">
+                  <div class="field">Stp
+                     <label for="stp"> <input id="stp" [(ngModel)]="STRT"   /></label>
+                    </div>
+                 </div><div class="six columns">
+                  <div class="field">Service
+                     <label for="service"> <input id="service" [(ngModel)]="SUFT"   /></label>
+                    </div>
+                 </div>
+                 <div class="field">Gw End
+                  <label for="gwend"> <input id="gwend" [(ngModel)]="GWED"   /></label>
+                 </div>
+                 <div class="field">Strdt
+                  <label for="strdt"> <input id="strdt" [(ngModel)]="STDT"   /></label>
+                 </div>
+              </div>
+              </div>
+            </div>
+ 

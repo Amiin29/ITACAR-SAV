@@ -13,7 +13,11 @@ export class VehiculeComponent extends CoreBase implements OnInit {
 
   @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
   @ViewChild('vehiculeDatagrid') datagrid: SohoDataGridComponent;
-
+  MSEQ:any
+  WADT:any
+  STRT:any
+  SUFT:any
+  GWED:any
 
 
   MESO : any;
@@ -203,6 +207,7 @@ ngOnChanges(changes) {
         {
          this.VehiculeIsSelected=true
          this.GetMetere(selected);
+         this.GetVehiculeWarranty(selected);
        
         }
         else {
@@ -244,10 +249,50 @@ private refreshGridItem(detailItem: any)
       const clone = Object.assign(selected.data, detailItem);
       this.datagrid.updateRow(selected.idx, clone);
    }
-  
+       //---------------------------------------GetVehiculeWarranty------------------------------------------------}
+GetVehiculeWarranty(selectedVehicule: MIRecord){
+   const request: IMIRequest = {
+
+      program: "MOS390MI",
+      transaction: "LstClaDetail", 
+      outputFields: ["ITNO", "SERN", "MSEQ", "WADT", "STRT", "SUFT", "GWED", "STDT"]
+
+
+   };
+   const inputRecord : MIRecord = new MIRecord();
+    const ITNO = selectedVehicule['ITNO'];
+    inputRecord.setString('ITNO',ITNO);
+    
+      const SERN = selectedVehicule['SERN'];
+      inputRecord.setString('SERN',SERN);
+    request.record = inputRecord;
+
+    this.miService.execute(request).subscribe((responseByMeter: IMIResponse) => 
+    {
+       this.setBusy(false, true);
+          if (!responseByMeter.hasError()) 
+          {
+            
+             this.detailItem = responseByMeter.item;
+           
+          } 
+             else 
+             {
+               
+                this.handleError('Failed to get details');
+             }
+    }, (error) => 
+    {
+       this.setBusy(false, true);
+      
+       this.handleError('Failed to get details', error);
+    });
+
+
+}
   //----------------------------------------Meter reading ---------------------------------------
   GetMetere(selectedVehicule: MIRecord){
-     console.log('-----------------------------------')
+    /* console.log('-----------------------------------')
    this.setBusy(true, true);
    const requestInfoByMeter: IMIRequest = 
       {
@@ -281,10 +326,13 @@ private refreshGridItem(detailItem: any)
         
          this.handleError('Failed to get details', error);
       });
+*/
+
+
 } 
 
 
-
+ 
 
 
 }
