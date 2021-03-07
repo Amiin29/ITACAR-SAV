@@ -265,12 +265,21 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
    </div>
   </div>
 
+
   <!------------------------------------------Véhicule adress---------------------------------------->
   <div soho-tab-panel-container>
                    
     <div soho-tab-panel tabId="tab-003">
        <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
           <div #vehiculeDatagridMeters class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
+
+  <!-----------------------------------------Garantie Véhicule--------------------------------------->
+  <div soho-tab-panel-container>
+                   
+    <div soho-tab-panel tabId="tab-002">
+       <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+          <div #vehiculeDatagridGarantit class="grid"  id="gridGarantit" soho-datagrid [gridOptions]="datagridOptionsGarantit" 
+
           soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
           
        </div>

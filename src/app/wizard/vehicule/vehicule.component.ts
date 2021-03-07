@@ -15,7 +15,11 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
   @ViewChild('vehiculeDatagrid') datagrid: SohoDataGridComponent;
   @ViewChild('vehiculeDatagridMeters') datagridMeters: SohoDataGridComponent;
+
   @ViewChild('vehiculeDatagridAdress') datagridAdress: SohoDataGridComponent;
+
+  @ViewChild('vehiculeDatagridGarantit') datagridGarantit: SohoDataGridComponent;
+
   MESO : any;
   MVAO: any;
   KNOW: any;
@@ -40,6 +44,8 @@ export class VehiculeComponent extends CoreBase implements OnInit {
 datagridOptions: SohoDataGridOptions;
   datagridOptionsMeters: SohoDataGridOptions;
   datagridOptionsAdress:SohoDataGridOptions;
+
+  datagridOptionsGarantit :SohoDataGridOptions
   private maxRecords = 50000;
   private pageSize = 7;
   isBusy = false;
@@ -54,6 +60,8 @@ datagridOptions: SohoDataGridOptions;
   Vehiculs: any[] = [];
   meters : any[] = [];
   Adress: any[] =[];
+
+  garantit :any[]= [];
   hasSelected: boolean;
   color
   constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService,private mycolor:ColorService) {
@@ -61,7 +69,11 @@ datagridOptions: SohoDataGridOptions;
  
    this.initGrid();
    this.initMeterGrid();
+
    this.initAdressGrid();
+
+   this.initGarantitGrid()
+
 }
 ngOnChanges(changes) {
    this.listVehicule(); 
@@ -74,6 +86,70 @@ ngOnChanges(changes) {
   this.color=this.mycolor.getcolor()
   
   }
+  
+initGarantitGrid(){
+   const optionsGarantit: SohoDataGridOptions = {
+      selectable: 'single' as SohoDataGridSelectable,
+      disableRowDeactivation: true,
+      clickToSelect: false,
+      alternateRowShading: true,
+      cellNavigation: false,
+      idProperty: 'col-cuno',
+      paging: true,
+      rowHeight:'small' ,
+      pagesize: this.pageSize,
+      indeterminate: false,
+      editable: true,
+      
+      showDirty: true,
+      stretchColumn: 'favorite',
+     
+      columns: [
+         
+          {
+            width: 'auto', id: 'col-ITNO', field: 'ITNO', name: 'Item number',
+            resizable: true, filterType: 'text', sortable: true
+         },
+       
+         {
+            width: 'auto', id: 'col-SERN', field: 'SERN', name: 'Serial no',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+            width: 'auto', id: 'col-MSEQ', field: 'STAT', name: 'Status',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+            width: 'auto', id: 'col-MSEQ', field: 'CONO', name: 'Company',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+          width: 'auto', id: 'col-WADT', field: 'WADT', name: 'Warranty date',
+          resizable: true, filterType: 'text', sortable: true
+       },
+         {
+            width: 'auto', id: 'col-STRT', field: 'WATP', name: 'Warranty Type',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+          width: 'auto', id: 'col-SUFI', field: 'PYNO', name: 'Payer',
+          resizable: true, filterType: 'text', sortable: true
+        },
+     
+       {
+          width: 'auto', id: 'col-STDT', field: 'IDTY', name: 'Item type Id',
+          resizable: true, filterType: 'text', sortable: true
+       },
+        
+      ],
+      dataset: [],
+      emptyMessage: {
+         title: 'No Vehicul available',
+         icon: 'icon-empty-no-data'
+      }
+   };
+   this.datagridOptionsGarantit = optionsGarantit;
+}
   initMeterGrid() {
     
    const optionsMeter: SohoDataGridOptions = {
@@ -330,8 +406,14 @@ ngOnChanges(changes) {
    updateGridDataMeters() {
       this.datagridMeters ? this.datagridMeters.dataset = this.meters : this.datagridOptionsMeters.dataset = this.meters;
    }
+
    updateGridDataAdress() {
       this.datagridAdress ? this.datagridAdress.dataset = this.meters : this.datagridOptionsAdress.dataset = this.Adress;
+
+
+   updateGridGarantit() {
+      this.datagridGarantit ? this.datagridGarantit.dataset = this.garantit : this.datagridOptionsGarantit.dataset = this.garantit;
+
    }
    private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
@@ -359,7 +441,11 @@ ngOnChanges(changes) {
         {
          this.VehiculeIsSelected=true
          this.GetMetereVehicule(selected);
+
          this.GetadressVehicule(selected);
+
+         this.GetGarantitVehicule(selected)
+
        
         }
         else {
@@ -443,6 +529,49 @@ this.display2=false;
            
          
 } 
+GetGarantitVehicule(selectedVehicule: MIRecord){
+   this.initGarantitGrid();
+   this.setBusy(true);
+  
+         const requestInfoByGarantit: IMIRequest = 
+         {
+            program: 'MOS390MI',
+            transaction: 'LstClaDetail',
+            outputFields: [ 'ITNO' , 'IDTY','CONO','SERN','STAT','WADT','WATP','PYNO','IDTY'],
+           
+         };
+         const inputrecord :MIRecord= new MIRecord();
+
+         inputrecord.setString('ITNO',selectedVehicule ['ITNO']); 
+         console.log('itnoooo garantit-'+selectedVehicule ['ITNO'])
+
+         inputrecord.setString('SERN',selectedVehicule ['SERN']);
+
+         console.log('sern garantit-'+selectedVehicule ['SERN'])
+         requestInfoByGarantit.record = inputrecord;
+
+         this.miService.execute(requestInfoByGarantit).subscribe((response: IMIResponse) => 
+         {
+            if (!response.hasError()) 
+            {
+               this.garantit = response.items;
+               console.log( 'garantit-------------------'+this.garantit);
+               this.updateGridGarantit();
+            } 
+            else
+            {
+               this.handleError('Failed to list  Garantit');
+            }
+            this.setBusy(false);
+         }, (error) => 
+         {
+            this.setBusy(false);
+            this.handleError('Failed to list  Garantit', error);
+         });
+
+}
+
+
 
 //-----------------------Véhicule adress----------------------------------------//
 GetadressVehicule(selectedVehicule: MIRecord){
