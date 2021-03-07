@@ -37,7 +37,16 @@ align-items:center ;
   font-weight: 400;
   
 }
-
+@keyframes fadeout{
+  0%{
+    transform :translateY(0);
+    opacity: 1;
+  }
+  100%{
+    transform: translateY(200%);
+    opacity: 0.5;
+  }
+}
 popup{
 position: fixed;
 top: 0;
@@ -118,7 +127,7 @@ color: black;
       z-index: 6;
     }
     .popup-fadout{
-    animation: fadeout 200s;
+    animation: fadeout .5s;
     }
     .top{
       height: 4rem;

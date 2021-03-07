@@ -32,13 +32,14 @@
        <div class="popup" *ngIf='display'>
          <div class="background-black"   (click)="closemodal()"></div>
          <div class="popup-container" [class]="fadeout" >
-            <div class="top">
+            <div class="top" [style.background-color]="color.color" >
                <div class="text"> <svg class="icon icon-car"><use xlink:href="assets/icons.svg#icon-car"></use></svg>Ajout Véhicule</div>
                <div class="left"><svg class="icon"><use xlink:href="assets/icons.svg#icon-save"></use></svg>
                   <svg class="icon" (click)="closemodal()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
             </div>
      <div class="form-container">
-               <label>Model</label><div class="select">
+               <label style="width: 100%;">Model</label>
+               <div class="select" style=margin-left:1rem>
                   <select  required [(ngModel)]="Model">
                      
                      <option value="saab" disabled selected>   </option>
@@ -60,9 +61,9 @@
                 <label>Code Client</label> 
                    <input  [(ngModel)]="CustmerNumber" ngModel ng-model="CustmerNumber"  readonly />
              </div>
-           <div>
-               <label class="op">Plan d'opération</label>
-           </div>
+           
+               <h2 style="width: 100%;margin: 1rem 0;" class="op">Plan d'opération</h2>
+           
            <div>
              <label>Distribution Courbe</label>
                 <input  [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
@@ -92,7 +93,7 @@
       <div class="popup1" *ngIf='display1'>
          <div class="background-black"   (click)="closemodal1()"></div>
          <div class="popup-container" [class]="fadeout1" >
-            <div class="top">
+            <div class="top" [style.background-color]="color.color">
                <div class="text"> <svg class="icon icon-car"><use xlink:href="assets/icons.svg#icon-car"></use></svg>Ajout opération plan</div>
                <div class="left"><svg class="icon"><use xlink:href="assets/icons.svg#icon-save"></use></svg>
                   <svg class="icon" (click)="closemodal1()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
@@ -135,13 +136,14 @@
           <div class="popup2" *ngIf='display2'>
             <div class="background-black"   (click)="closemodal2()"></div>
             <div class="popup-container" [class]="fadeout2" >
-               <div class="top">
+               <div class="top" [style.background-color]="color.color">
                   <div class="text"><svg class="icon icon-taxi_alert"><use xlink:href="assets/icons.svg#icon-taxi_alert"></use></svg>Ajout Réclamation</div>
                   <div class="left"><svg class="icon"><use xlink:href="assets/icons.svg#icon-save"></use></svg>
                      <svg class="icon" (click)="closemodal2()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
                </div>
              <div class="form-container">
-                  <label>Type réclamation</label><div class="select">
+                  <label style="width: 100%">Type réclamation</label>
+                  <div class="select" style=margin-left:1rem>
                      <select  required [(ngModel)]="Model">
                         
                         <option value="saab" disabled selected>   </option>
@@ -263,12 +265,21 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
    </div>
   </div>
 
+
+  <!------------------------------------------Véhicule adress---------------------------------------->
+  <div soho-tab-panel-container>
+                   
+    <div soho-tab-panel tabId="tab-003">
+       <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+          <div #vehiculeDatagridMeters class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
+
   <!-----------------------------------------Garantie Véhicule--------------------------------------->
   <div soho-tab-panel-container>
                    
     <div soho-tab-panel tabId="tab-002">
        <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
           <div #vehiculeDatagridGarantit class="grid"  id="gridGarantit" soho-datagrid [gridOptions]="datagridOptionsGarantit" 
+
           soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
           
        </div>

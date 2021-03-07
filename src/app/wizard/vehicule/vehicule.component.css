@@ -57,6 +57,30 @@
   .popup-fadout{
   animation: fadeout 1s;
   }
+  @keyframes popup-animation {
+    0%{
+      transform: translateY(100%);
+      opacity: 0.5;
+  
+  
+    }
+    100%{
+      transform: translateY(0);
+      opacity: 1;
+  
+    }
+  }
+  
+  @keyframes fadeout{
+    0%{
+      transform :translateY(0);
+      opacity: 1;
+    }
+    100%{
+      transform: translateY(200%);
+      opacity: 0.5;
+    }
+  }
   .top{
     height: 5rem;
     width: 100%;
@@ -103,10 +127,11 @@
   }
   input{
     min-width: 30rem;
-    margin: 1rem;
+    margin: 2rem;
     height: 3rem;
+}
   
-  }
+  
   
   select{
     border: 1px solid gray;
