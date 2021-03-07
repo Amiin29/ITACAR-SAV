@@ -274,7 +274,7 @@
 <div class="popup" *ngIf='display'>
    <div class="background-black"   (click)="closemodal()"></div>
      <div class="popup-container" [class]="fadeout" >
-         <div class="top">
+         <div class="top" [style.background-color]="color.color">
             <div class="text"><svg class="icon-plus"><use xlink:href="assets/icons.svg#icon-user-plus"></use></svg>Ajout Client</div>
             <div class="left"><svg class="icon" (click)="AddCustomer()"><use xlink:href="assets/icons.svg#icon-save"></use></svg>
             <svg class="icon" (click)="closemodal()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>

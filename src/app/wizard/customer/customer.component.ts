@@ -3,7 +3,7 @@ import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { Console } from 'console';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
-
+import { ColorService } from 'src/app/color.service';
 @Component({
    templateUrl: './customer.component.html',
    styleUrls: ['./customer.css'],
@@ -33,6 +33,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    customerIsSelected =false;
    new: any[] = [];
    detailItem: any;
+   color
   
    detailFinancialoByCustomer:any;
    BLCD : string ;
@@ -61,7 +62,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    Email: string;
    Compagnie: string;
 
-   constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService) {
+   constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
       super('CustomerSampleComponent');
       this.initGrid();
    }
@@ -69,6 +70,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    ngOnInit() {
    
       this.listItems();
+      this.color=this.mycolor.getcolor()
 
      
 

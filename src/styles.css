@@ -3,3 +3,18 @@
 #compound_field_popdown_contents.popdown {
   width: 700px;
 }
+.wizard-page{
+ height: max-content;}
+ @media (min-width: 767px){
+.six.columns {
+    margin-left: 19px;
+    width: calc(48% - 10px);
+    display: inline-block;
+    width: max-cotnet;
+    width: max-content;
+}
+
+}
+.card{
+  min-height: max-content;
+}

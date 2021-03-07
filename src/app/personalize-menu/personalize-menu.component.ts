@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 
 import { SohoPersonalizeDirective } from 'ids-enterprise-ng';
+import { ColorService } from '../color.service';
 
 interface ThemeMenuItem extends SohoTheme {
   selected?: boolean;
@@ -22,7 +23,8 @@ interface ColorMenuItem extends SohoPersonalizationColor {
 export class PersonalizeMenuComponent implements OnInit {
   @ViewChild(SohoPersonalizeDirective, { static: true })
   private personalize?: SohoPersonalizeDirective;
-
+  constructor(private setcolor :ColorService ) {
+ }
   /**
    * Mark as a popupmenu.
    */
@@ -123,6 +125,8 @@ export class PersonalizeMenuComponent implements OnInit {
     // Getting upper case colours and lower case colours, so assume lower.
     this.color = ev.data.isDefault ? '' : (colorHex as string).toLowerCase();
     this.setSelectedColor(this.color, true);
+    this.setcolor.setcolro(this.color)
+
   }
 
   /**
