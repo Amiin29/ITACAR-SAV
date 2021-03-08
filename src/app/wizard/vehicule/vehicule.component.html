@@ -3,33 +3,21 @@
 [resizeContainers]="true"
 [favorButtonset]="true"
 (selected)="onSelected($event)">
-            
-           <soho-toolbar-title>
+            <soho-toolbar-title>
               <span soho-toolbar-section-title></span>
           </soho-toolbar-title>
-            
-             
-                  <!-- buttons -->
+            <!-- buttons -->
                <soho-toolbar-button-set>
-               <!-- buttons -->
-               
                <button soho-button="icon" icon="add" title="Ajout Véhicule" data-action="{'button':'add'}" (click)="ajouterVehicule()" >
                </button>
-             
-             
-               <button soho-button="icon" icon="add" title="Ajout Opération" data-action="{'button':'add'}" (click)="ajouterOperation()" >
+              <button soho-button="icon" icon="add" title="Ajout Opération" data-action="{'button':'add'}" (click)="ajouterOperation()" >
                </button>
-             
-             
                <button soho-button="icon" icon="add" title="Ajout Réclamation" data-action="{'button':'add'}" (click)="ajouterReclamation()" >
                </button>
-             
-            </soho-toolbar-button-set>
+             </soho-toolbar-button-set>
        </soho-toolbar>
-
-       <!----------------------------------------Ajouter Véhicule---------------------------------->
-       
-       <div class="popup" *ngIf='display'>
+<!----------------------------------------Ajouter Véhicule---------------------------------->
+        <div class="popup" *ngIf='display'>
          <div class="background-black"   (click)="closemodal()"></div>
          <div class="popup-container" [class]="fadeout" >
             <div class="top" [style.background-color]="color.color" >
@@ -40,14 +28,12 @@
      <div class="form-container">
                <label style="width: 100%;">Model</label>
                <div class="select" style=margin-left:1rem>
-                  <select  required [(ngModel)]="Model">
-                     
+                  <select  required [(ngModel)]="Model"> 
                      <option value="saab" disabled selected>   </option>
                      <option value="saab">4444</option>
                      <option value="mercedes">Mercedes</option>
                      <option value="audi">Audi</option>
-                  </select>
-                  
+                  </select> 
                </div>
               <div class="NumVin">
               <label>Numéro VIN</label>
@@ -61,9 +47,7 @@
                 <label>Code Client</label> 
                    <input  [(ngModel)]="CustmerNumber" ngModel ng-model="CustmerNumber"  readonly />
              </div>
-           
-               <h2 style="width: 100%;margin: 1rem 0;" class="op">Plan d'opération</h2>
-           
+           <h2 style="width: 100%;margin: 1rem 0;" class="op">Plan d'opération</h2>
            <div>
              <label>Distribution Courbe</label>
                 <input  [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
@@ -88,8 +72,7 @@
             </div>
          </div>
       </div>
-   
-      <!-------------------------------------Ajouter Opération--------------------------------------->
+   <!-------------------------------------Ajouter Opération--------------------------------------->
       <div class="popup1" *ngIf='display1'>
          <div class="background-black"   (click)="closemodal1()"></div>
          <div class="popup-container" [class]="fadeout1" >
@@ -127,8 +110,6 @@
                  <label>No of periods</label>
                <input [(ngModel)]="ofp" ngModel ng-model="ofp"  required />
              </div>
-             
-             
              </div>
             </div>
          </div>
@@ -145,14 +126,12 @@
                   <label style="width: 100%">Type réclamation</label>
                   <div class="select" style=margin-left:1rem>
                      <select  required [(ngModel)]="Model">
-                        
                         <option value="saab" disabled selected>   </option>
                         <option value="saab">4444</option>
                         <option value="mercedes">Mercedes</option>
                         <option value="audi">Audi</option>
                      </select>
-                     
-                  </div>
+                     </div>
                  <div class="NumVin">
                  <label>Code Voiture</label>
                   <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
@@ -185,8 +164,7 @@
                       <label>Code Client</label>
                     <input [(ngModel)]="CustmerNumber" ngModel ng-model="CustmerNumber"  required />
                   </div>
-                  
-                <div>
+                  <div>
                   <label>décision par</label>
                 <input [(ngModel)]="decision" ngModel ng-model="decision"  required />
                 </div>
@@ -264,6 +242,7 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
       </div>
    </div>
   </div>
+ </div>
 
 
   <!------------------------------------------Véhicule adress---------------------------------------->
@@ -271,17 +250,23 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
                    
     <div soho-tab-panel tabId="tab-003">
        <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-          <div #vehiculeDatagridMeters class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
-
-  <!-----------------------------------------Garantie Véhicule--------------------------------------->
-  <div soho-tab-panel-container>
-                   
-    <div soho-tab-panel tabId="tab-002">
-       <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-          <div #vehiculeDatagridGarantit class="grid"  id="gridGarantit" soho-datagrid [gridOptions]="datagridOptionsGarantit" 
-
+          <div #vehiculeDatagridAdress class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
           soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
           
        </div>
     </div>
    </div>
+  </div>
+  <!-----------------------------------------Garantie Véhicule--------------------------------------->
+  <div soho-tab-panel-container>
+                   
+   <div soho-tab-panel tabId="tab-002">
+      <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+         <div #vehiculeDatagridGarantit class="grid"  id="gridGarantit" soho-datagrid [gridOptions]="datagridOptionsGarantit" 
+
+         soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
+         
+      </div>
+   </div>
+  </div>
+  </div>

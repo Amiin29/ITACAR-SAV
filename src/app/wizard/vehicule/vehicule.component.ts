@@ -410,7 +410,7 @@ initGarantitGrid(){
    updateGridDataAdress() {
       this.datagridAdress ? this.datagridAdress.dataset = this.meters : this.datagridOptionsAdress.dataset = this.Adress;
 
-
+   }
    updateGridGarantit() {
       this.datagridGarantit ? this.datagridGarantit.dataset = this.garantit : this.datagridOptionsGarantit.dataset = this.garantit;
 
