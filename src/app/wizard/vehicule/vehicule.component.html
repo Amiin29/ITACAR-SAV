@@ -38,51 +38,49 @@
                   <svg class="icon" (click)="closemodal()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
             </div>
      <div class="form-container">
-               <label style="width: 100%;">Model</label>
+              
                <div class="select" style=margin-left:1rem>
-                  <select  required [(ngModel)]="Model">
+                  <select  [selected]="Model" required [(ngModel)]="Model">
                      
-                     <option value="saab" disabled selected>   </option>
-                     <option value="saab">4444</option>
-                     <option value="mercedes">Mercedes</option>
-                     <option value="audi">Audi</option>
+                     <option value="">   </option>
+                    
                   </select>
                   
                </div>
-              <div class="NumVin">
-              <label>Numéro VIN</label>
-               <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
+              
+              
+               <input placeholder="Numéro VIN" id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
+             
+             <div>
+             
+               <input placeholder="Num Série" [(ngModel)]="Numserie" ngModel ng-model="Numserie"  required />
              </div>
              <div>
-             <label>Num Série</label> 
-               <input  [(ngModel)]="Numserie" ngModel ng-model="Numserie"  required />
-             </div>
-             <div>
-                <label>Code Client</label> 
-                   <input  [(ngModel)]="CustmerNumber" ngModel ng-model="CustmerNumber"  readonly />
+               
+                   <input placeholder="Code Client" [(ngModel)]="CustmerNumber" ngModel ng-model="CustmerNumber"  readonly />
              </div>
            
                <h2 style="width: 100%;margin: 1rem 0;" class="op">Plan d'opération</h2>
            
            <div>
-             <label>Distribution Courbe</label>
-                <input  [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
+            
+                <input placeholder="Distribution Courbe" [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
            </div>
            <div>
-             <label>kilométrage</label>
-               <input  [(ngModel)]="Meter" ngModel ng-model="Meter" placeholder="KM" required />
+             
+               <input placeholder="kilométrage" [(ngModel)]="Meter" ngModel ng-model="Meter" placeholder="KM" required />
             </div>
             <div>
-                <label>moyenne mensuelle KM</label>
-               <input  [(ngModel)]="Maverage" ngModel ng-model="Maverage"  required />
+           
+               <input placeholder="moyenne mensuelle KM" [(ngModel)]="Maverage" ngModel ng-model="Maverage"  required />
              </div>
              <div>
-                 <label>Période jj/mm/aaaa</label>
-               <input  [(ngModel)]="periode" ngModel ng-model="periode"  required />
+               
+               <input placeholder="Période jj/mm/aaaa" [(ngModel)]="periode" ngModel ng-model="periode"  required />
              </div>
              <div>
-                 <label>No of periods</label>
-               <input [(ngModel)]="ofp" ngModel ng-model="ofp"  required />
+          
+               <input placeholder="Nombre de periode"[(ngModel)]="ofp" ngModel ng-model="ofp"  required />
              </div>
              
             </div>
@@ -100,32 +98,32 @@
             </div>
      <div class="form-container">
          <div class="listnom">
-             <label>Liste Nom</label>
-              <input id="di-lang" [(ngModel)]="listnom" ngModel ng-model="listnom"  required />
+         
+              <input placeholder="Liste Nom" id="di-lang" [(ngModel)]="listnom" ngModel ng-model="listnom"  required />
             </div>  
               <div class="NumVin">
-              <label>Numéro VIN</label>
-               <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
+             
+               <input placeholder="Numéro VIN"  id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
              </div>
            <div>
-             <label>Distribution Courbe</label>
-                <input  [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
+            
+                <input placeholder="Distribution Courbe" [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  />
            </div>
            <div>
-             <label>kilométrage</label>
-               <input  [(ngModel)]="Meter" ngModel ng-model="Meter" placeholder="KM" required />
+         
+               <input placeholder="kilométrage" [(ngModel)]="Meter" ngModel ng-model="Meter" placeholder="KM" required />
             </div>
             <div>
-                <label>moyenne mensuelle KM</label>
-               <input  [(ngModel)]="Maverage" ngModel ng-model="Maverage"  required />
+               
+               <input placeholder="moyenne mensuelle KM" [(ngModel)]="Maverage" ngModel ng-model="Maverage"  required />
              </div>
              <div>
-                 <label>Période jj/mm/aaaa</label>
-               <input  [(ngModel)]="periode" ngModel ng-model="periode"  required />
+      
+               <input placeholder="Période jj/mm/aaaa" [(ngModel)]="periode" ngModel ng-model="periode"  required />
              </div>
              <div>
-                 <label>No of periods</label>
-               <input [(ngModel)]="ofp" ngModel ng-model="ofp"  required />
+            
+               <input placeholder="No of periods" [(ngModel)]="ofp" ngModel ng-model="ofp"  required />
              </div>
              
              
@@ -265,12 +263,23 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
    </div>
   </div>
 
+
   <!------------------------------------------Véhicule adress---------------------------------------->
   <div soho-tab-panel-container>
                    
     <div soho-tab-panel tabId="tab-003">
        <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-          <div #vehiculeDatagridMeters class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
+          <div #vehiculeDatagridMeters class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
+         </div>
+      </div>
+     </div>
+  <!-----------------------------------------Garantie Véhicule--------------------------------------->
+  <div soho-tab-panel-container>
+                   
+    <div soho-tab-panel tabId="tab-002">
+       <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+          <div #vehiculeDatagridGarantit class="grid"  id="gridGarantit" soho-datagrid [gridOptions]="datagridOptionsGarantit" 
+
           soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
           
        </div>

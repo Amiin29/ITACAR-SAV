@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild,Input, EventEmitter } from '@angular/core'
 import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
-import { ColorService } from 'src/app/color.service';
 
 @Component({
   selector: 'vehicule',
@@ -15,7 +14,7 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
   @ViewChild('vehiculeDatagrid') datagrid: SohoDataGridComponent;
   @ViewChild('vehiculeDatagridMeters') datagridMeters: SohoDataGridComponent;
-  @ViewChild('vehiculeDatagridAdress') datagridAdress: SohoDataGridComponent;
+  @ViewChild('vehiculeDatagridGarantit') datagridGarantit: SohoDataGridComponent;
   MESO : any;
   MVAO: any;
   KNOW: any;
@@ -23,23 +22,15 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   MVOM: any;
   INDA: any;
   TTSI: any;
+  STDT: any;
+  STTI: any;
   MVAX: any;
-  ITNO :any;
-  SERN :any;
-  BIRT :any;
-  STDT :any;
-  STTI:any;
-  STAT:any;
-  CORX:any;
-  CORY:any;
-  CORZ:any;
-  RORC:any;
-  RORN:any;
-  RORL:any;
-  RORX:any;
-datagridOptions: SohoDataGridOptions;
+  ITNO :any
+  SERN :any
+  datagridOptions: SohoDataGridOptions;
   datagridOptionsMeters: SohoDataGridOptions;
-  datagridOptionsAdress:SohoDataGridOptions;
+  datagridOptionsGarantit :SohoDataGridOptions
+  datagridOptionsAdress:SohoDataGridOptions
   private maxRecords = 50000;
   private pageSize = 7;
   isBusy = false;
@@ -53,27 +44,89 @@ datagridOptions: SohoDataGridOptions;
   isDetailBusy = false;
   Vehiculs: any[] = [];
   meters : any[] = [];
-  Adress: any[] =[];
+  garantit :any[]= [];
   hasSelected: boolean;
-  color
-  constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService,private mycolor:ColorService) {
+  
+  constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService) {
    super('VehiculeComponent');
  
    this.initGrid();
    this.initMeterGrid();
-   this.initAdressGrid();
+   this.initGarantitGrid()
 }
 ngOnChanges(changes) {
    this.listVehicule(); 
-  
-  
  }
   ngOnInit(): void {  
    this.listVehicule(); 
    this.updateGridData();
-  this.color=this.mycolor.getcolor()
   
   }
+ //-----------------------------------------DataGrid Garantit--------------------------------------- 
+initGarantitGrid(){
+   const optionsGarantit: SohoDataGridOptions = {
+      selectable: 'single' as SohoDataGridSelectable,
+      disableRowDeactivation: true,
+      clickToSelect: false,
+      alternateRowShading: true,
+      cellNavigation: false,
+      idProperty: 'col-cuno',
+      paging: true,
+      rowHeight:'small' ,
+      pagesize: this.pageSize,
+      indeterminate: false,
+      editable: true,
+      
+      showDirty: true,
+      stretchColumn: 'favorite',
+     
+      columns: [
+         
+          {
+            width: 'auto', id: 'col-ITNO', field: 'ITNO', name: 'Item number',
+            resizable: true, filterType: 'text', sortable: true
+         },
+       
+         {
+            width: 'auto', id: 'col-SERN', field: 'SERN', name: 'Serial no',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+            width: 'auto', id: 'col-MSEQ', field: 'STAT', name: 'Status',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+            width: 'auto', id: 'col-MSEQ', field: 'CONO', name: 'Company',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+          width: 'auto', id: 'col-WADT', field: 'WADT', name: 'Warranty date',
+          resizable: true, filterType: 'text', sortable: true
+       },
+         {
+            width: 'auto', id: 'col-STRT', field: 'WATP', name: 'Warranty Type',
+            resizable: true, filterType: 'text', sortable: true
+         },
+         {
+          width: 'auto', id: 'col-SUFI', field: 'PYNO', name: 'Payer',
+          resizable: true, filterType: 'text', sortable: true
+        },
+     
+       {
+          width: 'auto', id: 'col-STDT', field: 'IDTY', name: 'Item type Id',
+          resizable: true, filterType: 'text', sortable: true
+       },
+        
+      ],
+      dataset: [],
+      emptyMessage: {
+         title: 'No Vehicul available',
+         icon: 'icon-empty-no-data'
+      }
+   };
+   this.datagridOptionsGarantit = optionsGarantit;
+}
+//-------------------------------------------------DataGrid Meter------------------------------------------
   initMeterGrid() {
     
    const optionsMeter: SohoDataGridOptions = {
@@ -131,87 +184,15 @@ ngOnChanges(changes) {
      ],
      dataset: [],
      emptyMessage: {
-        title: 'No Compteur available',
+        title: 'No Vehicul available',
         icon: 'icon-empty-no-data'
      }
   };
   this.datagridOptionsMeters = optionsMeter;
  }
- initAdressGrid() {
-    
-   const optionsAdress: SohoDataGridOptions = {
-     selectable: 'single' as SohoDataGridSelectable,
-     disableRowDeactivation: true,
-     clickToSelect: false,
-     alternateRowShading: true,
-     cellNavigation: false,
-     idProperty: 'col-cuno',
-     paging: true,
-     rowHeight:'small' ,
-     pagesize: this.pageSize,
-     indeterminate: false,
-     editable: true,
-     
-     showDirty: true,
-     stretchColumn: 'favorite',
-    
-     columns: [
-       
-         {
-           width: 'auto', id: 'col-birt', field: 'BIRT', name: 'ORIGIN ID',
-           resizable: true, filterType: 'text', sortable: true
-        },
-      
-        {
-           width: 'auto', id: 'col-stdt', field: 'STDT', name: 'STR dt',
-           resizable: true, filterType: 'text', sortable: true
-        },
-        {
-           width: 'auto', id: 'col-stti', field: 'STTI', name: 'STR tm',
-           resizable: true, filterType: 'text', sortable: true
-        },
-        {
-         width: 'auto', id: 'col-stat', field: 'STAT', name: 'Sts',
-         resizable: true, filterType: 'text', sortable: true
-      },
-        {
-           width: 'auto', id: 'col-corx', field: 'CORX', name: 'Lattitude:',
-           resizable: true, filterType: 'text', sortable: true
-        },
-        {
-         width: 'auto', id: 'col-cory', field: 'CORY', name: 'longtitude:',
-         resizable: true, filterType: 'text', sortable: true
-       },
-      {
-         width: 'auto', id: 'col-corz', field: 'CORZ', name: 'Height',
-         resizable: true, filterType: 'text', sortable: true
-      },
-      {
-         width: 'auto', id: 'col-rorc', field: 'RORC', name: 'Roc',
-         resizable: true, filterType: 'text', sortable: true
-      },
-      {
-         width: 'auto', id: 'col-rorn', field: 'RORN', name: 'Ref order',
-         resizable: true, filterType: 'text', sortable: true
-      },
-      {
-         width: 'auto', id: 'col-rorl', field: 'RORL', name: 'Ref ol',
-         resizable: true, filterType: 'text', sortable: true
-      },
-      {
-         width: 'auto', id: 'col-rorx', field: 'RORX', name: 'SF',
-         resizable: true, filterType: 'text', sortable: true
-      },
-       
-     ],
-     dataset: [],
-     emptyMessage: {
-        title: 'No Compteur available',
-        icon: 'icon-empty-no-data'
-     }
-  };
-  this.datagridOptionsAdress = optionsAdress;
- }
+
+ //----------------------------------------------DataGrid vehicule-------------------------------
+
   initGrid() {
     
    const options: SohoDataGridOptions = {
@@ -324,20 +305,26 @@ ngOnChanges(changes) {
          .buttons(buttons)
          .open();
    }
+
+
    updateGridData() {
       this.datagrid ? this.datagrid.dataset = this.Vehiculs : this.datagridOptions.dataset = this.Vehiculs;
    }
    updateGridDataMeters() {
       this.datagridMeters ? this.datagridMeters.dataset = this.meters : this.datagridOptionsMeters.dataset = this.meters;
    }
-   updateGridDataAdress() {
-      this.datagridAdress ? this.datagridAdress.dataset = this.meters : this.datagridOptionsAdress.dataset = this.Adress;
+
+   updateGridGarantit() {
+      this.datagridGarantit ? this.datagridGarantit.dataset = this.garantit : this.datagridOptionsGarantit.dataset = this.garantit;
    }
+
    private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
       isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
    }
-  customerSelectedEventVehicule(event: boolean){
+  
+  
+   customerSelectedEventVehicule(event: boolean){
 
     console.log('wizar - outputSElected '+event['OKCUNO'])
   }
@@ -359,7 +346,7 @@ ngOnChanges(changes) {
         {
          this.VehiculeIsSelected=true
          this.GetMetereVehicule(selected);
-         this.GetadressVehicule(selected);
+         this.GetGarantitVehicule(selected)
        
         }
         else {
@@ -369,35 +356,38 @@ ngOnChanges(changes) {
   ajouterVehicule(){
      this.display=true;
   }
-
-  closemodal(){
-   this.fadeout="popup-fadout"
-setTimeout(()=>{
-this.fadeout="";
-this.display=false;
-},1000)
-}
+  
   ajouterOperation(){
-     this.display1=true;
-  }
-  closemodal1(){
-   this.fadeout1="popup-fadout"
-setTimeout(()=>{
-this.fadeout1="";
-this.display1=false;
-},1000)
+   this.display1=true;
 }
-ajouterReclamation(){this.display2=true;}
-closemodal2(){
-   this.fadeout2="popup-fadout"
-setTimeout(()=>{
-this.fadeout2="";
-this.display2=false;
-},1000)
-}
+      closemodal(){
+         this.fadeout="popup-fadout"
+      setTimeout(()=>{
+      this.fadeout="";
+      this.display=false;
+      },1000)
+      }
+    
+      closemodal1(){
+         this.fadeout1="popup-fadout"
+      setTimeout(()=>{
+      this.fadeout1="";
+      this.display1=false;
+      },1000)
+      }
+      ajouterReclamation(){
+         this.display2=true;
+      }
+      closemodal2(){
+         this.fadeout2="popup-fadout"
+            setTimeout(()=>{
+         this.fadeout2="";
+         this.display2=false;
+      },1000)
+      }
 
   
-  //----------------------------------------Meter reading ---------------------------------------
+  //----------------------------------------Meter reading --------------------------------------------------
   GetMetereVehicule(selectedVehicule: MIRecord){
     
    this.initMeterGrid();
@@ -443,54 +433,43 @@ this.display2=false;
            
          
 } 
+//-----------------------------------------------Garantit Vehicule---------------------------------------------
 
-//-----------------------Véhicule adress----------------------------------------//
-GetadressVehicule(selectedVehicule: MIRecord){
-    
-   this.initMeterGrid();
+GetGarantitVehicule(selectedVehicule: MIRecord){
+   this.initGarantitGrid();
    this.setBusy(true);
   
-         const requestInfoByMeter: IMIRequest = 
+         const requestInfoByGarantit: IMIRequest = 
          {
-            program: 'MMS241MI',
-            transaction: 'LstMeters',
-            outputFields: ['MES0','MVA0','MVAI','INDA','KNOW','MV0M','RPTP','LMDT'],
-            
+            program: 'MOS390MI',
+            transaction: 'LstClaDetail',
+            outputFields: [ 'ITNO' , 'IDTY','CONO','SERN','STAT','WADT','WATP','PYNO','IDTY'],
+           
          };
          const inputrecord :MIRecord= new MIRecord();
-
          inputrecord.setString('ITNO',selectedVehicule ['ITNO']); 
-         console.log(selectedVehicule ['ITNO'])
-
+         console.log('itnoooo garantit-'+selectedVehicule ['ITNO'])
          inputrecord.setString('SERN',selectedVehicule ['SERN']);
-         console.log(selectedVehicule ['SERN'])
-         requestInfoByMeter.record = inputrecord;
-
-         this.miService.execute(requestInfoByMeter).subscribe((response: IMIResponse) => 
+         console.log('sern garantit-'+selectedVehicule ['SERN'])
+         requestInfoByGarantit.record = inputrecord;
+         this.miService.execute(requestInfoByGarantit).subscribe((response: IMIResponse) => 
          {
             if (!response.hasError()) 
             {
-               this.Adress = response.items;
-               console.log( this.Adress);
-               this.updateGridDataMeters();
+               this.garantit = response.items;
+               console.log( 'garantit-------------------'+this.garantit);
+               this.updateGridGarantit();
             } 
             else
             {
-               this.handleError('Failed to list meters');
+               this.handleError('Failed to list  Garantit');
             }
             this.setBusy(false);
          }, (error) => 
          {
             this.setBusy(false);
-            this.handleError('Failed to list items', error);
+            this.handleError('Failed to list  Garantit', error);
          });
-   
- 
 
-           
-         
-} 
-
-
-
+}
 }
