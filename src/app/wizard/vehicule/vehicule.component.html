@@ -51,7 +51,7 @@
                </div>
               <div class="NumVin">
               <label>Numéro VIN</label>
-               <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
+               <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber" style=min-width:30rem ; style=margin:0rem ; style=margin:0rem     style=height:3rem  required />
              </div>
              <div>
              <label>Num Série</label> 
@@ -270,9 +270,10 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
                    
     <div soho-tab-panel tabId="tab-003">
        <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-          <div #vehiculeDatagridMeters class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
+          <div #vehiculeDatagridAdress class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
           soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
           
        </div>
     </div>
+   </div>
    </div>

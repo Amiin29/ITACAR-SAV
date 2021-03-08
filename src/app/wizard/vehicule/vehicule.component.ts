@@ -331,7 +331,7 @@ ngOnChanges(changes) {
       this.datagridMeters ? this.datagridMeters.dataset = this.meters : this.datagridOptionsMeters.dataset = this.meters;
    }
    updateGridDataAdress() {
-      this.datagridAdress ? this.datagridAdress.dataset = this.meters : this.datagridOptionsAdress.dataset = this.Adress;
+      this.datagridAdress ? this.datagridAdress.dataset = this.Adress : this.datagridOptionsAdress.dataset = this.Adress;
    }
    private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
@@ -447,36 +447,38 @@ this.display2=false;
 //-----------------------Véhicule adress----------------------------------------//
 GetadressVehicule(selectedVehicule: MIRecord){
     
-   this.initMeterGrid();
+   this.initAdressGrid();
    this.setBusy(true);
   
-         const requestInfoByMeter: IMIRequest = 
+         const requestInfoByAdress: IMIRequest = 
          {
-            program: 'MMS241MI',
-            transaction: 'LstMeters',
-            outputFields: ['MES0','MVA0','MVAI','INDA','KNOW','MV0M','RPTP','LMDT'],
+            program: 'MOS272MI',
+            transaction: 'GetAddressById',
+            outputFields: ['BIRT','STDT','STTI','STAT','CORX','CORY','CORZ','RORC','RORN','RORL','RORX'],
             
          };
          const inputrecord :MIRecord= new MIRecord();
 
          inputrecord.setString('ITNO',selectedVehicule ['ITNO']); 
-         console.log(selectedVehicule ['ITNO'])
+         console.log('adress'+selectedVehicule ['ITNO'])
+         //console.log('---------------------','ITNO')
 
          inputrecord.setString('SERN',selectedVehicule ['SERN']);
-         console.log(selectedVehicule ['SERN'])
-         requestInfoByMeter.record = inputrecord;
+         console.log('adress'+selectedVehicule ['SERN'])
+         //console.log('---------------------','SERN')
+         requestInfoByAdress.record = inputrecord;
 
-         this.miService.execute(requestInfoByMeter).subscribe((response: IMIResponse) => 
+         this.miService.execute(requestInfoByAdress).subscribe((response: IMIResponse) => 
          {
             if (!response.hasError()) 
             {
                this.Adress = response.items;
                console.log( this.Adress);
-               this.updateGridDataMeters();
+               this.updateGridDataAdress();
             } 
             else
             {
-               this.handleError('Failed to list meters');
+               this.handleError('Failed to list Adress');
             }
             this.setBusy(false);
          }, (error) => 
