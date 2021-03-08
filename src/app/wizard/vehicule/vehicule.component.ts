@@ -14,7 +14,14 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
   @ViewChild('vehiculeDatagrid') datagrid: SohoDataGridComponent;
   @ViewChild('vehiculeDatagridMeters') datagridMeters: SohoDataGridComponent;
+
+
+
+  @ViewChild('vehiculeDatagridAdress') datagridAdress: SohoDataGridComponent;
+
   @ViewChild('vehiculeDatagridGarantit') datagridGarantit: SohoDataGridComponent;
+
+
   MESO : any;
   MVAO: any;
   KNOW: any;
@@ -29,8 +36,12 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   SERN :any
   datagridOptions: SohoDataGridOptions;
   datagridOptionsMeters: SohoDataGridOptions;
+
+
+  datagridOptionsAdress:SohoDataGridOptions;
+
   datagridOptionsGarantit :SohoDataGridOptions
-  datagridOptionsAdress:SohoDataGridOptions
+
   private maxRecords = 50000;
   private pageSize = 7;
   isBusy = false;
@@ -44,6 +55,10 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   isDetailBusy = false;
   Vehiculs: any[] = [];
   meters : any[] = [];
+
+
+  Adress: any[] =[];
+
   garantit :any[]= [];
   hasSelected: boolean;
   
@@ -52,7 +67,15 @@ export class VehiculeComponent extends CoreBase implements OnInit {
  
    this.initGrid();
    this.initMeterGrid();
+
    this.initGarantitGrid()
+
+
+   this.initAdressGrid();
+
+   this.initGarantitGrid()
+
+
 }
 ngOnChanges(changes) {
    this.listVehicule(); 
@@ -61,7 +84,7 @@ ngOnChanges(changes) {
    this.listVehicule(); 
    this.updateGridData();
   
-  }
+
  //-----------------------------------------DataGrid Garantit--------------------------------------- 
 initGarantitGrid(){
    const optionsGarantit: SohoDataGridOptions = {
@@ -126,7 +149,9 @@ initGarantitGrid(){
    };
    this.datagridOptionsGarantit = optionsGarantit;
 }
+
 //-------------------------------------------------DataGrid Meter------------------------------------------
+
   initMeterGrid() {
     
    const optionsMeter: SohoDataGridOptions = {
@@ -314,9 +339,15 @@ initGarantitGrid(){
       this.datagridMeters ? this.datagridMeters.dataset = this.meters : this.datagridOptionsMeters.dataset = this.meters;
    }
 
+
    updateGridGarantit() {
       this.datagridGarantit ? this.datagridGarantit.dataset = this.garantit : this.datagridOptionsGarantit.dataset = this.garantit;
+
+   updateGridDataAdress() {
+      this.datagridAdress ? this.datagridAdress.dataset = this.meters : this.datagridOptionsAdress.dataset = this.Adress;
+
    }
+  
 
    private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
@@ -347,6 +378,11 @@ initGarantitGrid(){
          this.VehiculeIsSelected=true
          this.GetMetereVehicule(selected);
          this.GetGarantitVehicule(selected)
+
+
+         this.GetadressVehicule(selected);
+
+
        
         }
         else {
@@ -432,7 +468,7 @@ initGarantitGrid(){
 
            
          
-} 
+
 //-----------------------------------------------Garantit Vehicule---------------------------------------------
 
 GetGarantitVehicule(selectedVehicule: MIRecord){
@@ -447,11 +483,15 @@ GetGarantitVehicule(selectedVehicule: MIRecord){
            
          };
          const inputrecord :MIRecord= new MIRecord();
+
          inputrecord.setString('ITNO',selectedVehicule ['ITNO']); 
          console.log('itnoooo garantit-'+selectedVehicule ['ITNO'])
+
          inputrecord.setString('SERN',selectedVehicule ['SERN']);
+
          console.log('sern garantit-'+selectedVehicule ['SERN'])
          requestInfoByGarantit.record = inputrecord;
+
          this.miService.execute(requestInfoByGarantit).subscribe((response: IMIResponse) => 
          {
             if (!response.hasError()) 
@@ -472,4 +512,7 @@ GetGarantitVehicule(selectedVehicule: MIRecord){
          });
 
 }
+
+
+
 }
