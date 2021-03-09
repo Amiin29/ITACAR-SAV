@@ -59,8 +59,11 @@ import {LocaleInitializerModule} from "./locale-initializer/locale-initializer.m
 import {CustomerSampleComponent} from './wizard/customer/customer.component'
 
 import { VehiculeComponent } from './wizard/vehicule/vehicule.component'
-import { from } from 'rxjs';
+import { from } from 'rxjs';;
+import { AddVehiculeComponent } from './wizard/vehicule/add-vehicule/add-vehicule.component'
+import{GarantitVehiculeComponent}from './wizard/vehicule/garantit-vehicule/garantit-vehicule.component'
 
+import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/compteur-vehicule.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,16 +99,14 @@ import { from } from 'rxjs';
     ToastDemoComponent,
     WeekViewDemoComponent,
     WizardDemoComponent,
-  
     CustomerSampleComponent,
-
-
     SampleViewerComponent,
     SampleViewerDialogComponent,
-
-
-    VehiculeComponent
-  ],
+    VehiculeComponent,
+    AddVehiculeComponent,
+     GarantitVehiculeComponent,
+    
+     CompteurVehiculeComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,

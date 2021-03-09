@@ -25,6 +25,8 @@ interface IKeyValue {
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements AfterViewInit, OnInit {
+  
+ 
   /**
    * Local Storage Key
    */
