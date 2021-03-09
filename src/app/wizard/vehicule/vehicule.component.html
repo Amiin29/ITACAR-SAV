@@ -201,72 +201,39 @@ soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (sel
   <div soho-tab-list-container>
      <ul soho-tab-list>
         <li soho-tab>
-           <a soho-tab-title tabId="tab-001">prévu PM</a>
+           <a soho-tab-title tabId="tab-001">Garantie Véhicule</a>
         </li>
         <li soho-tab>
-           <a soho-tab-title tabId="tab-002">Garantie Véhicule</a>
+           <a soho-tab-title tabId="tab-002">Lecture Compteur</a>
         </li>
-        <li soho-tab>
-           <a soho-tab-title tabId="tab-003">Vehicle Adress</a>
-        </li>
-        <li soho-tab>
-           <a soho-tab-title tabId="tab-004">Lecture Compteur</a>
-        </li>
-        <li soho-tab>
-          <a soho-tab-title tabId="tab-005">AS-blt Struct</a>
+       <li soho-tab>
+         <a soho-tab-title tabId="tab-003">Historique des services (facturé)</a>
        </li>
        <li soho-tab>
-         <a soho-tab-title tabId="tab-006">Historique des services (facturé)</a>
+         <a soho-tab-title tabId="tab-004">Historique des services (non facturé)</a>
        </li>
        <li soho-tab>
-         <a soho-tab-title tabId="tab-007">Historique des services (non facturé)</a>
+         <a soho-tab-title tabId="tab-005">Attributs</a>
        </li>
-       <li soho-tab>
-         <a soho-tab-title tabId="tab-008">Service spécial ouvert</a>
-       </li>
-       <li soho-tab>
-         <a soho-tab-title tabId="tab-009">Service spécial fermé</a>
-       </li>
+       
       </ul>
      </div>
      </div>
-   
+    <!-----------------------------------------Garantie Véhicule--------------------------------------->
+  <div soho-tab-panel-container>
+                   
+    <div soho-tab-panel tabId="tab-001">
+       <app-garantit-vehicule *ngIf="hasSelected" [ITNO]="itemGarantitITNO"  [SERN]="itemGarantitSERN"></app-garantit-vehicule>
+   </div>
+   </div>
  <!--------------------------------------------Meter reading------------------------------->
  <div soho-tab-panel-container>
                    
-   <div soho-tab-panel tabId="tab-004">
-      <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-         <div #vehiculeDatagridMeters class="grid"  id="gridMeters" soho-datagrid [gridOptions]="datagridOptionsMeters" 
-         soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
-         
-      </div>
-   </div>
+   <div soho-tab-panel tabId="tab-002">
+   <app-compteur-vehicule *ngIf="hasSelected" [ITNO]="itemCompteurITNO"  [SERN]="itemCompteurSERN"></app-compteur-vehicule>
   </div>
  </div>
 
-
-  <!------------------------------------------Véhicule adress---------------------------------------->
-  <div soho-tab-panel-container>
-                   
-    <div soho-tab-panel tabId="tab-003">
-       <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-          <div #vehiculeDatagridAdress class="grid"  id="gridAdress" soho-datagrid [gridOptions]="datagridOptionsAdress" 
-          soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
-          
-       </div>
-    </div>
-   </div>
-  </div>
-  <!-----------------------------------------Garantie Véhicule--------------------------------------->
-  <div soho-tab-panel-container>
-                   
-   <div soho-tab-panel tabId="tab-002">
-      <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-         <div #vehiculeDatagridGarantit class="grid"  id="gridGarantit" soho-datagrid [gridOptions]="datagridOptionsGarantit" 
-
-         soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" >
-         
-      </div>
-   </div>
-  </div>
-  </div>
+ 
+  
+ 
