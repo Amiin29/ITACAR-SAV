@@ -15,7 +15,7 @@ export class CalendarLegendDemoComponent {
 
   @ViewChild('SohoCalendarComponent') sohoCalendarComponent?: SohoCalendarComponent;
 
-  public initialMonth = 11;
+  public initialMonth = 1;
   public initialYear = 2018;
   public showViewChanger = true;
   public eventTypes?: [];

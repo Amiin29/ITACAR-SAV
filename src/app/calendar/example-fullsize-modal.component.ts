@@ -8,7 +8,19 @@ import { Component } from '@angular/core';
   templateUrl: 'example-fullsize-modal.component.html'
 })
 export class FullSizeModalDialogComponent {
-  public model = {
-    header: 'Full Size Modal'
+ 
+  onChange(_event: any) {
+    console.log('in onChange');
+  }
+  Date(_event: any) {
+    
+  }
+
+  
+  public model = { // eslint-disable-line
+    hhmm: '1:23 PM',
+    hhmmss: '1:23:43 PM',
+    HHmm24: '17:50'
   };
+  public showModel = false;
 }

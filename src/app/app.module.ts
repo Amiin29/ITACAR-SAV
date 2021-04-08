@@ -64,6 +64,15 @@ import { AddVehiculeComponent } from './wizard/vehicule/add-vehicule/add-vehicul
 import{GarantitVehiculeComponent}from './wizard/vehicule/garantit-vehicule/garantit-vehicule.component'
 
 import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/compteur-vehicule.component'
+;
+import { InformationBasiqueCsutomerComponent } from './wizard/customer/information-basique-csutomer/information-basique-csutomer.component'
+;
+import { DetailsCustomerComponent } from './wizard/customer/details-customer/details-customer.component'
+;
+import { InformationFinancereComponent } from './wizard/customer/information-financere/information-financere.component'
+;
+import { AddCustomerComponent } from './wizard/customer/add-customer/add-customer.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,8 +114,16 @@ import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/c
     VehiculeComponent,
     AddVehiculeComponent,
      GarantitVehiculeComponent,
+     InformationBasiqueCsutomerComponent,
+     DetailsCustomerComponent,
+     InformationFinancereComponent,
+
+     CompteurVehiculeComponent,
+
+     AddCustomerComponent,
+  ],
     
-     CompteurVehiculeComponent],
+     
   imports: [
     AppRoutingModule,
     BrowserModule,

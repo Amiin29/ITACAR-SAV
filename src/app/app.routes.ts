@@ -30,6 +30,7 @@ import { ApplicationMenuRoleSwitcherDemoComponent } from './application-menu/app
 import { ApplicationMenuTestPerfDemoComponent } from './application-menu/application-menu-test-performance.demo';
 import { WeekViewDemoComponent } from './week-view/week-view.demo';
 import { VehiculeComponent } from './wizard/vehicule/vehicule.component';
+import { FullSizeModalDialogComponent } from './calendar/example-fullsize-modal.component';
 
 import { CustomerSampleComponent } from './wizard/customer/customer.component';
 export const routes: Routes = [

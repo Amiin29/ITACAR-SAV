@@ -1,0 +1,35 @@
+<div class="full-width column">
+    <div class="field">
+      <label for="context-name" class="required">Nom</label>
+      <input id="context-name" aria-required="true" data-validate="required" name="context-name" type="text"  />
+    </div>
+    <div class="field">
+      <label for="context-name" class="required">Prénom</label>
+      <input id="context-name" aria-required="true" data-validate="required" name="context-name" type="text" />
+    </div>
+    <div class="field">
+      <label for="context-name" class="required">Téléphone</label>
+      <input id="context-name" aria-required="true" data-validate="required" name="context-name" type="text"/>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <div class="field">
+          <label for="standard12" class="label">Date de RDV</label>
+          <input soho-datepicker name="standard12" placeholder="MM/dd/yyyy"   dateFormat="Date" mode="standard"  (change)="Date($event)"/>
+        </div>
+      </div>
+   
+      <div class="four columns">
+        <div class="field">
+          <label for="standard24" class="label">Heure / Minute</label>
+          <input soho-timepicker name="standard24" timeFormat="HH:mm" mode="standard" [(ngModel)]="model.HHmm24" (change)="onChange($event)"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="context-desc" class="required">Déscription</label>
+      <textarea id="context-desc" aria-required="true" data-validate="required" name="context-desc" maxlength="50"></textarea>
+    </div>
+   
+  </div>

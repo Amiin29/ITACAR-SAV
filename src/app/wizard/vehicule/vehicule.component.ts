@@ -207,10 +207,11 @@ onSelected(args: any[], isSingleSelect?: boolean)
        // console.log(selected)
      if (this.hasSelected)
         {
-         this.itemGarantitITNO=selected['ITNO']
-         this.itemGarantitSERN=selected['SERN']
+         this.itemGarantitITNO=selected['ITNO']//inpout ITNO FOR Garantit
+         this.itemGarantitSERN=selected['SERN']//input SERN FORM GARANTIT
          this.itemCompteurITNO=selected['ITNO']
-this.itemCompteurSERN=selected['SERN']
+         this.itemCompteurSERN=selected['SERN']
+         
          this.VehiculeIsSelected=true
          //this.GetMetereVehicule(selected);
 

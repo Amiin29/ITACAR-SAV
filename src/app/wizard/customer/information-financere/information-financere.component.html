@@ -1,0 +1,47 @@
+<div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0"readonly>
+    <div class="row card"> 
+       
+       <div class="six columns">
+          <div class="field"><label>Arrêt client </label>
+          <select class="select-1 field"  required [(ngModel)]="BLCD" readonly>
+             <!-- <option id="di-lang"  selected disabled  >Template</option> -->
+             <option value="0">0-Non bloquer</option>
+             <option value="1">1-Bloquer partiellement</option>
+             <option value="2">3-Bloquer CO,EQM</option>
+          </select>
+          </div>
+       </div>        
+      
+       <div class="six columns">
+          <div class="field"><label>Taxe applicable   </label>
+          <select class="select-1 field"  required [(ngModel)]="TXAP" readonly>
+             <!-- <option id="di-lang"  selected disabled  >Template</option> -->
+             <option value="0">0-Non</option>
+             <option value="1">1-Oui</option>
+             <option value="2">2-Non VAT expemt</option>
+          </select>
+          </div>
+       </div>   
+                   
+       <div class="">
+          <div class="six columns">
+             <div class="field">Devise 
+                <label for="di-cumn"><input id="di-cunm" [(ngModel)]="CUCD" readonly/></label>                                     
+             </div>
+          </div>                                
+       </div>                    
+       <div class="">
+          <div class="six columns">
+             <div class="field">Mdalités de paiement 
+                <label for="di-town"><input id="di-town" [(ngModel)]="TEPY" readonly/></label>                                      
+             </div>
+          </div>
+         
+       </div>
+
+
+
+
+          
+     </div>
+ </div>
