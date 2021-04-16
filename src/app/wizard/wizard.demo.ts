@@ -13,6 +13,9 @@ export class WizardDemoComponent {
   @ViewChild(SohoWizardComponent, { static: true }) wizard!: SohoWizardComponent;
   @Output() newItemEventSend = new EventEmitter<MIRecord>();
   customerIsSelected = false ;
+  VehiculeIsSelected=false
+  currentItemSelected2=false
+
   currentItemSelected ;
   selectboolean = false ;
 
@@ -71,19 +74,42 @@ const newbutton=[...this.buttons]
 newbutton[2].disabled()
 this.buttons=newbutton
   }
-  
- 
+  //------------------------VheiculeSelected-----------------------------------------
+  VehiculeSelectedEvent(event: boolean){
+    if(event){
+      this.VehiculeIsSelected = true;
+      //console.log('wizar - outputSElected '+event['SERN'])
+      
+      this.currentItemSelected =event['SERN'] ;
+    }
+    else{
+
+      this.VehiculeIsSelected = false;
+    }
+    console.log('this.fffffffffffffff:'+this.VehiculeIsSelected)
+const newbutton=[...this.buttons]
+newbutton[2].disabled()
+this.buttons=newbutton
+  }
+
+
+
+
   nextButtonDisabled() {
-    // return this.wizard.currentTickId !== 'confirmation';
-    if(this.wizard.currentTickId=="app-customer"){
+    if(this.wizard.currentTickId=="app-customer" || this.wizard.currentTickId=="app-inspection"){
       console.log(this.customerIsSelected)
-      if(this.customerIsSelected){
+      console.log('88888888888888888888'+this.VehiculeIsSelected)
+
+      if(this.customerIsSelected || this.VehiculeIsSelected){
                     return false
       }
-      else{return true}
+      else
+      {return true}
 
     }
+    
   }
+ 
 
   onBeforeActivated(e: SohoWizardEvent) {
     console.log(`onBeforeActivated: The tick with the label ${e.tick.text()}`);

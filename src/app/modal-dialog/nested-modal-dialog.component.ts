@@ -58,5 +58,5 @@ export class NestedModalDialogComponent {
         NestedModalDialogComponent.s_depth--;
       })
       .open();
-  }
+  } 
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild,Input, EventEmitter ,Output} from '@angular/core';
+import { Component, OnInit, ViewChild,Input, EventEmitter ,Output,ViewContainerRef} from '@angular/core';
 import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
+import { SohoDataGridComponent, SohoMessageService,SohoModalDialogService } from 'ids-enterprise-ng';
 import { ColorService } from 'src/app/color.service';
-
+import {AddVehiculeComponent} from './add-vehicule/add-vehicule.component'
 @Component({
   selector: 'vehicule',
   templateUrl: './vehicule.component.html',
@@ -18,66 +18,39 @@ export class VehiculeComponent extends CoreBase implements OnInit {
 
   @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
   @ViewChild('vehiculeDatagrid') datagrid: SohoDataGridComponent;
+   @ViewChild('dialogPlaceholder', { read: ViewContainerRef, static: true })
+  placeholder?: ViewContainerRef;
+  itemCUNO:any;
   itemGarantitITNO:any;
   itemGarantitSERN:any;
- 
   itemCompteurITNO:any;
   itemCompteurSERN:any;
-  MESO : any;
-  MVAO: any;
-  KNOW: any;
-  MVAI: any;
-  MVOM: any;
-  INDA: any;
-  TTSI: any;
-  MVAX: any;
-  ITNO :any;
-  SERN :any;
-  BIRT :any;
-  STDT :any;
-  STTI:any;
-  STAT:any;
-  CORX:any;
-  CORY:any;
-  CORZ:any;
-  RORC:any;
-  RORN:any;
-  RORL:any;
-  RORX:any;
   datagridOptions: SohoDataGridOptions;
   private maxRecords = 50000;
   private pageSize = 7;
   isBusy = false;
+  
   VehiculeIsSelected = false
-  display=false;
-  fadeout:string;
-  display1=false;
-  fadeout1:string;
-  display2=false;
-  fadeout2:string;
   isDetailBusy = false;
   Vehiculs: any[] = [];
   ServiceClosed: any[] =[];
   hasSelected: boolean;
   color
-  constructor(private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService,private mycolor:ColorService) {
+  test = false;
+  constructor(private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService,private mycolor:ColorService) {
    super('VehiculeComponent');
- 
-   this.initGrid();
- 
-   
-}
+           this.initGrid();
+ }
 ngOnChanges(changes) {
    this.listVehicule(); 
-}
+  }
   ngOnInit(): void {  
    this.listVehicule(); 
    this.updateGridData();
-  this.color=this.mycolor.getcolor()
-}
- 
-
-initGrid() {
+   this.itemCUNO=this.CUNO;
+   this.mycolor.setid(this.CUNO)
+   }
+ initGrid() {
     const options: SohoDataGridOptions = {
      selectable: 'single' as SohoDataGridSelectable,
      disableRowDeactivation: true,
@@ -112,11 +85,10 @@ initGrid() {
            resizable: true, filterType: 'text', sortable: true
         },
         {
-           width: 'auto', id: 'col-aagn', field: 'MLYR', name: 'Anneé',
+           width: 'auto', id: 'col-aagn', field: 'MLYR', name: 'Matricule',
            resizable: true, filterType: 'text', sortable: true
         },
-       
-     ],
+       ],
      dataset: [],
      emptyMessage: {
         title: 'No Vehicul available',
@@ -132,21 +104,15 @@ initGrid() {
       }
       this.setBusy(true);
       this.userService.getUserContext().subscribe((context) => 
-        {
-            const request: IMIRequest = 
-            {
-               program: 'MMS240MI',
+        {  const request: IMIRequest = 
+            {  program: 'MMS240MI',
                transaction: 'LstByCustomer',
                outputFields: ['CUNO', 'ITNO', 'SERN' ,'MLYR'],
                maxReturnedRecords: this.maxRecords
             };
             const inputrecord :MIRecord= new MIRecord();
-
             inputrecord.setString ('CUNO',this.CUNO)
-            
-
             request.record = inputrecord;
-
             this.miService.execute(request).subscribe((response: IMIResponse) => 
             {
                if (!response.hasError()) 
@@ -184,10 +150,7 @@ initGrid() {
    updateGridData() {
       this.datagrid ? this.datagrid.dataset = this.Vehiculs : this.datagridOptions.dataset = this.Vehiculs;
    }
-  
-
-   
-private setBusy(isBusy: boolean, isDetail?: boolean) 
+  private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
       isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
    }
@@ -195,7 +158,7 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
 
     console.log('wizar - outputSElected '+event['OKCUNO'])
   }
-onSelected(args: any[], isSingleSelect?: boolean) 
+ onSelected(args: any[], isSingleSelect?: boolean) 
   {
      if (this.isBusy)
         {
@@ -206,46 +169,23 @@ onSelected(args: any[], isSingleSelect?: boolean)
         this.hasSelected = !!selected;
        // console.log(selected)
      if (this.hasSelected)
+     
         {
+         this.VehiculeIsSelected=true
+         console.log(selected)  
          this.itemGarantitITNO=selected['ITNO']
          this.itemGarantitSERN=selected['SERN']
          this.itemCompteurITNO=selected['ITNO']
-this.itemCompteurSERN=selected['SERN']
-         this.VehiculeIsSelected=true
-         //this.GetMetereVehicule(selected);
-
-         
-      }
+         this.itemCompteurSERN=selected['SERN']
+          }
         else {
+         this.VehiculeIsSelected=false
          }
   }
-  ajouterVehicule(){
-     this.display=true;
+openFullSize() {
+   const dialogRef = this.modalService
+     .modal<AddVehiculeComponent>(AddVehiculeComponent,this.placeholder, { fullsize: 'responsive' })
+     .title("Ajouter Véhicule")
+     .open();
+   }
   }
-  closemodal(){
-   this.fadeout="popup-fadout"
-  setTimeout(()=>{
-   this.fadeout="";
-   this.display=false;
-  },1000)
-  }
-  ajouterOperation(){
-     this.display1=true;
-  }
-  closemodal1(){
-   this.fadeout1="popup-fadout"
-   setTimeout(()=>{
-this.fadeout1="";
-this.display1=false;
-},1000)
-}
-ajouterReclamation(){this.display2=true;}
-closemodal2(){
-   this.fadeout2="popup-fadout"
-setTimeout(()=>{
-this.fadeout2="";
-this.display2=false;
-},1000)
-}
-
-}

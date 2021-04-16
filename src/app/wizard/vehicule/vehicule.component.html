@@ -8,113 +8,15 @@
           </soho-toolbar-title>
             <!-- buttons -->
                <soho-toolbar-button-set>
-               <button soho-button="icon" icon="add" title="Ajout Véhicule" data-action="{'button':'add'}" (click)="ajouterVehicule()" >
+               <button soho-button="icon" icon="add" title="Ajout Véhicule" data-action="{'button':'add'}" (click)="openFullSize()" >
                </button>
-              <button soho-button="icon" icon="add" title="Ajout Opération" data-action="{'button':'add'}" (click)="ajouterOperation()" >
-               </button>
-               <button soho-button="icon" icon="add" title="Ajout Réclamation" data-action="{'button':'add'}" (click)="ajouterReclamation()" >
-               </button>
+              
              </soho-toolbar-button-set>
        </soho-toolbar>
-<!----------------------------------------Ajouter Véhicule---------------------------------->
-        <div class="popup" *ngIf='display'>
-         <div class="background-black"   (click)="closemodal()"></div>
-         <div class="popup-container" [class]="fadeout" >
-            <div class="top" [style.background-color]="color.color" >
-               <div class="text"> <svg class="icon icon-car"><use xlink:href="assets/icons.svg#icon-car"></use></svg>Ajout Véhicule</div>
-               <div class="left"><svg class="icon"><use xlink:href="assets/icons.svg#icon-save"></use></svg>
-                  <svg class="icon" (click)="closemodal()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
-            </div>
-     <div class="form-container">
-               <label style="width: 100%;">Model</label>
-               <div class="select" style=margin-left:1rem>
-                  <select  required [(ngModel)]="Model"> 
-                     <option value="saab" disabled selected>   </option>
-                     <option value="saab">4444</option>
-                     <option value="mercedes">Mercedes</option>
-                     <option value="audi">Audi</option>
-                  </select> 
-               </div>
-              <div class="NumVin">
-              <label>Numéro VIN</label>
-               <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
-             </div>
-             <div>
-             <label>Num Série</label> 
-               <input  [(ngModel)]="Numserie" ngModel ng-model="Numserie"  required />
-             </div>
-             <div>
-                <label>Code Client</label> 
-                   <input  [(ngModel)]="CustmerNumber" ngModel ng-model="CustmerNumber"  readonly />
-             </div>
-           <h2 style="width: 100%;margin: 1rem 0;" class="op">Plan d'opération</h2>
-           <div>
-             <label>Distribution Courbe</label>
-                <input  [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
-           </div>
-           <div>
-             <label>kilométrage</label>
-               <input  [(ngModel)]="Meter" ngModel ng-model="Meter" placeholder="KM" required />
-            </div>
-            <div>
-                <label>moyenne mensuelle KM</label>
-               <input  [(ngModel)]="Maverage" ngModel ng-model="Maverage"  required />
-             </div>
-             <div>
-                 <label>Période jj/mm/aaaa</label>
-               <input  [(ngModel)]="periode" ngModel ng-model="periode"  required />
-             </div>
-             <div>
-                 <label>No of periods</label>
-               <input [(ngModel)]="ofp" ngModel ng-model="ofp"  required />
-             </div>
-             
-            </div>
-         </div>
-      </div>
-   <!-------------------------------------Ajouter Opération--------------------------------------->
-      <div class="popup1" *ngIf='display1'>
-         <div class="background-black"   (click)="closemodal1()"></div>
-         <div class="popup-container" [class]="fadeout1" >
-            <div class="top" [style.background-color]="color.color">
-               <div class="text"> <svg class="icon icon-car"><use xlink:href="assets/icons.svg#icon-car"></use></svg>Ajout opération plan</div>
-               <div class="left"><svg class="icon"><use xlink:href="assets/icons.svg#icon-save"></use></svg>
-                  <svg class="icon" (click)="closemodal1()"><use xlink:href="assets/icons.svg#icon-cancel-circle"></use></svg></div>
-            </div>
-     <div class="form-container">
-         <div class="listnom">
-             <label>Liste Nom</label>
-              <input id="di-lang" [(ngModel)]="listnom" ngModel ng-model="listnom"  required />
-            </div>  
-              <div class="NumVin">
-              <label>Numéro VIN</label>
-               <input id="di-lang" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber"  required />
-             </div>
-           <div>
-             <label>Distribution Courbe</label>
-                <input  [(ngModel)]="Dcurve" ngModel ng-model="Dcurve"  readonly />
-           </div>
-           <div>
-             <label>kilométrage</label>
-               <input  [(ngModel)]="Meter" ngModel ng-model="Meter" placeholder="KM" required />
-            </div>
-            <div>
-                <label>moyenne mensuelle KM</label>
-               <input  [(ngModel)]="Maverage" ngModel ng-model="Maverage"  required />
-             </div>
-             <div>
-                 <label>Période jj/mm/aaaa</label>
-               <input  [(ngModel)]="periode" ngModel ng-model="periode"  required />
-             </div>
-             <div>
-                 <label>No of periods</label>
-               <input [(ngModel)]="ofp" ngModel ng-model="ofp"  required />
-             </div>
-             </div>
-            </div>
-         </div>
+
+    
           <!-------------------------------------Ajouter Réclamation------------------------------------------------------------->
-          <div class="popup2" *ngIf='display2'>
+          <!--<div class="popup2" *ngIf='display2'>
             <div class="background-black"   (click)="closemodal2()"></div>
             <div class="popup-container" [class]="fadeout2" >
                <div class="top" [style.background-color]="color.color">
@@ -190,7 +92,7 @@
                 </div>
                </div>
             </div>
-         </div>
+         </div>----------->
 
   <div #vehiculeDatagrid class="grid" id="gridVehicules" soho-datagrid [gridOptions]="datagridOptions" 
 soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0" (selected)="onSelected($event.rows)">

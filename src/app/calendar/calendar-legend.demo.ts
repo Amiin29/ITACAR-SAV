@@ -5,7 +5,6 @@ import {
 import { CalendarDemoService } from './calendar.demo.service';
 // @ts-ignore
 import { SohoCalendarComponent } from 'ids-enterprise-ng';
-
 @Component({
   selector: 'app-calendar-legend-demo',
   templateUrl: 'calendar-legend.demo.html',

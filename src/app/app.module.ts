@@ -3,16 +3,15 @@ import { NgModule } from '@angular/core';
 import {
   CommonModule
 } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
 // @ts-ignore
-import { SohoComponentsModule } from 'ids-enterprise-ng';
 
+
+import { SohoComponentsModule } from 'ids-enterprise-ng';
 import { AlertDemoComponent } from './alert/alert.demo';
 import { ApplicationMenuDemoComponent } from './application-menu/application-menu.demo';
 import { ApplicationMenuLazyDemoComponent } from './application-menu/application-menu-lazy.demo';
@@ -45,25 +44,27 @@ import { TabsModuleDemoComponent } from './tabs/tabs-module.demo';
 import { TabsVerticalDemoComponent } from './tabs/tabs-vertical.demo';
 import { TestTabsBasicComponent } from './tabs/test-tabs-basic.demo';
 import { ToastDemoComponent } from './toast/toast.demo';
-
 import { WizardDemoComponent } from './wizard/wizard.demo';
-
-
 import{SampleViewerComponent,SampleViewerDialogComponent} from './sample-viewer/sample-viewer.component'
-
 import { ApplicationMenuRoleSwitcherDemoComponent } from './application-menu/application-menu-roleswitcher.demo';
 import { ApplicationMenuTestPerfDemoComponent } from './application-menu/application-menu-test-performance.demo';
 import { WeekViewDemoComponent } from './week-view/week-view.demo';
 import {M3OdinModule} from "@infor-up/m3-odin-angular";
 import {LocaleInitializerModule} from "./locale-initializer/locale-initializer.module";
 import {CustomerSampleComponent} from './wizard/customer/customer.component'
-
 import { VehiculeComponent } from './wizard/vehicule/vehicule.component'
 import { from } from 'rxjs';;
 import { AddVehiculeComponent } from './wizard/vehicule/add-vehicule/add-vehicule.component'
-import{GarantitVehiculeComponent}from './wizard/vehicule/garantit-vehicule/garantit-vehicule.component'
+import{GarantitVehiculeComponent}from './wizard/vehicule/garantit-vehicule/garantit-vehicule.component';
+import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/compteur-vehicule.component';
+import { AttributComponent } from './wizard/vehicule/attribut/attribut.component';
+import { HistoSERVICEFactureComponent } from './wizard/vehicule/historique-service-facture/histo-service-facture.component';
+import { HistoSERVICENonFactureComponent } from './wizard/vehicule/historique-service-non-facture/histo-service-non-facture.component';
+import { InspectionComponent } from './wizard/inspection/inspection.component';
+import { ReceptionConseilComponent } from './wizard/inspection/reception-conseil/reception-conseil.component';;
+import { ObservationComponent } from './wizard/inspection/observation/observation.component'
 
-import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/compteur-vehicule.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,10 +105,17 @@ import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/c
     SampleViewerDialogComponent,
     VehiculeComponent,
     AddVehiculeComponent,
-     GarantitVehiculeComponent,
+    GarantitVehiculeComponent,
+    CompteurVehiculeComponent,
+    AttributComponent,
+    HistoSERVICEFactureComponent,
+    HistoSERVICENonFactureComponent,
+    InspectionComponent,
+    ReceptionConseilComponent,
+    ObservationComponent
+    ],
     
-     CompteurVehiculeComponent],
-  imports: [
+    imports: [
     AppRoutingModule,
     BrowserModule,
     CommonModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild,Input, EventEmitter ,Output} from '@angular/core';
-import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import {IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
+import { MIService } from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 
 @Component({
@@ -31,6 +31,7 @@ ngOnInit(): void {
 }
   ngOnChanges(changes) {
     this.initGarantitGrid(); 
+    this.GetGarantitVehicule();
    }
   initGarantitGrid(){
     const optionsGarantit: SohoDataGridOptions = {

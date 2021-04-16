@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild,Input, EventEmitter ,Output} from '@angular/core';
-import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import {IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
+import { MIService} from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 
 @Component({
@@ -11,6 +11,7 @@ import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 export class CompteurVehiculeComponent implements OnInit {
   @Input() ITNO: any;
   @Input() SERN: any;
+  hasSelected: boolean;
   private pageSize = 7;
   isDetailBusy = false;
   isBusy = false;
@@ -24,6 +25,10 @@ ngOnInit(): void {
    this.initMeterGrid(); 
    this.GetMetereVehicule();
   }
+  ngOnChanges(changes) {
+   this.initMeterGrid(); 
+   this.GetMetereVehicule();
+}
   initMeterGrid() {
     const optionsMeter: SohoDataGridOptions = {
      selectable: 'single' as SohoDataGridSelectable,
@@ -134,4 +139,5 @@ GetMetereVehicule(){
          .buttons(buttons)
          .open();
    }
+  
 }

@@ -1,11 +1,9 @@
-import {
-  Component,
-  HostBinding,
-  ViewChild,
-} from '@angular/core';
+import {Component,HostBinding,ViewChild,} from '@angular/core';
 import { CalendarDemoService } from './calendar.demo.service';
 // @ts-ignore
 import { SohoCalendarComponent, SohoToastService } from 'ids-enterprise-ng';
+import { SohoModalDialogService, SohoModalDialogRef} from 'ids-enterprise-ng';
+
 
 @Component({
   selector: 'app-calendar-demo',
@@ -27,7 +25,7 @@ export class CalendarDemoComponent {
   public events?: [];
   public iconTooltip = 'status';
   public eventTooltip = 'comments';
-
+  title:any;
   public onRenderMonthCallback = (_node: Node, response: Function) => {
     this.monthViewService.getCalendarEventTypes().subscribe((types) => {
       this.monthViewService.getCalendarEvents().subscribe((events) => {
@@ -42,7 +40,7 @@ export class CalendarDemoComponent {
     console.log('onCalendarEventSelectedCallback', args);
   }
 
-  constructor(private monthViewService: CalendarDemoService, private toastService: SohoToastService) { }
+  constructor(private monthViewService: CalendarDemoService, private toastService: SohoToastService,private modalService: SohoModalDialogService) { }
 
   onRenderMonth(event: SohoCalendarRenderMonthEvent) {
     console.log('onRenderMonth', event);
@@ -68,4 +66,5 @@ export class CalendarDemoComponent {
       console.log('onEventContextMenu', event);
     }
   }
+  
 }

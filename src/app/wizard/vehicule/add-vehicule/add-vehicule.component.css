@@ -1,0 +1,29 @@
+button.ajouterVehicule{    text-decoration: none;
+    padding: 5px 20px;
+    outline: 0;
+    border-radius: 15px;
+    background-color: #3a9ac7;
+    color: #f6f7fa;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0 10px 10px 0;
+    white-space: nowrap;
+    display: inline-block;
+   }
+   button.Close{
+    padding: 5px 20px;
+    outline: 0;
+    border-radius: 15px;
+    background-color: #393939b5;
+    color: #f6f7fa;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0 10px 10px 0;
+    white-space: nowrap;
+    display: inline-block;
+    text-decoration: none;
+   }

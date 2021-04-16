@@ -6,7 +6,7 @@
     <div soho-wizard-header>
       <a soho-wizard-tick tickId="app-customer" shortLabel="app-customer" current="true">Client</a>
       <a soho-wizard-tick tickId="app-vehicule" shortLabel="Target" [disabled]="!customerIsSelected">Véhicule</a>
-      <a soho-wizard-tick tickId="backup-rule" shortLabel="Backup" [disabled]="true">Inspection</a>
+      <a soho-wizard-tick tickId="app-inspection" shortLabel="Backup" [disabled]="!VehiculeIsSelected">Inspection</a>
       <a soho-wizard-tick tickId="validation-rule" shortLabel="Rule" [disabled]="true">Devis</a>
       <a soho-wizard-tick tickId="confirmation" shortLabel="Conf." [disabled]="true">Ordre de réparation</a>
       <a soho-wizard-tick tickId="result" shortLabel="Res." [disabled]="true">Work center Planning</a>
@@ -19,18 +19,14 @@
       <div soho-wizard-page tickId="app-vehicule" >
         <vehicule *ngIf="customerIsSelected"  [CUNO]="currentItemSelected"></vehicule>
       </div>
-      <div soho-wizard-page tickId="backup-rule">
-      <!--<app-backup-rule-page></app-backup-rule-page>--->  
+      <div soho-wizard-page tickId="app-inspection">
+      <app-inspection ></app-inspection>  
       </div>
       <div soho-wizard-page tickId="validation-rule">
-         
-        
       </div>
       <div soho-wizard-page tickId="confirmation">
-       
       </div>
       <div soho-wizard-page tickId="result">
-        
       </div>
     </div>
     <div soho-wizard-buttonbar [buttons]="buttons">

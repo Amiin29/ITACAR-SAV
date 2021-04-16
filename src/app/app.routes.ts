@@ -30,7 +30,7 @@ import { ApplicationMenuRoleSwitcherDemoComponent } from './application-menu/app
 import { ApplicationMenuTestPerfDemoComponent } from './application-menu/application-menu-test-performance.demo';
 import { WeekViewDemoComponent } from './week-view/week-view.demo';
 import { VehiculeComponent } from './wizard/vehicule/vehicule.component';
-
+import{InspectionComponent} from './wizard/inspection/inspection.component'
 import { CustomerSampleComponent } from './wizard/customer/customer.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'wizard', pathMatch: 'full' }, // default
@@ -64,7 +64,9 @@ export const routes: Routes = [
   { path: 'week-view', component: WeekViewDemoComponent },
   { path: 'wizard', component: WizardDemoComponent },
   { path: 'customer', component: CustomerSampleComponent },
-  { path: 'vehicule', component: VehiculeComponent }
+  { path: 'vehicule', component: VehiculeComponent },
+  { path: 'Inspection', component: InspectionComponent }
+
 ];
 
 /**

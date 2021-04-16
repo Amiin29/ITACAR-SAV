@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ColorService {
  theme={
-  color:''
+  color:'',
+  id:''
 }
   constructor() { }
   setcolro(color){
@@ -13,5 +14,11 @@ export class ColorService {
   }
   getcolor(){
     return this.theme
+  }
+  setid(id){
+    this.theme.id=id
+  }
+  getid(){
+    return this.theme.id
   }
 }
