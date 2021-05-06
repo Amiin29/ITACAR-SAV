@@ -1,79 +1,76 @@
 <div class="full-width full-height scrollable-flex">
-  
+
     
-        <odin-sample-viewer ></odin-sample-viewer>
-      <div>
-  
-            <soho-toolbar
-               [maxVisibleButtons]="6"
-               [resizeContainers]="true"
-               [favorButtonset]="true"
-               (selected)="onSelected($event)">
-            
-             <soho-toolbar-title>
-               <span soho-toolbar-section-title></span>
-             </soho-toolbar-title>
-            
-             <soho-toolbar-button-set>
-               <button soho-button="icon" icon="add" title="Ajout Client" data-action="{'button':'add'}" (click)="Modal_ajouter_client()"></button>
-               <button soho-button="icon" icon="edit" (click)="modifier_client()" data-action="{'button':'Edit'}" title="Modifier Client"></button>
-                </soho-toolbar-button-set>
-            </soho-toolbar>
-            <div>
-              <div  #customersDatagrid soho-datagrid [gridOptions]="datagridOptions"  (selected)="onSelected($event.rows)"
-              soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0"></div>
-            </div>
-            
-            <div soho-tabs>
-               <div soho-tab-list-container>
-                  <ul soho-tab-list>
-                     <li soho-tab>
-                        <a soho-tab-title tabId="tab-1">Information basique</a>
-                     </li>
-                     <li soho-tab>
-                        <a soho-tab-title tabId="tab-2">Details client</a>
-                     </li>
-                     <li soho-tab>
-                        <a soho-tab-title tabId="tab-3">Information financière</a>
-                     </li>
-                     <li soho-tab>
-                        <a soho-tab-title tabId="tab-4">Rendez-vous</a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-            <div soho-tab-panel-container>                                   
-               <div soho-tab-panel tabId="tab-1">
-                     <app-information-basique-csutomer  *ngIf="hasSelected"  [CUNO]="itemCUNO"></app-information-basique-csutomer>
-               </div>
-              </div>
+   <odin-sample-viewer ></odin-sample-viewer>
+ <div>
 
-              <div soho-tab-panel-container>
-                <div soho-tab-panel tabId="tab-2">
-               <app-details-customer *ngIf="hasSelected"   [CUNO]="itemCUNO" ></app-details-customer>
-               </div>
-              </div>
-              <div soho-tab-panel-container>
+       <soho-toolbar
+          [maxVisibleButtons]="6"
+          [resizeContainers]="true"
+          [favorButtonset]="true"
+          (selected)="onSelected($event)">
+       
+        <soho-toolbar-title>
+          <span soho-toolbar-section-title></span>
+        </soho-toolbar-title>
+       
+        <soho-toolbar-button-set>
+          <button soho-button="icon" icon="add" title="Ajout Client" data-action="{'button':'add'}"(click)="Modal_ajouter_client()" ></button>
+           </soho-toolbar-button-set>
+       </soho-toolbar>
+       <div>
+         <div  #customersDatagrid soho-datagrid [gridOptions]="datagridOptions"  (selected)="onSelected($event.rows)"
+         soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0"></div>
+       </div>
+       
+       <div soho-tabs>
+          <div soho-tab-list-container>
+             <ul soho-tab-list>
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-1">Information basique</a>
+                </li>
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-2">Details client</a>
+                </li>
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-3">Information financière</a>
+                </li>
+               
+             </ul>
+          </div>
+       </div>
+       <div soho-tab-panel-container>                                   
+          <div soho-tab-panel tabId="tab-1">
+                <app-information-basique-csutomer  *ngIf="hasSelected"  [CUNO]="itemCUNO"></app-information-basique-csutomer>
+          </div>
+         </div>
 
-               <div soho-tab-panel tabId="tab-3">
-                  <app-information-financere *ngIf="hasSelected"  [CUNO]="itemCUNO"  ></app-information-financere>
-                            </div>
-                           
-                        </div>
+         <div soho-tab-panel-container>
+           <div soho-tab-panel tabId="tab-2">
+          <app-details-customer *ngIf="hasSelected"   [CUNO]="itemCUNO" ></app-details-customer>
+          </div>
+         </div>
+         <div soho-tab-panel-container>
+
+          <div soho-tab-panel tabId="tab-3">
+             <app-information-financere *ngIf="hasSelected"  [CUNO]="itemCUNO"  ></app-information-financere>
+                       </div>
+                      
+                   </div>
+             
+                
+                <div soho-tab-panel tabId="tab-service">
                   
-                     
-                     <div soho-tab-panel tabId="tab-service">
-                       
-                     </div>
-                  <div soho-tab-panel-container>
-                        <div soho-tab-panel tabId="tab-Recherche">
-                            <div class="full-width full-height scrollable-flex">            
-                            </div>
-                         </div>
-                        <div soho-tab-panel tabId="tab-Vehicule"></div>
-                        <div soho-tab-panel tabId="tab-Service"></div>
-                        <div soho-tab-panel tabId="tab-maintenance"></div>
-                  </div>
+                </div>
+             <div soho-tab-panel-container>
+                   <div soho-tab-panel tabId="tab-Recherche">
+                       <div class="full-width full-height scrollable-flex">            
+                       </div>
+                    </div>
+                   <div soho-tab-panel tabId="tab-Vehicule"></div>
+                   <div soho-tab-panel tabId="tab-Service"></div>
+                   <div soho-tab-panel tabId="tab-maintenance"></div>
+             </div>
 
 
 
@@ -81,15 +78,15 @@
 
 
 
-     </div>
-    
+</div>
 
- </div>
+
+</div>
 
 <div class="popup" *ngIf='display'>
-   <div class="background-black"   (click)="closemodal()"></div>
-     <div class="popup-container" [class]="fadeout" >
-         
-          <app-add-customer></app-add-customer>
-   </div>
+<div class="background-black"   (click)="closemodal()"></div>
+<div class="popup-container" [class]="fadeout" >
+    
+     <app-add-customer></app-add-customer>
+</div>
 </div>

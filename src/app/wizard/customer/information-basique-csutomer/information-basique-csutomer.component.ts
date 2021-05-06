@@ -27,15 +27,12 @@ constructor(private miService: MIService) { }
 ngOnInit(): void {
     this.GetBasicInfoByCustomer()
   }
-
   private setBusy(isBusy: boolean, isDetail?: boolean) 
-  {
-     isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
-  }
-
+      {
+         isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
+      }
   private GetBasicInfoByCustomer()
   {
-     
      this.setBusy(true, true);
      const requestInfoByCustomer: IMIRequest = 
         {
@@ -51,7 +48,6 @@ ngOnInit(): void {
         this.setBusy(false, true);
            if (!responseInfoByCustomer.hasError()) 
            {
-             
               this.DCUNO = responseInfoByCustomer.item['CUNO'];
               this.DCUNM = responseInfoByCustomer.item['CUNM'];
               this.DTOWN = responseInfoByCustomer.item['TOWN'];
@@ -60,12 +56,11 @@ ngOnInit(): void {
               this.DTFNO = responseInfoByCustomer.item['TFNO'];
               this.DCUA1 = responseInfoByCustomer.item['CUA1'];
               this.DPONO = responseInfoByCustomer.item['PONO'];
-             
-                console.log('-------'+this.DCUNO)
-              } 
+                          
+            } 
               else 
-              {
-                              }
+              {                           
+               }
      }, (error) => 
      {
         this.setBusy(false, true);

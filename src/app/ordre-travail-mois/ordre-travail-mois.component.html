@@ -1,0 +1,18 @@
+<div class="row top-padding" >
+    <div class="two-thirds column">
+      <div class="widget" style="    top: -15px;margin-left: -100px;
+      width: 102%;">
+        <div class="widget-header">
+          <h2 class="widget-title">Ordre de Travail par Mois</h2>
+        </div>
+        <div class="widget-content" *ngIf="test && tab.length > 0 ">
+          <div  soho-line 
+            [dataset]="areaData"
+            [isArea]="false"
+              >
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>

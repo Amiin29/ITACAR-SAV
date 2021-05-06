@@ -72,7 +72,14 @@ import { DetailsCustomerComponent } from './wizard/customer/details-customer/det
 import { InformationFinancereComponent } from './wizard/customer/information-financere/information-financere.component'
 ;
 import { AddCustomerComponent } from './wizard/customer/add-customer/add-customer.component'
-
+;
+import { StatistiqueComponent } from './statistique/statistique.component'
+;
+import { OrdreTravailMoisComponent } from './ordre-travail-mois/ordre-travail-mois.component'
+;
+import { StatByModelComponent } from './stat-by-model/stat-by-model.component'
+;
+import { StatByStatusComponent } from './stat-by-status/stat-by-status.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,9 +125,13 @@ import { AddCustomerComponent } from './wizard/customer/add-customer/add-custome
      DetailsCustomerComponent,
      InformationFinancereComponent,
 
-     CompteurVehiculeComponent,
+    CompteurVehiculeComponent,
 
-     AddCustomerComponent,
+    AddCustomerComponent,       
+    OrdreTravailMoisComponent,
+    StatistiqueComponent,
+    StatByModelComponent,
+    StatByStatusComponent,
   ],
     
      

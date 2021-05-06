@@ -3,6 +3,7 @@ import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 import { ColorService } from 'src/app/color.service';
+import { SohoToastService } from 'ids-enterprise-ng';
 
 import {
    SohoModalDialogService, SohoModalDialogRef
@@ -25,9 +26,9 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
    gridOptions: any = null;
    datagridOptions: SohoDataGridOptions;
    private maxRecords = 50000;
-   private pageSize = 7;
+   private pageSize = 10;
    display=false;
-   title:'scsqcqq'
+   //title:'scsqcqq'
    itemCUNO:any
    customerIsSelected =false;
    color
@@ -38,7 +39,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit {
 ngOnInit() {
       this.listItems();
    }
-constructor(private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
+constructor(private toastService: SohoToastService,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
       super('CustomerSampleComponent');
       this.initGrid();
    }
@@ -130,7 +131,6 @@ listItems()
                if (!response.hasError()) 
                {
                   this.items = response.items;
-                  //console.log( this.items);
                   this.updateGridData();
                } 
                else
@@ -159,13 +159,10 @@ onSelected(args: any[], isSingleSelect?: boolean)
          const selected = args && newCount === 1 ? args[0].data : null;
          this.hasSelected = !!selected;
         
-        // console.log(selected)
       if (this.hasSelected)
          {
          this.customerIsSelected=true
-         
          this.itemCUNO=selected['OKCUNO']
-         console.log( ' this.itemInfoBasqiueCUNO'+this.itemCUNO)
          this.addNewItem(selected);
          }
          else {
@@ -193,24 +190,42 @@ private refreshGridItem(detailItem: any)
    {
       isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
    }
-
-   Modal_ajouter_client(){
-   const dialogRef = this.modalService
-   .modal<AddCustomerComponent>(AddCustomerComponent, this.placeholder, { fullsize: 'responsive' })
-   
-   .open();
-   
-  }
-modifier_client(){
-
-  }
+   Modal_ajouter_client() {
+      const dialogRef = this.modalService
+      .modal<AddCustomerComponent>(AddCustomerComponent, this.placeholder, { fullsize: 'responsive' })
+      .title('Ajouter Client')
+        .buttons(
+          [
+            
+            {
+              text: 'Cancel', click: () => {
+                dialogRef.close('CANCEL');
+              },isDefault: false
+            },
+            {
+            },
+            {
+              text: 'Submit', click: () => {
+               this.mycolor.sendEventAddCustomer()
+               this.showToast()
+                dialogRef.close('SUBMIT');
+              }, isDefault: true
+            }
+          ])
+        
+        .open();
+    }
+    showToast(position: SohoToastPosition = SohoToastService.TOP_RIGHT) {
+      this.toastService.show({ draggable: true, title: '', message: 'Client Ajouter avec succès', position });
+    }
 
  onBeforeActivated(e: SohoWizardEvent) {
-   console.log(`onBeforeActivated: The tick with the label ${e.tick.text()}`);
+   //console.log(`onBeforeActivated: The tick with the label ${e.tick.text()}`);
  }
  onAfterActivated(e: SohoWizardEvent) {
-   console.log(`onAfterActivated: The tick with the label ${e.tick.text()}`);
-   console.log(e);
+  // console.log(`onAfterActivated: The tick with the label ${e.tick.text()}`);
+
+   //console.log(e);
  }
  addNewItem(value: MIRecord) {
    this.newItemEvent.emit(value);

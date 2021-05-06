@@ -31,12 +31,12 @@ import { ApplicationMenuTestPerfDemoComponent } from './application-menu/applica
 import { WeekViewDemoComponent } from './week-view/week-view.demo';
 import { VehiculeComponent } from './wizard/vehicule/vehicule.component';
 import { FullSizeModalDialogComponent } from './calendar/example-fullsize-modal.component';
-
+import {StatistiqueComponent} from './statistique/statistique.component'
 import { CustomerSampleComponent } from './wizard/customer/customer.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'wizard', pathMatch: 'full' }, // default
   { path: 'alert', component: AlertDemoComponent },
-  
+  {path:'StatistiqueComponent',component:StatistiqueComponent},
   { path: 'application-lazy-menu', component: ApplicationMenuLazyDemoComponent },
   { path: 'application-menu-roleswitcher', component: ApplicationMenuRoleSwitcherDemoComponent },
   { path: 'application-menu-test-performance', component: ApplicationMenuTestPerfDemoComponent },

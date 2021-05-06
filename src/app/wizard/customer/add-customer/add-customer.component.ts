@@ -3,15 +3,28 @@ import {IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService} from '@infor-up/m3-odin-angular';
 import { SohoModalDialogService} from 'ids-enterprise-ng';
 import { from } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { FormControl,FormGroup, Validators } from '@angular/forms';
+
 import { ColorService } from 'src/app/color.service';
-//import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-//import {MatDialogRef} from '@material/dialog'
+
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent implements OnInit {
+
+   
+   verifform : FormGroup = new FormGroup({
+      'codePostale' : new FormControl ([Validators.required , Validators.minLength(5)]),
+      //'password' : new FormControl(Validators.required),
+     // 'confirm_password' : new FormControl(Validators.required),
+  
+    
+    });
+   clickEventsubscription:Subscription;
+
   isDetailBusy = false;
   isBusy = false;
   detailItem: any;
@@ -38,76 +51,74 @@ export class AddCustomerComponent implements OnInit {
    Area: any[] = [];
    fadeout : string
 
-  constructor(private modalService: SohoModalDialogService,private mycolor:ColorService,private miService: MIService) { }
-
+  constructor(private modalService: SohoModalDialogService,private mycolor:ColorService,private miService: MIService) {
+     this.clickEventsubscription=this.mycolor.getAddCustomer().subscribe(()=>{
+        this.AddCustomer()
+     })
+   }
   ngOnInit(): void {
     this.Getcustomertemplate();
     this.GetcustomerVille()
     this.color=this.mycolor.getcolor()
-
   }
   private setBusy(isBusy: boolean, isDetail?: boolean) 
   {
      isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
   }
   AddCustomer(){
-    console.log('1***ValueOfTemplateSelected*****'+this.ValueOfTemplateSelected)
-    console.log('2 ***ValueOfTownSelected*****'+this.ValueOfTownSelected)
-    console.log('3****ValueOfAreaSelected***'+this.ValueOfAreaSelected)
-    console.log('3****codePostale***'+this.codePostale)
-          const inputRecord = new MIRecord();
-          const request: IMIRequest = 
-          {
-             program: 'CRS610MI',
-             transaction: 'Add',
-             record : inputRecord,
-          };
-          inputRecord.setString("CUTM", this.ValueOfTemplateSelected);
-          inputRecord.setString("CUNM", this.Custmername);
-          inputRecord.setString("CUA1", this.Adresse1);
-          inputRecord.setString("CUA2", this.Adresse2);
-          inputRecord.setString("CSCD", this.ValueOfTownSelected);
-          inputRecord.setString("PONO", this.codePostale);
-          inputRecord.setString("ECAR", this.ValueOfAreaSelected);
-          inputRecord.setString("PHNO", this.MobileNumber);
-          inputRecord.setString("TFNO", this.FaxNumber);
-          inputRecord.setString("MAIL", this.Email);
-          request.record = inputRecord;
-          this.setBusy(true, true);
-          request.record = inputRecord;
-          this.miService.execute(request).subscribe((response: IMIResponse) => 
-          {
-             this.setBusy(false, true);
-             if (!response.hasError()) 
-             {
-                this.detailItem = response.item;
-                //this.openMessage()
-             } 
-             else 
-                {
-                   this.detailItem = undefined;
-                   
-                }
-          }, (error) => 
-          {
-             this.setBusy(false, true);
-             this.detailItem = undefined;
-             
-          });
- }
+   console.log('1***ValueOfTemplateSelected*****'+this.ValueOfTemplateSelected)
+   console.log('2 ***ValueOfTownSelected*****'+this.ValueOfTownSelected)
+   console.log('3****ValueOfAreaSelected***'+this.ValueOfAreaSelected)
+   console.log('3****codePostale***'+this.codePostale)
+         const inputRecord = new MIRecord();
+         const request: IMIRequest = 
+         {
+            program: 'CRS610MI',
+            transaction: 'Add',
+            record : inputRecord,
+         };
+         inputRecord.setString("CUTM", this.ValueOfTemplateSelected);
+         inputRecord.setString("CUNM", this.Custmername);
+         inputRecord.setString("CUA1", this.Adresse1);
+         inputRecord.setString("CUA2", this.Adresse2);
+         inputRecord.setString("CSCD", this.ValueOfTownSelected);
+         inputRecord.setString("PONO", this.codePostale);
+         inputRecord.setString("ECAR", this.ValueOfAreaSelected);
+         inputRecord.setString("PHNO", this.MobileNumber);
+         inputRecord.setString("TFNO", this.FaxNumber);
+         inputRecord.setString("MAIL", this.Email);
+         request.record = inputRecord;
+         this.setBusy(true, true);
+         request.record = inputRecord;
+         this.miService.execute(request).subscribe((response: IMIResponse) => 
+         {
+            this.setBusy(false, true);
+            if (!response.hasError()) 
+            {
+               this.detailItem = response.item;
+               console.log('***********CUNO**************'+this.detailItem['CUNO'])
 
+            } 
+            else 
+               {
+                  this.detailItem = undefined;
+               }
+         }, (error) => 
+         {
+            this.setBusy(false, true);
+            this.detailItem = undefined;
+         });
+}
 //-------------------------------------------------------------------------------------
 onChangeCountry(event): void { 
   const newVal = event.target.value;
-  console.log("//////////////////Country/////////////////",newVal)
   this.getCountry(newVal)
 }
 onChangeState(event): void { 
   const newVal = event.target.value;
   this.ValueOfAreaSelected = newVal;
-  console.log("////////////////State///////////////////",newVal)
 }
-//-------------------------------chargement de country-------------------------------------------------------
+//-------------------------------chargement de Ville-------------------------------------------------------
   getCountry(ville :string){
      const inputRecord = new MIRecord();
      inputRecord.setString('CSCD', ville);
@@ -150,15 +161,13 @@ private Getcustomertemplate (){
         const name = this.items[1]["CUNM"];
              }
      else {
-        //this.handleError2(response,'***');
      }
   }, (response) => {
      this.setBusy(false);
-     //this.handleError2(response, 'customer');
   });  
   
 }
-//-------------------------------chargement de Ville--------------------------------------------------------------------
+//-------------------------------chargement de Pays--------------------------------------------------------------------
 GetcustomerVille(){
   const inputRecord = new MIRecord();
   inputRecord.setString("CONO", "860");
@@ -177,19 +186,9 @@ GetcustomerVille(){
         const name = this.villee["CSCD"];
      }
      else {
-        //this.handleError2(response,'***');
      }
   }, (response) => {
      this.setBusy(false);
-     //this.handleError2(response, 'customer');
   }); 
-}
-closemodal(){
-   //this.dialogRef.close();
-
-}
-openMessage() {
-   
- }
-
+} 
 }
