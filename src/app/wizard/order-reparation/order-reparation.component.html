@@ -1,0 +1,55 @@
+
+
+<div style="top: 50px;">
+    <div class="field" style="margin-left: 38px;top: 27px;">Code client 
+      <label for="di-cscd"> <input id="Cclient"   [value]="CUNO" readonly/></label>
+    </div>
+    <div class="field" style="margin-left: 38px;top: 33px;">Code produit
+      <label for="di-cscd"> <input id="Cproduit"  [value]="ITNO" readonly/></label>
+    </div>
+
+    <div class="field" style="top: 107px;margin-left: 38px;">Modèle
+      <label for="di-cscd"> <input id="modele"   readonly/></label>
+    </div>
+
+    <div class="field" style="top: -32px;margin-left: 38px;">Chassis
+      <label for="di-cscd"> <input id="chassis"   [value]="SERN" readonly/></label>
+    </div>
+    
+      <div class="field" style="    margin-left: 40rem;top: -16.9rem;">Type Commande
+        <label for="di-cscd">   
+            <select [(ngModel)]="defaultTypeCommande" *ngIf='IfOrderType' soho-dropdown id="context-type" name="type" aria-required="true" data-validate="required" (change)="OnChangeOderType($event.target.value)" >
+              <option *ngFor="let OType of OrderTypes" value="{{OType['OTAOTY']}}" >{{OType["OTTX15"]}}</option>
+            </select>
+          </label>
+      </div>
+     
+    <soho-toolbar-button-set style="margin-left: 884px;top: -13px;">
+      <button soho-button="icon" icon="add" title="Ajout New Line"(click)="AddNewMCOLine()" data-action="{'button':'add'}" ></button>  
+      <button soho-button="btn" icon="print" *ngIf="created"  data-action="{'button':'print'}" (click)="PrintMCO()">
+        <span>Imprimer</span>
+      </button>
+    </soho-toolbar-button-set>
+
+    <div #MCODatagrid class="grid" id="gridMCO" soho-datagrid [gridOptions]="datagridOptions" 
+      soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0">
+    </div>
+
+    <div class="field" style="margin-left: 40rem;top: -552.8px;">Service
+      <label for="di-cscd">   
+        <select [(ngModel)]="defaultService" *ngIf='IfService' soho-dropdown id="context-type" name="type" aria-required="true" data-validate="required" (change)="OnChangeService($event.target.value)" >
+          <option *ngFor="let service of Services" value="{{service['SUFI']}}">{{service["SUFI"]}}</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="field" style="margin-left: 39.9rem;top: -767px;">Contrat
+      <label for="di-cscd"> 
+        <select [(ngModel)]="defaultContrat" *ngIf='IfContrat'  soho-dropdown id="context-type" name="type" aria-required="true" data-validate="required" (change)="OnChangeContrat($event.target.value)" >
+          <option *ngFor="let contrat of Contrats"  value="{{contrat['AAGN']}}" >{{contrat["AAGN"]}}</option>
+        </select>
+      </label>
+    </div>
+    <button id="next" type="button"  class="btn-secondary hide-focus" style="margin-left: 39.9rem;top: -606px;" (click)="CreateMCO()"><span>Create MCO</span></button>
+      <svg soho-icon icon="success" alert="true" style="    margin-left: 24px;top: -596px;"></svg>  
+</div>

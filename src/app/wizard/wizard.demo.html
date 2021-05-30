@@ -1,38 +1,34 @@
 <div class="full-width full-height scrollable-flex">
   <div soho-wizard
-       (afteractivated)="onAfterActivated($event)"
-       (beforeactivate)="onBeforeActivated($event)"
-       (activated)="onActivated($event)">
-    <div soho-wizard-header>
-      <a soho-wizard-tick tickId="app-customer" shortLabel="app-customer" current="true">Client</a>
-      <a soho-wizard-tick tickId="app-vehicule" shortLabel="Target" [disabled]="!customerIsSelected">Véhicule</a>
-      <a soho-wizard-tick tickId="backup-rule" shortLabel="Backup" [disabled]="true">Inspection</a>
-      <a soho-wizard-tick tickId="validation-rule" shortLabel="Rule" [disabled]="true">Devis</a>
-      <a soho-wizard-tick tickId="confirmation" shortLabel="Conf." [disabled]="true">Ordre de réparation</a>
-      <a soho-wizard-tick tickId="result" shortLabel="Res." [disabled]="true">Work center Planning</a>
-    </div>
+        (afteractivated)="onAfterActivated($event)"
+        (beforeactivate)="onBeforeActivated($event)"
+        (activated)="onActivated($event)">
+      <div soho-wizard-header>
+        <a soho-wizard-tick tickId="app-customer" shortLabel="app-customer" current="true">Client</a>
+        <a soho-wizard-tick tickId="app-vehicule" shortLabel="Target" [disabled]="!customerIsSelected">Véhicule</a>
+        <a soho-wizard-tick tickId="backup-rule" shortLabel="Backup" [disabled]="!VehiculeIsSelected">Inspections</a>
+        <a soho-wizard-tick tickId="validation-rule" shortLabel="Rule" [disabled]="!InspectionIsSelected">Details Inspection</a>
+        <a soho-wizard-tick tickId="confirmation" shortLabel="Conf." [disabled]="true" [disabled]="!InspectionIsSelected">Ordre de réparation - Devis</a>
+        
+      </div>
     <div soho-wizard-pages>
-      <div soho-wizard-page tickId="app-customer" style="overflow:  hidden;">
-        <customer  (newItemEvent)="customerSelectedEvent($event)"></customer>
-      </div>
-      <div soho-wizard-page tickId="app-vehicule" >
-        <vehicule *ngIf="customerIsSelected"  [CUNO]="currentItemSelected"></vehicule>
-      </div>
-      <div soho-wizard-page tickId="backup-rule">
-      <!--<app-backup-rule-page></app-backup-rule-page>--->  
-      </div>
-      <div soho-wizard-page tickId="validation-rule">
-         
-        
-      </div>
-      <div soho-wizard-page tickId="confirmation">
-       
-      </div>
-      <div soho-wizard-page tickId="result">
-        
-      </div>
+        <div soho-wizard-page tickId="app-customer" style="overflow:  hidden;">
+          <customer (newItemEvent)="customerSelectedEvent($event)" ></customer>
+        </div>
+        <div soho-wizard-page tickId="app-vehicule" >
+          <vehicule *ngIf="customerIsSelected" [CUNO]="currentItemSelected" (newVehculeEvent)="ReciveSelectedVehicule($event)" ></vehicule>
+        </div>
+        <div soho-wizard-page tickId="backup-rule">
+          <app-inspection *ngIf="VehiculeIsSelected"  [currentVISelected]="currentVehculeSelected" (newInspectionEvent)="ReciveIspectionSelected($event)" ></app-inspection>
+        </div>
+        <div soho-wizard-page tickId="validation-rule">
+          <app-details-inspection *ngIf="InspectionIsSelected" [inspec]="inspec" ></app-details-inspection>
+        </div>
+        <div soho-wizard-page tickId="confirmation">
+          <app-order-reparation *ngIf="InspectionIsSelected" [CUNO]="currentItemSelected" [RFIA]="currentVehculeSelected"></app-order-reparation>
+        </div>
+        <div soho-wizard-page tickId="result"></div>
     </div>
-    <div soho-wizard-buttonbar [buttons]="buttons">
-    </div>
+    <div soho-wizard-buttonbar [buttons]="buttons"></div>
   </div>
 </div>

@@ -1,10 +1,6 @@
-import {
-  Component,
-  ViewChild,Output, EventEmitter 
-} from '@angular/core';
+import {Component,ViewChild,Output, EventEmitter } from '@angular/core';
 import { MIRecord } from '@infor-up/m3-odin';
-import { SohoWizardComponent } from 'ids-enterprise-ng';
-
+import { SohoWizardComponent,SohoToastService } from 'ids-enterprise-ng';
 @Component({
   selector: 'demo-wizard-demo',
   templateUrl: 'wizard.demo.html',
@@ -13,10 +9,13 @@ export class WizardDemoComponent {
   @ViewChild(SohoWizardComponent, { static: true }) wizard!: SohoWizardComponent;
   @Output() newItemEventSend = new EventEmitter<MIRecord>();
   customerIsSelected = false ;
-  currentItemSelected ;
+  currentCustomerSelected=null ;
   selectboolean = false ;
-
-
+  InspectionIsSelected=false;
+  currentVehculeSelected;
+  VehiculeIsSelected=false
+  currentItemSelected =null;
+  inspec=null;
   public buttons = [
     {
       id: 'prevous',
@@ -41,65 +40,72 @@ export class WizardDemoComponent {
       position: 'middle'
     }
   ];
+ constructor(private toastService:SohoToastService) {}
 
-  // public ticks: SohoWizardTick[] = [
-  //   { label: 'Select Files', href: 'select-files', state: 'current'},
-  //   { label: 'Target Folder', href: 'target-folder'},
-  //   { label: 'Backup Rules', href: 'backup-rule'},
-  //   { label: 'Validation', href: 'validation-rule'},
-  //   { label: 'Confirmation', href: 'confirmation'},
-  //   { label: 'Result', href: 'result'}
-  // ];
-
-  constructor() {
-  }
-
-  customerSelectedEvent(event: boolean){
-    console.log(event)
-    if(event){
-      this.customerIsSelected = true;
-      console.log('wizar - outputSElected '+event['OKCUNO'])
-      
-      this.currentItemSelected =event['OKCUNO'] ;
-    }
-    else{
-
-      this.customerIsSelected = false;
-    }
-    console.log('this.customerIsSelected:'+this.customerIsSelected)
-const newbutton=[...this.buttons]
-newbutton[2].disabled()
-this.buttons=newbutton
-  }
+ 
   
  
-  nextButtonDisabled() {
-    // return this.wizard.currentTickId !== 'confirmation';
-    if(this.wizard.currentTickId=="app-customer"){
-      console.log(this.customerIsSelected)
+  nextButtonDisabled() 
+  {
+    if(this.wizard.currentTickId=="app-customer")
+    {
       if(this.customerIsSelected){
-                    return false
+        return false
       }
-      else{return true}
-
+      else
+      {
+        return true
+      }
     }
   }
+ 
+  onBeforeActivated(e: SohoWizardEvent) {}
+  onActivated(e: SohoWizardEvent) {}
+  onAfterActivated(e: SohoWizardEvent) {}
+ 
 
-  onBeforeActivated(e: SohoWizardEvent) {
-    console.log(`onBeforeActivated: The tick with the label ${e.tick.text()}`);
-    console.log(e);
+ ifInspectionSelected(data){
+   
+  this.InspectionIsSelected=data;
+}
+ReciveIspectionSelected (event){
+  if (event.length > 0){
+     this.inspec =event;
+  }else {
+    this.InspectionIsSelected=false;
+    
+    this.toastService.show({ draggable: true, title: '', message: 'Inspection invalide' });
   }
+ 
 
-  onActivated(e: SohoWizardEvent) {
-    console.log(`onActivated: The tick with the label ${e.tick.text()}`);
-    console.log(e);
-  }
+  
+}
+ReciveSelectedVehicule (event){
+  this.currentVehculeSelected =event;
+if (event){
+  this.VehiculeIsSelected=true;
+}
+}
+customerSelectedEvent(event)
+{
+  if(event)
+    {
+      this.customerIsSelected = true;      
+      this.currentItemSelected =event ;
 
-  onAfterActivated(e: SohoWizardEvent) {
-    console.log(`onAfterActivated: The tick with the label ${e.tick.text()}`);
-    console.log(e);
-  }
-  addNewItemToSend(value: MIRecord) {
-    this.newItemEventSend.emit(value);
-  }
+     
+    }
+  else
+    {
+      this.customerIsSelected = false;
+    }
+
+  const newbutton=[...this.buttons]
+  newbutton[2].disabled()
+  this.buttons=newbutton
+}
+addItem(newItem: string) {
+  this.currentItemSelected.push(newItem);
+}
+
 }

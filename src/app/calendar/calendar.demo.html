@@ -2,22 +2,15 @@
     [month]="initialMonth"
     [year]="initialYear"
     [renderMonthCallback]="onRenderMonthCallback" 
-    
     [showViewChanger]="showViewChanger"
-      
-    
     [selectedCallback]="onCalendarDateSelectedCallback"
     (monthRendered)="onRenderMonth($event)"
     (dblclick)="OnDbClick($event)"
     (eventClick)="onEventClicked($event)"   
-     (eventContextMenu)="onCalendarEventContextMenu($event)"
-     
-     [eventTooltip]="eventTooltip"
-     [iconTooltip]="iconTooltip"
-     
->
+    (eventContextMenu)="onCalendarEventContextMenu($event)"
+    [eventTooltip]="eventTooltip"
+    [iconTooltip]="iconTooltip">
 
   <div soho-calendar-monthview></div>
-
   <div soho-calendar-week-view></div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild,Input, EventEmitter ,Output} from '@angular/core';
-import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import {IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
+import { MIService } from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 
 @Component({
@@ -13,8 +13,8 @@ export class GarantitVehiculeComponent implements OnInit {
   isDetailBusy = false;
   isBusy = false;
   garantit :any[]= [];
-  @Input() ITNO: any;
-  @Input() SERN: any;
+  @Input() LIITNO: any;
+  @Input() LISERN: any;
   STAT:any;
   CONO:any;
   WADT:any;
@@ -31,6 +31,7 @@ ngOnInit(): void {
 }
   ngOnChanges(changes) {
     this.initGarantitGrid(); 
+    this.GetGarantitVehicule();
    }
   initGarantitGrid(){
     const optionsGarantit: SohoDataGridOptions = {
@@ -104,28 +105,25 @@ GetGarantitVehicule(){
           
         };
         const inputrecord :MIRecord= new MIRecord();
-        inputrecord.setString('ITNO',this.ITNO); 
-        console.log('itnoooo garantit-'+this.ITNO)
-        inputrecord.setString('SERN',this.SERN);
-        console.log('sern garantit-'+this.SERN)
+        inputrecord.setString('ITNO',this.LIITNO); 
+        inputrecord.setString('SERN',this.LISERN);
         requestInfoByGarantit.record = inputrecord;
         this.miService.execute(requestInfoByGarantit).subscribe((response: IMIResponse) => 
         {
            if (!response.hasError()) 
            {
               this.garantit = response.items;
-              console.log( 'garantit-------------------'+this.garantit);
               this.updateGridGarantit();
            } 
            else
            {
-              this.handleError('Failed to list  Garantit');
+           
            }
            this.setBusy(false);
         }, (error) => 
         {
            this.setBusy(false);
-           this.handleError('Failed to list  Garantit', error);
+          
         });
 }
 private setBusy(isBusy: boolean, isDetail?: boolean) 
@@ -135,14 +133,5 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
 updateGridGarantit() {
     this.datagridGarantit ? this.datagridGarantit.dataset = this.garantit : this.datagridOptionsGarantit.dataset = this.garantit;
    }
-private handleError(message: string, error?: any) 
-   {
-        // this.logError(message, error ? '- Error: ' + JSON.stringify(error) : '');
-         const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-         this.messageService.error()
-         .title('An error occured')
-         .message(message + '. More details might be available in the browser console.')
-         .buttons(buttons)
-         .open();
-   }
+
 }

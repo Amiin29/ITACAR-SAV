@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild,Input, EventEmitter ,Output} from '@angular/core';
-import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import {IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
+import { MIService} from '@infor-up/m3-odin-angular';
 import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 
 @Component({
@@ -9,8 +9,9 @@ import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
   styleUrls: ['./compteur-vehicule.component.css']
 })
 export class CompteurVehiculeComponent implements OnInit {
-  @Input() ITNO: any;
-  @Input() SERN: any;
+  @Input() LIITNO: any;
+  @Input() LISERN: any;
+  hasSelected: boolean;
   private pageSize = 7;
   isDetailBusy = false;
   isBusy = false;
@@ -24,6 +25,10 @@ ngOnInit(): void {
    this.initMeterGrid(); 
    this.GetMetereVehicule();
   }
+  ngOnChanges(changes) {
+   this.initMeterGrid(); 
+   this.GetMetereVehicule();
+}
   initMeterGrid() {
     const optionsMeter: SohoDataGridOptions = {
      selectable: 'single' as SohoDataGridSelectable,
@@ -96,42 +101,30 @@ GetMetereVehicule(){
           outputFields: ['MES0','MVA0','MVAI','INDA','KNOW','MV0M','RPTP','LMDT'],
           };
        const inputrecord :MIRecord= new MIRecord();
-       inputrecord.setString('ITNO',this.ITNO); 
-       console.log('00000000'+this.ITNO)
-       inputrecord.setString('SERN',this.SERN);
-       console.log(this.SERN)
+       inputrecord.setString('ITNO',this.LIITNO); 
+       inputrecord.setString('SERN',this.LISERN);
        requestInfoByMeter.record = inputrecord;
        this.miService.execute(requestInfoByMeter).subscribe((response: IMIResponse) => 
        {
           if (!response.hasError()) 
           {
              this.compteur = response.items;
-             console.log( this.compteur);
              this.updateGridDataMeters();
           } 
           else
           {
-             this.handleError('Failed to list meters');
+            response=null
           }
           this.setBusy(false);
        }, (error) => 
        {
           this.setBusy(false);
-          this.handleError('Failed to list items', error);
        });
  } 
  private setBusy(isBusy: boolean, isDetail?: boolean) 
    {
       isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
    }
-   private handleError(message: string, error?: any) 
-   {
-         //this.logError(message, error ? '- Error: ' + JSON.stringify(error) : '');
-         const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-         this.messageService.error()
-         .title('An error occured')
-         .message(message + '. More details might be available in the browser console.')
-         .buttons(buttons)
-         .open();
-   }
+  
+  
 }

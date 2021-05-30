@@ -1,71 +1,57 @@
 <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
-    <div class="row card">         
-       <div class="num">
+    <div class="row card">  
+       <div>      
+         <div class="num">
             <div class="six columns">
-               <div class="field">Groupe de Clients
-                  <label for="di-cuno"><input id="grp" [(ngModel)]="detailItem.OKCUCL" readonly /></label>                                     
+               <div class="field" style="    margin-left: -21px;">Groupe de Clients
+                  <label for="di-cuno"><input id="grp" [(ngModel)]="OKCUCL" readonly /></label>                                     
                </div>
             </div>
-       </div>
-            <div class="cle">
-               <div class="six columns">
-                   <div class="field">onglet liste de prix
-                      <label for="di-cua2"><input id="clrech" [(ngModel)]="detailItem.OKPLTB"readonly /></label>                                      
-                   </div>
-                </div>                              
-             </div>                 
+         </div>
+         <div class="cle">
+            <div class="six columns">
+               <div class="field">onglet liste de prix
+                  <label for="di-cua2"><input id="clrech" [(ngModel)]="OKPLTB"readonly /></label>                                      
+               </div>
+            </div>                              
+         </div>                 
          <div class="">
             <div class="six columns">
                <div class="field">Groupe de facturation 
-                  <label for="di-cumn"><input id="grpfact" [(ngModel)]="detailItem.OKIVGP" readonly/></label>                                     
+                  <label for="di-cumn"><input id="grpfact" [(ngModel)]="OKIVGP" readonly/></label>                                     
                </div>
             </div>                                
          </div>                    
          <div class="">
             <div class="six columns">
-               <div class="field">Modalités de paiement 
-                  <label for="di-town"><input id="modpai" [(ngModel)]="detailItem.OKTEPY"readonly /></label>                                      
+               <div class="field" style="margin-left: 318px;top: -11px;">Modalités de paiement 
+                  <label for="di-town"><input id="modpai" [(ngModel)]="OKTEPY"readonly /></label>                                      
                </div>
-            </div>
-         
-           
+            </div>  
          </div>
          <div class="six columns">
-            <div class="field">Devise
-               <label for="di-cscd"> <input id="dev" [(ngModel)]="detailItem.OKCUCD" readonly/></label>
-               
+            <div class="field" style="top: -12px;">Devise
+               <label for="di-cscd"> <input id="dev" [(ngModel)]="OKCUCD" readonly/></label>            
             </div>
          </div>
-         <div class="six columns">
-             <div class="field">Vendeur 
-                <label for="di-cua1"><input id="vend" [(ngModel)]="detailItem.OKSMCD" readonly /></label>
-                
-             </div>
-          </div>
-         <div class="six columns">
-            <div class="field">Modèle de remise 
-               <label for="di-cua4"> <input id="rem" [(ngModel)]="detailItem.OKLHCD"readonly /></label>
-                
-            </div>
-            
+         <div class="six columnsv">
+               <div class="fieldv" style="margin-left: 298px;top: -83px;">Vendeur 
+                <label for="di-cua1"><input id="vend" [(ngModel)]="OKSMCD" readonly /></label>
+               </div>
          </div>
-         <div class="six columns">
-            <div class="field">Paiement mtd AR 
-               <label for="di-cua4"> <input id="pai" [(ngModel)]="detailItem.OKPYCD"readonly /></label>
-    
+         <div class="six columnsModR">
+            <div class="fieldModR">Modèle de remise 
+               <label for="di-cua4"> <input id="rem" [(ngModel)]="OKLHCD"readonly /></label> 
+            </div>    
+         </div>
+         <div class="six columnsPai">
+            <div class="fieldPai" style="margin-left: -17px;"> Paiement mtd AR 
+               <label for="di-cua4"> <input id="pai" [(ngModel)]="OKPYCD"readonly /></label>
             </div>
          </div>
          <div class="six columns">
-            <div class="field">Groupe de remise  
-               <label for="di-cua4"> <input id="grprem" [(ngModel)]="detailItem.OKDIGC" readonly/></label>
-                
-            </div>
-            
-         </div>
-         <div class="six columns">
-            <div class="field"><label>summary invoice</label>
-            <select class="select-1 field"  required [(ngModel)]="detailItem.OKAICD"readonly>
-               <!-- <option id="di-lang"  selected disabled  >Template</option> -->
+            <div class="field" style="    top: -149px;margin-left: -18px;"><label>summary invoice</label>
+            <select class="select-1 field"  required [(ngModel)]="OKAICD"readonly>
                <option value="saab" disabled selected>   </option>
                <option value="0">0-One Order/Dely</option>
                <option value="1">1-Same order</option>
@@ -76,7 +62,6 @@
          </div>
 
       
-
-     
+      </div>    
    </div>
 </div>

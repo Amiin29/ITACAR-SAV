@@ -1,0 +1,40 @@
+<div class="full-width column">
+
+  
+    <div class="field">
+      <label for="context-name" class="required">Nom</label>
+      <input minlength="6" id="context-nom" aria-required="true" data-validate="required"   name="context-nom" type="text" [(ngModel)]="nom"  />
+    </div>
+    <div class="field">
+      <label for="context-Type" class="required">Type</label>
+      <input id="context-Type" aria-required="true" data-validate="required" name="context-Type" type="text" [(ngModel)]="typeRDV"  />
+    </div>
+    <div class="field">
+      <label for="context-Tel" class="required">Tel</label>
+      <input id="context-Tel" aria-required="true" data-validate="required" name="context-Tel" type="number" maxlength="8" [(ngModel)]="tel"  />
+    </div>
+    <div class="row" >
+      <div class="four columns">
+        <div class="field" style="width: 111px;">
+          <label for="standard12" class="label">Date de RDV</label>
+          <input soho-datepicker name="standard12" placeholder="jj" [(ngModel)]="date" data-validate="required"/>
+        </div>
+      </div>
+   
+      <div class="four columns">
+        <div class="field" style="top: 1px;
+        margin-left: 37px;
+        width: 93px;">
+          <label for="standard24" class="label">Heure / Minute</label>
+          <input soho-timepicker name="standard24" timeFormat="HH:mm" placeholder="hh/mm" mode="standard" [(ngModel)]="heure" data-validate="required"/>
+        </div>
+      </div>
+  
+    </div>
+
+    <div class="field">
+      <label for="context-desc" class="required">Déscription</label>
+      <textarea id="context-Déscription" aria-required="true" data-validate="required" name="context-Déscription" maxlength="50"  [(ngModel)]="Description"></textarea>
+    </div>
+   
+  </div>

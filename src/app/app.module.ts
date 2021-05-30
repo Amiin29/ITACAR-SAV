@@ -7,64 +7,29 @@ import {
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
 // @ts-ignore
 import { SohoComponentsModule } from 'ids-enterprise-ng';
-
-import { AlertDemoComponent } from './alert/alert.demo';
-import { ApplicationMenuDemoComponent } from './application-menu/application-menu.demo';
-import { ApplicationMenuLazyDemoComponent } from './application-menu/application-menu-lazy.demo';
-import { ApplicationMenuLazyMenuDemoComponent } from './application-menu/application-menu-lazy-menu.demo';
-import { ApplicationMenuLazyService } from './application-menu/application-menu-lazy-service.demo';
 import { CalendarDemoComponent } from './calendar/calendar.demo';
 import { CalendarLegendDemoComponent } from './calendar/calendar-legend.demo';
 import { CalendarUpdatedDemoComponent } from './calendar/calendar-updated.demo';
-import { ErrorDemoComponent } from './error/error.demo';
-import { HeaderTabsDemoComponent } from './header/header-tabs.demo';
 import { HeaderToggleButtonsDemoComponent } from './header/header-toggle-buttons.demo';
 import { HeaderToolbarAndTabsDemoComponent } from './header/header-toolbar-and-tabs.demo';
 import { HeaderToolbarDemoComponent } from './header/header-toolbar.demo';
 import { SohoHeaderDemoComponent } from './header/header.demo';
-import { MessageDemoComponent } from './message/message.demo';
-import { ModalDialogDemoModule } from './modal-dialog/modal-dialog.demo.module';
-import { NotificationDemoComponent } from './notification/notification.demo';
 import { PersonalizeMenuComponent } from './personalize-menu/personalize-menu.component';
 import { SohoHeaderDynamicDemoComponent } from './header/header-dynamic.demo';
-import { SohoMastheadDemoComponent } from './masthead/masthead.demo';
 import { SohoRenderLoopService } from '../../projects/ids-enterprise-ng/src/lib/renderLoop';
-import { TabsBasicDemoComponent } from './tabs/tabs-basic.demo';
-import { TabsCountsDemoComponent } from './tabs/tabs-counts.demo';
-import { TabsDataDrivenDemoComponent } from './tabs/tabs-datadriven.demo';
-import { TabsDismissibleDemoComponent } from './tabs/tabs-dismissible.demo';
-import { TabsDropdownDemoComponent } from './tabs/tabs-dropdown.demo';
-import { TabsDynamicDemoComponent } from './tabs/tabs-dynamic.demo';
-import { TabsResizeDemoComponent } from './tabs/tabs-resize.demo';
-import { TabsModuleDemoComponent } from './tabs/tabs-module.demo';
-import { TabsVerticalDemoComponent } from './tabs/tabs-vertical.demo';
-import { TestTabsBasicComponent } from './tabs/test-tabs-basic.demo';
-import { ToastDemoComponent } from './toast/toast.demo';
 
 import { WizardDemoComponent } from './wizard/wizard.demo';
 
 
 import{SampleViewerComponent,SampleViewerDialogComponent} from './sample-viewer/sample-viewer.component'
-
-import { ApplicationMenuRoleSwitcherDemoComponent } from './application-menu/application-menu-roleswitcher.demo';
-import { ApplicationMenuTestPerfDemoComponent } from './application-menu/application-menu-test-performance.demo';
-import { WeekViewDemoComponent } from './week-view/week-view.demo';
 import {M3OdinModule} from "@infor-up/m3-odin-angular";
 import {LocaleInitializerModule} from "./locale-initializer/locale-initializer.module";
 import {CustomerSampleComponent} from './wizard/customer/customer.component'
 
-import { VehiculeComponent } from './wizard/vehicule/vehicule.component'
-import { from } from 'rxjs';;
-import { AddVehiculeComponent } from './wizard/vehicule/add-vehicule/add-vehicule.component'
-import{GarantitVehiculeComponent}from './wizard/vehicule/garantit-vehicule/garantit-vehicule.component'
-
-import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/compteur-vehicule.component'
-;
 import { InformationBasiqueCsutomerComponent } from './wizard/customer/information-basique-csutomer/information-basique-csutomer.component'
 ;
 import { DetailsCustomerComponent } from './wizard/customer/details-customer/details-customer.component'
@@ -75,64 +40,83 @@ import { AddCustomerComponent } from './wizard/customer/add-customer/add-custome
 ;
 import { StatistiqueComponent } from './statistique/statistique.component'
 ;
-import { OrdreTravailMoisComponent } from './ordre-travail-mois/ordre-travail-mois.component'
+import { OrdreTravailMoisComponent } from './statistique/ordre-travail-mois/ordre-travail-mois.component'
 ;
-import { StatByModelComponent } from './stat-by-model/stat-by-model.component'
+import { StatByModelComponent } from './statistique/stat-by-model/stat-by-model.component'
 ;
-import { StatByStatusComponent } from './stat-by-status/stat-by-status.component'
+import { StatByStatusComponent } from './statistique/stat-by-status/stat-by-status.component'
+;
+import { UpdateRDVComponent } from './calendar/update-rdv/update-rdv.component'
+;
+import { AddRdvComponent } from './calendar/add-rdv/add-rdv.component'
+;
+import { ConsultRdvComponent } from './calendar/consult-rdv/consult-rdv.component';;
+import { VehiculeComponent } from './wizard/vehicule/vehicule.component'
+;
+import { AddVehiculeComponent } from './wizard/vehicule/add-vehicule/add-vehicule.component'
+;
+import { GarantitVehiculeComponent } from './wizard/vehicule/garantit-vehicule/garantit-vehicule.component'
+;
+import { CompteurVehiculeComponent } from './wizard/vehicule/compteur-vehicule/compteur-vehicule.component';
+
+import { DetailsParehouseComponent} from './piece-rechange/parehouse/details-parehouse/details-parehouse.component';
+import { InspectionComponent } from './wizard/inspection/inspection.component'
+import { DetailsInspectionComponent } from './wizard/details-inspection/details-inspection.component';;
+import { ObservationComponent } from './wizard/details-inspection/observation/observation.component';
+import { QualiteComponent } from './wizard/details-inspection/qualite/qualite.component';
+import { ReceptionComponent } from './wizard/details-inspection/reception/reception.component';
+import { PieceRechangeComponent } from './piece-rechange/piece-rechange.component';
+import { RelationComponent } from './piece-rechange/relation/relation.component';
+import { ParehouseComponent } from './piece-rechange/parehouse/parehouse.component';
+import { AliasComponent } from './piece-rechange/alias/alias.component';
+import { DetailsPieceRechangesComponent } from './piece-rechange/details-piece-rechanges/details-piece-rechanges.component';
+import { OrderReparationComponent } from './wizard/order-reparation/order-reparation.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AlertDemoComponent,
-    ApplicationMenuDemoComponent,
-    ApplicationMenuLazyDemoComponent,
-    ApplicationMenuLazyMenuDemoComponent,
-    ApplicationMenuRoleSwitcherDemoComponent,
-    ApplicationMenuTestPerfDemoComponent,
     CalendarDemoComponent,
     CalendarLegendDemoComponent,
     CalendarUpdatedDemoComponent,
-    HeaderTabsDemoComponent,
     HeaderToggleButtonsDemoComponent,
     HeaderToolbarAndTabsDemoComponent,
     HeaderToolbarDemoComponent,
-    MessageDemoComponent,
-    NotificationDemoComponent,
     PersonalizeMenuComponent,
     SohoHeaderDynamicDemoComponent,
     SohoHeaderDemoComponent,
-    SohoMastheadDemoComponent,
-    TabsBasicDemoComponent,
-    TabsCountsDemoComponent,
-    TabsDataDrivenDemoComponent,
-    TabsDismissibleDemoComponent,
-    TabsDropdownDemoComponent,
-    TabsDynamicDemoComponent,
-    TabsResizeDemoComponent,
-    TabsModuleDemoComponent,
-    TabsVerticalDemoComponent,
-    TestTabsBasicComponent,
-    ToastDemoComponent,
-    WeekViewDemoComponent,
     WizardDemoComponent,
     CustomerSampleComponent,
     SampleViewerComponent,
     SampleViewerDialogComponent,
-    VehiculeComponent,
+    InformationBasiqueCsutomerComponent,
+    DetailsCustomerComponent,
+    InformationFinancereComponent,
     AddVehiculeComponent,
-     GarantitVehiculeComponent,
-     InformationBasiqueCsutomerComponent,
-     DetailsCustomerComponent,
-     InformationFinancereComponent,
-
-    CompteurVehiculeComponent,
-
     AddCustomerComponent,       
     OrdreTravailMoisComponent,
     StatistiqueComponent,
     StatByModelComponent,
     StatByStatusComponent,
-  ],
+    UpdateRDVComponent,
+    InformationBasiqueCsutomerComponent,
+    AddRdvComponent,
+    ConsultRdvComponent ,
+      VehiculeComponent,
+      GarantitVehiculeComponent,
+      CompteurVehiculeComponent,
+      InspectionComponent ,
+      DetailsInspectionComponent ,
+      QualiteComponent,
+      ReceptionComponent,
+      DetailsPieceRechangesComponent,
+      ParehouseComponent,
+      DetailsParehouseComponent,
+      RelationComponent,
+      PieceRechangeComponent,
+      AliasComponent,
+      ObservationComponent,
+      OrderReparationComponent],
+     
+      
     
      
   imports: [
@@ -141,15 +125,19 @@ import { StatByStatusComponent } from './stat-by-status/stat-by-status.component
     CommonModule,
     FormsModule,
     HttpClientModule,
-    ModalDialogDemoModule,
     ReactiveFormsModule,
     SohoComponentsModule,
     M3OdinModule,
     LocaleInitializerModule
+    
   ],
   providers: [
-    ApplicationMenuLazyService,
-    SohoRenderLoopService
+    SohoRenderLoopService,
+    InformationBasiqueCsutomerComponent,
+    GarantitVehiculeComponent,
+    AddVehiculeComponent,
+    
+    
   ],
   entryComponents: [
   ],

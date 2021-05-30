@@ -6,17 +6,11 @@
 
     <soho-toolbar-flex-section [isTitle]="true">
       <h1>
-        <span soho-toolbar-flex-page-title>SAV-ITALCAR</span>
+        <span soho-toolbar-flex-page-title>Service Apres Vente </span>
         <span soho-toolbar-flex-section-title *ngIf="sectionTitle">{{sectionTitle}}</span>
       </h1>
     </soho-toolbar-flex-section>
-
-    <!-- If the currentToolbarOptions are NOT null/undefined then display the toolbar buttons
-         using the toolbarOptions input. -->
-    <!-- todo ppatton - for some reason if I put the ngIf='false' in the soho-toolbar-button-set
-         then some div seems to be automatically created for me or something. Something in soho perhaps? -->
     <soho-toolbar-flex-section [isButtonSet]="true">
-
       <ng-template [ngIf]="currentToolbarOptions">
         <ng-template ngFor let-button [ngForOf]="currentToolbarOptions?.toolbarButtons">
           <button *ngIf="!button.menu" soho-button="{{button?.type}}" isToggle="{{button?.istoggle}}" icon="{{button?.icon}}" id="{{button?.id}}" attr.data-button="{{button?.data}}" toggleOnIcon="{{button?.toggleOnIcon}}" toggleOffIcon="{{button?.toggleOffIcon}}">{{button?.text}}</button>

@@ -1,0 +1,84 @@
+<div class="full-width full-height scrollable-flex">
+
+
+    <!--<odin-sample-viewer ></odin-sample-viewer>-->
+    <div>
+ 
+       <soho-toolbar [maxVisibleButtons]="6" [resizeContainers]="true" [favorButtonset]="true"
+          (selected)="onSelected($event)">
+ 
+          <soho-toolbar-title>
+             <span soho-toolbar-section-title></span>
+          </soho-toolbar-title>
+ 
+ 
+       </soho-toolbar>
+ 
+       <div class="display-grid">
+          <div         class="item1"
+          >
+          <div
+         #PieceRechangeDatagrid soho-datagrid [gridOptions]="datagridOptions"
+             (selected)="onSelected($event.rows)" soho-busyindicator>
+          </div>
+       </div>
+             <div class="item2">
+                <app-details-piece-rechanges  *ngIf="hasSelected" [ITNO]="itemPareHouseITNO"></app-details-piece-rechanges>
+ 
+             </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+       </div>
+       <div soho-tabs>
+          <div soho-tab-list-container>
+             <ul soho-tab-list>
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-1">Par Whs / N ° d'article</a>
+                </li>
+ 
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-2">Rapports</a>
+                </li>
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-3">références complémentaires</a>
+                </li>
+                <li soho-tab>
+                   <a soho-tab-title tabId="tab-4">structure du produit</a>
+                </li>
+ 
+ 
+ 
+             </ul>
+          </div>
+       </div>
+       <!-------------------------------------------------parHouse-------------------------------------------->
+       <div soho-tab-panel-container>
+ 
+          <div soho-tab-panel tabId="tab-1">
+             <app-parehouse *ngIf="hasSelected" [ITNO]="itemPareHouseITNO"></app-parehouse>
+          </div>
+       </div>
+       <!-------------------------------------------------relations-------------------------------------------->
+       <div soho-tab-panel-container>
+ 
+          <div soho-tab-panel tabId="tab-2">
+             <app-relation *ngIf="hasSelected" [ITNO]="itemRelation"></app-relation>
+          </div>
+       </div>
+       <!-------------------------------------------------Alias-------------------------------------------->
+       <div soho-tab-panel-container>
+ 
+          <div soho-tab-panel tabId="tab-3">
+             <app-alias *ngIf="hasSelected" [ITNO]="itemAlias"></app-alias>
+          </div>
+       </div>
+    </div>
+ </div>

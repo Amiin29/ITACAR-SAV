@@ -1,0 +1,44 @@
+<div soho-busyindicator  [blockUI]="true" [displayDelay]="0">
+    <div class="block">    
+        <div class="field" style="margin-left: 65.8rem;
+        top: 9.6rem;">
+            <label for="context-name" >Nom</label>
+            <input id="context-name" name="context-name" type="text"   value={{nom}} [(ngModel)]="nom"/>
+          </div>
+          
+             <div class="num">
+               <div class="six columns">
+                  <div class="field" style="top: -6.6rem;">Numéro Téléphone
+                     <label for="di-cuno"><input id="di-cuno"  value={{tel}} [(ngModel)]="tel"/></label>                                     
+                  </div>
+               </div>
+          </div>
+               <div class="cle">
+               <div class="six columns">
+                   <div class="field" style="top: -6.6rem;" >Date
+                      <label for="di-cua2"><input id="di-cua2"   value={{date}} [(ngModel)]="date"/></label>                                      
+                   </div>
+                </div>                              
+          </div>                 
+            <div class="">
+               <div class="six columns">
+                  <div class="field" style="top: -6.6rem;">Heure
+                     <label for="di-cumn"><input id="di-cunm"  value={{heure}} [(ngModel)]="heure"/></label>                                     
+                  </div>
+               </div>                                
+            </div>                    
+            <div class="">
+               <div class="six columns">
+                  <div class="field" style="top: -3.6rem;">Type
+                     <label for="di-town"><input id="di-town"   value={{type}} [(ngModel)]="type"/></label>                                      
+                  </div>
+               </div>     
+               <div class="six columns">
+                  <div class="field" style="top: -3.6rem;">Description
+                     <label for="di-cua3"> <input id="di-cua3"  value={{description}} [(ngModel)]="description"/></label>
+                  </div>
+               </div>
+            </div>   
+           
+      </div>
+    </div>

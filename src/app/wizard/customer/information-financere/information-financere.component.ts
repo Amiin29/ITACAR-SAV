@@ -7,47 +7,52 @@ import { MIService} from '@infor-up/m3-odin-angular';
   templateUrl: './information-financere.component.html',
   styleUrls: ['./information-financere.component.css']
 })
-export class InformationFinancereComponent implements OnInit {
-      @Input() CUNO: any;
-      BLCD : any;
-      TXAP : any;
-      CUCD : any;
-      TEPY: any;
-      isBusy: boolean
-      isDetailBusy = false;
-      detailFinancialoByCustomer:any;
-constructor(private miService: MIService) { }
+export class InformationFinancereComponent implements OnInit 
+{
+   @Input() CUNO: any;
+   BLCD : any;
+   TXAP : any;
+   CUCD : any;
+   TEPY: any;
+   isBusy: boolean
+   isDetailBusy = false;
+   detailFinancialoByCustomer:any;
 
-  ngOnInit(): void {
-this.GetFinancialInfoByCustomer()
-  }
-//---------------------------------------------- details  Financial ----------------------------------------
-GetFinancialInfoByCustomer(){
-  this.setBusy(true, true);
-     const requestfFinancial: IMIRequest = 
-     {
-        program: 'CRS610MI',
-        transaction: 'GetFinancial',
-        outputFields: ['BLCD', 'TXAP','CUCD', 'TEPY']
+   constructor(private miService: MIService) { }
 
-     };
-        const CUNO = this.CUNO;
-        const inputRecord : MIRecord = new MIRecord();
-        inputRecord.setString('CUNO',CUNO);
-        requestfFinancial.record = inputRecord;
-        
-        this.miService.execute(requestfFinancial).subscribe((responseFinancial: IMIResponse) => 
+   ngOnInit(): void 
+      {
+      this.GetFinancialInfoByCustomer()
+      }
+   ngOnChanges(changes) 
+      {
+      this.GetFinancialInfoByCustomer();
+      } 
+   GetFinancialInfoByCustomer()
+   {
+      this.setBusy(true, true);
+      const requestfFinancial: IMIRequest = 
+         {
+            program: 'CRS610MI',
+            transaction: 'GetFinancial',
+            outputFields: ['BLCD', 'TXAP','CUCD', 'TEPY']
+         };
+      const CUNO = this.CUNO;
+      const inputRecord : MIRecord = new MIRecord();
+      inputRecord.setString('CUNO',CUNO);
+      requestfFinancial.record = inputRecord;
+      this.miService.execute(requestfFinancial).subscribe((responseFinancial: IMIResponse) => 
         {
            this.setBusy(false, true);
-           if (!responseFinancial.hasError()) 
-           {
-              this.detailFinancialoByCustomer = responseFinancial.item;
-              this.BLCD = this.detailFinancialoByCustomer['BLCD'];
-              this.CUCD = this.detailFinancialoByCustomer['CUCD'];
-              this.TEPY = this.detailFinancialoByCustomer['TEPY'];
-              this.TXAP = this.detailFinancialoByCustomer['TXAP'];
-           } 
-           else 
+               if (!responseFinancial.hasError()) 
+               {
+                  this.detailFinancialoByCustomer = responseFinancial.item;
+                  this.BLCD = this.detailFinancialoByCustomer['BLCD'];
+                  this.CUCD = this.detailFinancialoByCustomer['CUCD'];
+                  this.TEPY = this.detailFinancialoByCustomer['TEPY'];
+                  this.TXAP = this.detailFinancialoByCustomer['TXAP'];
+               } 
+               else 
               {
                  this.detailFinancialoByCustomer = undefined;
               }
@@ -56,9 +61,9 @@ GetFinancialInfoByCustomer(){
            this.setBusy(false, true);
            this.detailFinancialoByCustomer = undefined;
         });
- }
-private setBusy(isBusy: boolean, isDetail?: boolean) 
-  {
-     isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
-  }
+   }
+   private setBusy(isBusy: boolean, isDetail?: boolean) 
+      {
+         isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
+      }
 }

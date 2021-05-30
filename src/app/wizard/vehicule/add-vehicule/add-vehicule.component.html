@@ -1,1 +1,54 @@
 
+
+  <div class="full-width column">
+    <div class="field">
+      <label for="context-name" >Num Client</label>
+      <input id="context-name" name="context-name" type="text" value={{CUNO}}  readonly/>
+    </div>
+  
+  
+  
+  
+  
+    
+    <div class="field">
+      <label for="context-type" class="required">Modèle</label>
+      <select soho-dropdown id="context-type" name="type" aria-required="true" data-validate="required" [(ngModel)]="ValueOfModelSelected">
+        <option [selected]="Model.MMITNO" *ngFor="let Model of Models" value="{{Model['MMITNO']}}" >{{Model["MMITNO"]}}</option>
+      </select>
+    </div>
+ 
+    <form [formGroup]="myForm" novalidate>
+  <div class="form-group">
+  <div class="field">
+      <label for="context-name" class="required">Chassis</label>
+      <input id="context-name" aria-required="true" data-validate="required" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber" name="context-name" type="text" class="form-control" formControlName="chassis" [ngClass]="{'is-invalid': chassis.errors && (chassis.touched || chassis.dirty), 'is-valid':chassis.valid}"/>
+      <div class="invalid-feedback" >
+        <strong *ngIf="chassis.errors?.minlength">La longueur du chassis doit être égale à {{chassis.errors?.minlength.requiredLength}} caractères. {{chassis.errors?.minlength.requiredLength - chassis.errors?.minlength.actualLength}} plus de caractère requis. </strong>
+        <strong *ngIf="chassis.errors?.pattern">probleme pattern </strong>
+
+      </div>
+    </div>
+  </div>
+  
+  
+  
+    
+  <div class="form-group">
+    <div class="field">
+      <label for="context-name" class="required">Matricule</label>
+      <input id="context-name" aria-required="true" data-validate="required"  [(ngModel)]="Numserie" ngModel ng-model="Numserie" name="context-name" type="text"  class="form-control" formControlName="matricule" [ngClass]="{'is-invalid': matricule.errors , 'is-valid':matricule.valid}"/>
+      <div class="invalid-feedback" >
+        <strong *ngIf="matricule.errors?.minlength">La longueur du matricule doit être égale à {{matricule.errors?.minlength.requiredLength}} caractères.{{matricule.errors?.minlength.requiredLength - matricule.errors?.minlength.actualLength}} plus de caractère requis. </strong>
+        <br>
+        <strong *ngIf="matricule.errors?.pattern">La matricule n'admet pas des caractères spécifiques que TU </strong>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+

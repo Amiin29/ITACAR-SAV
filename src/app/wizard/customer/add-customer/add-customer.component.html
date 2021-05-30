@@ -1,62 +1,62 @@
 
- <form name="verifform">
-<div class="full-width column">
-  <div class="field">
-      <label for="context-name" class="required">Template</label>
+<form name="verifform">
+  <div class="full-width column">
+    <div class="field">
+      <label for="context-name" >Template</label>
+      <input id="context-Nom" aria-required="true" data-validate="required" name="context-Nom" type="text" value='Template Client' disabled=true />
+    </div>
 
-  <select [(ngModel)]="ValueOfTemplateSelected" name="ValueOfTemplateSelected">
-      <option aria-required="true" data-validate="required" [selected]="item.CUNO" *ngFor="let item of items" value="{{item['CUNO']}}" >{{item["CUNM"]}}</option>
-      </select>
+    <div class="field">
+      <label for="context-name" class="required">Nom</label>
+      <input [(ngModel)]="Custmername" id="context-Nom" aria-required="true" data-validate="required" name="context-Nom" type="text"  />
+    </div>
 
-  </div>
-  <div class="field">
-    <label for="context-name" class="required">Nom</label>
-    <input [(ngModel)]="Custmername" id="context-Nom" aria-required="true" data-validate="required" name="context-Nom" type="text"  />
-  </div>
-
-  <div class="field">
-    <label for="context-name" class="required">Adresse1</label>
-    <input  [(ngModel)]="Adresse1"  id="context-Adresse1" aria-required="true" data-validate="required" name="context-Adresse1" type="text"/>
-  </div>
-  <div class="field">
-    <label for="context-name" class="required">Adresse2</label>
-    <input  [(ngModel)]="Adresse2" id="context-Adresse2" aria-required="true" data-validate="required" name="context-Adresse2" type="text"/>
-
-  </div>
-  
-  <div class="field">
-    <label for="context-name" class="required">Code Postale</label>
-    <input FormControl="codePostale" [(ngModel)]="codePostale"id="context-Code" aria-required="true" data-validate="required" name="context-Code" type="text" />
-
-  </div>
-  <div class="field">
+    <div class="field">
       <label for="context-name" >Pays</label>
-  <select [(ngModel)]="ValueOfTownSelected" (change)=" onChangeCountry($event)" name="ValueOfTownSelected">
-      <option aria-required="true" data-validate="required" [selected]="vil.CSCD" *ngFor="let vil of villee" value="{{vil['CSCD']}}" >{{vil["TX40"]}}</option>
+      <select *ngIf="countrys" [(ngModel)]="ValueOfCountrySelected"  (change)=" onChangeCountry($event.target.value)" name="ValueOfCountrySelected">
+        <option aria-required="true" data-validate="required" [selected]="vil.CSCD" *ngFor="let vil of countrys" value="{{vil['CSCD']}}" >{{vil["TX40"]}}</option>
       </select>
+
+      
+    </div>
+    <div class="field">
+   
+    </div>
+    <div class="field">    
+      <select [(ngModel)]="ValueOfAreaSelected" name="ValueOfAreaSelected"  *ngIf="ValueOfCountrySelected" (change)=" onChangeState($event.target.value)" >
+        <label for="context-name">Ville</label>
+        <option  aria-required="true" data-validate="required" *ngFor="let Ar of Area" value="{{Ar['ECAR']}}" >{{Ar["TX15"]}}</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="context-name" class="required">Adresse1</label>
+      <input  [(ngModel)]="Adresse1"  id="context-Adresse1" aria-required="true" data-validate="required" name="context-Adresse1" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="context-name" class="required">Adresse2</label>
+      <input  [(ngModel)]="Adresse2" id="context-Adresse2" aria-required="true" data-validate="required" name="context-Adresse2" type="text"/>
+    </div>
+
+    <div class="field">
+      <label for="context-name" class="required">Code Postale</label>
+      <input FormControl="codePostale" [(ngModel)]="codePostale"id="context-Code" aria-required="true" data-validate="required" name="context-Code" type="text" />
+    </div>
+
+    <div class="field">
+      <label for="context-name" >Téléphone</label>
+      <input  aria-required="true" data-validate="required" [(ngModel)]="MobileNumber"id="context-Téléphone"   name="context-Téléphone" type="text" />
+    </div>
+
+    <div class="field">
+      <label for="context-name" >Numéro Faxe</label>
+      <input aria-required="true" data-validate="required" [(ngModel)]="FaxNumber" id="context-NuméroF " name="context-NuméroF" type="text" />
+    </div>
+    
+    <div class="field">
+      <label for="context-name" >E-mail</label>
+        <input aria-required="true" data-validate="required" [(ngModel)]="Email" id="context-mail"  name="context-mail" type="text" />
+    </div>
+
   </div>
-      <div class="field">
-          
-      <select [(ngModel)]="ValueOfAreaSelected" name="ValueOfAreaSelected"  *ngIf="ValueOfTownSelected" (change)=" onChangeState($event)" >
-          <label for="context-name">xx</label>
-          <option  aria-required="true" data-validate="required" *ngFor="let Ar of Area" value="{{Ar['ECAR']}}" >{{Ar["TX15"]}}</option>
-          </select>
-
-      </div>
-          <div class="field">
-              <label for="context-name" >Téléphone</label>
-              <input  aria-required="true" data-validate="required" [(ngModel)]="MobileNumber"id="context-Téléphone"   name="context-Téléphone" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="context-name" >Numéro Faxe</label>
-              <input aria-required="true" data-validate="required" [(ngModel)]="FaxNumber" id="context-NuméroF " name="context-NuméroF" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="context-name" >E-mail</label>
-              <input aria-required="true" data-validate="required" [(ngModel)]="Email" id="context-mail"  name="context-mail" type="text" />
-            </div>
-
-</div>
 </form>

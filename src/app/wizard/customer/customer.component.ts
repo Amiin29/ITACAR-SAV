@@ -1,51 +1,48 @@
 import { Component, OnInit, ViewChild,Output, ViewContainerRef,EventEmitter } from '@angular/core';
 import { CoreBase, IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
+import { SohoDataGridComponent, SohoMessageService, SohoToastService,SohoModalDialogService  } from 'ids-enterprise-ng';
 import { ColorService } from 'src/app/color.service';
-import { SohoToastService } from 'ids-enterprise-ng';
-
-import {
-   SohoModalDialogService, SohoModalDialogRef
- } from 'ids-enterprise-ng';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
- 
-//import{AddCustomerService} from './add-customer/add-cutomer-service'
+import { VehiculeServiceService } from 'src/app/wizard/vehicule/VehiculeService/vehicule-service.service';
+
 @Component({
    templateUrl: './customer.component.html',
    styleUrls: ['./customer.css'],
    selector: 'customer',
+   
 })
-export class CustomerSampleComponent extends CoreBase implements OnInit {
+export class CustomerSampleComponent extends CoreBase implements OnInit 
+{
    @ViewChild(SohoDataGridComponent) sohoDataGridComponent?: SohoDataGridComponent;
    @ViewChild('customersDatagrid') datagrid: SohoDataGridComponent;
    @ViewChild('dialogPlaceholder', { read: ViewContainerRef, static: true })
    placeholder?: ViewContainerRef;
-   @Output() newItemEvent = new EventEmitter<MIRecord>();
+   @Output() newItemEvent = new EventEmitter<string>();
    
-   gridOptions: any = null;
    datagridOptions: SohoDataGridOptions;
    private maxRecords = 50000;
    private pageSize = 10;
-   display=false;
-   //title:'scsqcqq'
-   itemCUNO:any
-   customerIsSelected =false;
-   color
-   hasSelected: boolean;
    isBusy = false;
+   display=false;
+
    isDetailBusy = false;
-   items: any[] = [];
-ngOnInit() {
+   gridOptions: any = null;
+   itemCUNO:any
+   hasSelected: boolean;
+   items: any[] = [];   
+   constructor(private VehiculeServiceService:VehiculeServiceService,private toastService: SohoToastService,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
+         super('CustomerSampleComponent');
+         this.initGrid();
+      }
+   ngOnInit() {
       this.listItems();
    }
-constructor(private toastService: SohoToastService,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
-      super('CustomerSampleComponent');
-      this.initGrid();
+   ngOnChanges(changes) {
+      this.listItems(); 
    }
-
-private initGrid() 
-   {  
+   private initGrid() 
+      {  
          const options: SohoDataGridOptions = {
          selectable: 'single' as SohoDataGridSelectable,
          disableRowDeactivation: true,
@@ -68,7 +65,7 @@ private initGrid()
                resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox
             },
             {
-               width: 'auto', id: 'col-cuno', field: 'OKCUNO', name: 'Numéro Client',
+               width: 'auto', id: 'col-cuno', field: 'OKCUNO', name: 'Numéro',
                resizable: true, filterType: 'text', sortable: true
             },
             {
@@ -93,20 +90,19 @@ private initGrid()
                resizable: true, filterType: 'text', sortable: true
             },
          ],
-         dataset: [],
-         emptyMessage: {
-            title: 'No customers available',
-            icon: 'icon-empty-no-data'
-         }
-      };
-      this.datagridOptions = options;
-   }
-listItems() 
-   {
-      if (this.isBusy) 
-      { 
-         return; 
+            dataset: [],
+               emptyMessage: {
+                  title: 'Aucun client disponible',
+                  icon: 'icon-empty-no-data'
+               }
+         };
+         this.datagridOptions = options;
       }
+
+   listItems() {
+      if (this.isBusy) { 
+         return; 
+         }
       this.setBusy(true);
       this.userService.getUserContext().subscribe((context) => 
         {
@@ -118,117 +114,93 @@ listItems()
                maxReturnedRecords: this.maxRecords
             };
             const inputrecord :MIRecord= new MIRecord();
-
             inputrecord.setString ('F_STAT','20')
             inputrecord.setString ('T_STAT','20')
             inputrecord.setString ('F_CUTP','0')
             inputrecord.setString ('T_CUTP','8')
-
             request.record = inputrecord;
-
             this.miService.execute(request).subscribe((response: IMIResponse) => 
             {
-               if (!response.hasError()) 
-               {
+               if (!response.hasError()) {
                   this.items = response.items;
                   this.updateGridData();
-               } 
-               else
-               {
+                  console.log('----------Customer---------')
+                  console.log(this.items)
+               }else{
                }
                this.setBusy(false);
-            }, (error) => 
-            {
+            }, (error) => {
                this.setBusy(false);
             });
-               }, (error) => 
-                  {
+               }, (error) => {
                      this.setBusy(false);
                   });
    }
-ngOnChanges(changes) {
-      this.listItems(); 
-   }
-onSelected(args: any[], isSingleSelect?: boolean) 
-   {
-      if (this.isBusy)
-         {
-          return; 
-         }
-         const newCount = args.length;
-         const selected = args && newCount === 1 ? args[0].data : null;
-         this.hasSelected = !!selected;
-        
-      if (this.hasSelected)
-         {
-         this.customerIsSelected=true
-         this.itemCUNO=selected['OKCUNO']
-         this.addNewItem(selected);
-         }
-         else {
-            this.customerIsSelected=false;
-            this.addNewItem(null);
-         }
-   } 
-private onClickLaunch()
-   {
-      this.items=[];
-      this.updateGridData();
-   }
-private updateGridData() 
-   {
+
+
+   onSelected(args: any[], isSingleSelect?: boolean) 
+      {
+         if (this.isBusy)
+            {
+            return; 
+            }
+            const newCount = args.length;
+            const selected = args && newCount === 1 ? args[0].data : null;
+            this.hasSelected = !!selected; 
+         if (this.hasSelected)
+            {
+               this.itemCUNO=selected['OKCUNO']
+               this.addNewItem(selected['OKCUNO'])
+               this.VehiculeServiceService.SetCustomerNumber(selected['OKCUNO'])
+
+            }
+            else {}
+      } 
+   private updateGridData(){
       this.datagrid ? this.datagrid.dataset = this.items : this.datagridOptions.dataset = this.items;
    }
-private refreshGridItem(detailItem: any) 
-   {
-      const selected = this.datagrid.getSelectedRows()[0];
-      const clone = Object.assign(selected.data, detailItem);
-      this.datagrid.updateRow(selected.idx, clone);
-   }
-
    private setBusy(isBusy: boolean, isDetail?: boolean) 
+      {
+         isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
+      }
+
+   Modal_ajouter_client() 
    {
-      isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
-   }
-   Modal_ajouter_client() {
       const dialogRef = this.modalService
       .modal<AddCustomerComponent>(AddCustomerComponent, this.placeholder, { fullsize: 'responsive' })
-      .title('Ajouter Client')
+      .title('')
         .buttons(
           [
-            
-            {
-              text: 'Cancel', click: () => {
+             {
+              text: 'Fermer', click: () => {
                 dialogRef.close('CANCEL');
               },isDefault: false
             },
             {
             },
             {
-              text: 'Submit', click: () => {
+              text: 'Ajouter', click: () => {
                this.mycolor.sendEventAddCustomer()
-               this.showToast()
+               this.ToastAddCutsomer()
                 dialogRef.close('SUBMIT');
               }, isDefault: true
             }
           ])
-        
         .open();
-    }
-    showToast(position: SohoToastPosition = SohoToastService.TOP_RIGHT) {
-      this.toastService.show({ draggable: true, title: '', message: 'Client Ajouter avec succès', position });
+   }
+
+   ToastAddCutsomer(position: SohoToastPosition = SohoToastService.TOP_RIGHT)
+      {
+      this.toastService.show({ draggable: true, title: '', message: 'Client Ajouté avec succès', position });
+      this.listItems();
+      }
+
+   onBeforeActivated(e: SohoWizardEvent) {}
+   onAfterActivated(e: SohoWizardEvent) {}
+
+   addNewItem(value: string) {
+      this.newItemEvent.emit(value);
     }
 
- onBeforeActivated(e: SohoWizardEvent) {
-   //console.log(`onBeforeActivated: The tick with the label ${e.tick.text()}`);
- }
- onAfterActivated(e: SohoWizardEvent) {
-  // console.log(`onAfterActivated: The tick with the label ${e.tick.text()}`);
-
-   //console.log(e);
- }
- addNewItem(value: MIRecord) {
-   this.newItemEvent.emit(value);
- }
   
 }

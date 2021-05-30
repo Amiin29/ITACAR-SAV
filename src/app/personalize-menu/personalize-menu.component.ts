@@ -125,7 +125,7 @@ export class PersonalizeMenuComponent implements OnInit {
     // Getting upper case colours and lower case colours, so assume lower.
     this.color = ev.data.isDefault ? '' : (colorHex as string).toLowerCase();
     this.setSelectedColor(this.color, true);
-    this.setcolor.setcolro(this.color)
+   // this.setcolor.setcolro(this.color)
 
   }
 
