@@ -26,7 +26,7 @@ export class DetailsPieceRechangesComponent implements OnInit {
  }
 //---------------------------------------------- details  client----------------------------------------
 GetDetailspiecesRechanges()
-{ console.log('++++++++++++++++++++++++++++++++++++++')
+   { 
    this.setBusy(true, true);
       const request: IMIRequest = 
       {
@@ -44,7 +44,12 @@ GetDetailspiecesRechanges()
             if (!response.hasError()) 
             {
                this.detailItem = response.item;
-               console.log( this.detailItem)
+               this.ITNO=this.detailItem['ITNO']
+               this.ITDS=this.detailItem['ITDS']
+               this.RESP=this.detailItem['RESP']
+               this.RENM=this.detailItem['RENM']
+               this.ITTY=this.detailItem['ITTY']
+               this.ITGR=this.detailItem['ITGR']
             } 
             else 
                {

@@ -1,6 +1,6 @@
 <div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0"readonly>
    <div class="row card"> 
-      <div class="six columns">
+      <div class="six columns" style="    margin-left: 34px;">
          <div class="field"><label>Arrêt client </label>
             <select class="select-1 field"  required [(ngModel)]="BLCD" readonly>
                <option value="0">0-Non bloquer</option>
@@ -9,7 +9,7 @@
             </select>
          </div>
       </div>        
-      <div class="six columns">
+      <div class="six columns" style="margin-left: 148px;">
          <div class="field"><label>Taxe applicable   </label>
             <select class="select-1 field"  required [(ngModel)]="TXAP" readonly>
                <option value="0">0-Non</option>
@@ -25,10 +25,10 @@
             </div>
          </div>                                
       </div>                    
-      <div class="">
-         <div class="six columns">
-            <div class="field">Mdalités de paiement 
-               <label for="di-town"><input id="di-town" [(ngModel)]="TEPY" readonly/></label>                                      
+      <div >
+         <div class="six columns" style="margin-left: 116px;">
+            <div class="field" style="    margin-left: 18px;">Méthode de paiement 
+               <label for="di-town"><input id="di-town" [(ngModel)]="PYCD" readonly/></label>                                      
             </div>
          </div>   
       </div>  

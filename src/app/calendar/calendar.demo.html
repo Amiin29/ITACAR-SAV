@@ -1,4 +1,4 @@
-<div soho-calendar
+<div  soho-calendar
     [month]="initialMonth"
     [year]="initialYear"
     [renderMonthCallback]="onRenderMonthCallback" 
@@ -7,10 +7,11 @@
     (monthRendered)="onRenderMonth($event)"
     (dblclick)="OnDbClick($event)"
     (eventClick)="onEventClicked($event)"   
+    (onMonthRenderedEvent)="test()"
     (eventContextMenu)="onCalendarEventContextMenu($event)"
     [eventTooltip]="eventTooltip"
-    [iconTooltip]="iconTooltip">
+    [iconTooltip]="iconTooltip" >
 
-  <div soho-calendar-monthview></div>
+  <div soho-calendar-monthview ></div>
   <div soho-calendar-week-view></div>
 </div>

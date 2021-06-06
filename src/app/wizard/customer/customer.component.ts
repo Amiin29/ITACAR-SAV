@@ -183,7 +183,8 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
                this.mycolor.sendEventAddCustomer()
                this.ToastAddCutsomer()
                 dialogRef.close('SUBMIT');
-              }, isDefault: true
+              }, isDefault: false,
+              id:'sendbutton'
             }
           ])
         .open();

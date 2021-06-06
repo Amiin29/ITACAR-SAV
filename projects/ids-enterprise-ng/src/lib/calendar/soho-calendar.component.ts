@@ -470,7 +470,7 @@ export class SohoCalendarComponent implements AfterViewChecked, AfterViewInit, O
   private calendar?: SohoCalendar | null;
   private _calendarOptions?: SohoCalendarOptions = {};
   private _calendarWeekOptions?: SohoCalendarWeekOptions = {};
-  private updateRequired?: boolean;
+  public updateRequired?: boolean;
 
   constructor(
     private element: ElementRef,

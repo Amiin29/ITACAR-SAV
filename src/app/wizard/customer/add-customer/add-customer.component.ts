@@ -11,11 +11,7 @@ import { ColorService } from 'src/app/color.service';
   styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent implements OnInit {
-
-   
-   verifform : FormGroup = new FormGroup({
-      'codePostale' : new FormControl ([Validators.required , Validators.minLength(5)]),
-    });
+ 
    clickEventsubscription:Subscription;
 
   isDetailBusy = false;
@@ -27,40 +23,52 @@ export class AddCustomerComponent implements OnInit {
    Custmername: string;
    Adresse1: string;
    Adresse2 :string
- 
-  
    codePostale: string;
    MobileNumber: string;
    num2: string;
    FaxNumber: string;
    Email: string;
    Compagnie: string;
-  
    ValueOfCountrySelected : any
    ValueOfAreaSelected : any ;
    items: any[] = [];
    Area: any[] = [];
+   myForm: FormGroup;
+   Code_Postale:FormControl;
+   Telephone:FormControl;
+   NumeroFaxe:FormControl;
+   E_mail:FormControl;
   
   constructor(private mycolor:ColorService,private miService: MIService) {
      this.clickEventsubscription=this.mycolor.getAddCustomer().subscribe(()=>{
         this.AddCustomer()
+        console.log('-------')
      })
    }
+   ngOnDestroy(): void {
+      this.clickEventsubscription.unsubscribe()  }
   ngOnInit(): void {
-  
+   ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
    console.log('ValueOfTownSelected:'+this.ValueOfCountrySelected)
-    this.GetAllCountrys()
-    
-   
+    this.GetAllCountrys();
+    this.Code_Postale = new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(4), Validators.maxLength(4),Validators.required]);
+    this.Telephone= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]);
+    this.NumeroFaxe= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]);
+    this.E_mail= new FormControl('',[Validators.pattern('[a-z]*.[a-z]*@[a-z]*.[a-z]*'), Validators.minLength(10), Validators.maxLength(30),Validators.required]);
+    this.myForm = new FormGroup({
+     'Code_Postale': new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(4),Validators.maxLength(4),Validators.required]),
+     'Telephone':new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]),
+     'NumeroFaxe':new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]),
+     'E_mail':new FormControl('', [Validators.pattern('[a-z]*@[a-z]*[.][a-z]*'), Validators.minLength(10), Validators.maxLength(30),Validators.required]),
+     
+     });
+
   }
   private setBusy(isBusy: boolean, isDetail?: boolean) 
   {
      isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
   }
   AddCustomer(){
-               
-
-
          const inputRecord = new MIRecord();
          const request: IMIRequest = 
          {
@@ -68,7 +76,6 @@ export class AddCustomerComponent implements OnInit {
             transaction: 'Add',
             record : inputRecord,
          };
-        
          inputRecord.setString("CUTM", 'C000');
          inputRecord.setString("CUNM", this.Custmername);
          inputRecord.setString("CUA1", this.Adresse1);
@@ -80,45 +87,29 @@ export class AddCustomerComponent implements OnInit {
          inputRecord.setString("TFNO", this.FaxNumber);
          inputRecord.setString("MAIL", this.Email);
          inputRecord.setString("TOWN", this.ValueOfAreaSelected);
-
-         //inputRecord.setString("TEPY", 'I30');
          inputRecord.setString("STAT", '20');
-
-           
-            console.log('CUNM='+this.Custmername)
-            console.log('CUA1='+this.Adresse1+'CUA2='+this.Adresse2)
-            console.log('CSCD='+this.ValueOfCountrySelected+'PONO='+this.codePostale)
-            console.log('ECAR='+this.ValueOfAreaSelected+'PHNO='+this.MobileNumber)
-            console.log('TFNO='+this.FaxNumber+'MAIL='+this.Email)
-
          request.record = inputRecord;
          this.setBusy(true, true);
          request.record = inputRecord;
          this.miService.execute(request).subscribe((response: IMIResponse) => 
          {
-            
             this.setBusy(false, true);
             if (!response.hasError()) 
             {
                this.detailItem = response.item;
                console.log (response)
-          
             } 
             else 
                {
                   this.detailItem = undefined;
-                 // this.handleError('Failed to get details');
                }
          }, (error) => 
          {
             this.setBusy(false, true);
             this.detailItem = undefined;
-           // this.handleError('Failed to get details', error);
          });
 
-        // this.listItems();
 }
-
 
 //-------------------------------chargement de Ville-------------------------------------------------------
   GetAllStates(ville :string){
@@ -182,4 +173,14 @@ onChangeCountry(event): void {
    this.ValueOfAreaSelected = event;
    console.log('ValueOfAreaSelected:'+this.ValueOfAreaSelected)
  }
+ handleinput(){
+    
+   if(this.myForm.valid){
+     ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=false
+   }
+   else{
+      (document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
+   
+   }
+    }
 }

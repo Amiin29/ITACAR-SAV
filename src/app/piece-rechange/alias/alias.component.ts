@@ -57,11 +57,11 @@ initAlias(){
            resizable: true, filterType: 'text', sortable: true
         },
         {
-           width: 'auto', id: 'col-MBPOPN', field: 'POPN', name: 'Réference Number',
+           width: 'auto', id: 'col-MBPOPN', field: 'POPN', name: 'Numéro de réference',
            resizable: true, filterType: 'text', sortable: true
         },
         {
-         width: 'auto', id: 'col-MWEOPA', field: 'EOPA', name: 'Partner',
+         width: 'auto', id: 'col-MWEOPA', field: 'EOPA', name: 'Partenaire',
          resizable: true, filterType: 'text', sortable: true
         },
         {
@@ -90,17 +90,13 @@ GetAlias(){
           
         };
         const inputrecord :MIRecord= new MIRecord();
-        inputrecord.setString('ITNO',this.ITNO); 
-        
-        console.log('itnoooo Alias-----------------------'+this.ITNO)
-       
+        inputrecord.setString('ITNO',this.ITNO);        
         requestInfoByAlias.record = inputrecord;
         this.miService.execute(requestInfoByAlias).subscribe((response: IMIResponse) => 
         {
            if (!response.hasError()) 
            {
               this.Alias = response.items;
-              console.log( 'Parehouse-----------+++++++++--------'+this.Alias);
               this.updateGridAlias();
            } 
            else

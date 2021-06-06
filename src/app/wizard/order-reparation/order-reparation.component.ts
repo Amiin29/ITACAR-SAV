@@ -14,37 +14,42 @@ export class OrderReparationComponent implements OnInit {
   @ViewChild('MCODatagrid') datagrid: SohoDataGridComponent;
   datagridOptions: SohoDataGridOptions;
   private pageSize = 7;
-
+  NumCommande=null
   isBusy = false;
   isDetailBusy = false;
   IfContrat =false;
   IfService =false;
   IfOrderType =false;
-
+IfPrinted = false;
   created=false;
+  btnMCO=false;
   SERN=null
   ITNO=null;
   CustomerONumber = null;
   OrderType=null;
   service=null;
+  serviceDescription='CHANGE_AIRMASS sous garantie';
   contrat=null;
 
   copy='1'
+  ORNO='';
   defaultContrat='IC';
   defaultTypeCommande='200';
   defaultService='CHANGE_AIRMASS';
+  
 
 
 
   Contrats : any[] |undefined=[];
   Services : any[] |undefined=[];
   OrderTypes : any[] |undefined=[];
-  MCOs: any[] = [];
+  Lignes: any[] = [];
   constructor(private toastService:SohoToastService,private OrderReparationService:OrderReparationService,private VehiculeServiceService:VehiculeServiceService)
    { this.initGrid();}
 
   ngOnInit(): void 
   {
+   this.Lignes=[];
      this.contrat=this.defaultContrat;
      this.service=this.defaultService;
      this.OrderType=this.defaultTypeCommande;
@@ -58,7 +63,7 @@ export class OrderReparationComponent implements OnInit {
       else {
          this.ToastErrorContart()         
       }
-      this.OrderReparationService.GetListServices(this.ITNO).then(value=>{
+      this.OrderReparationService.GetListServices(this.ITNO,this.defaultContrat).then(value=>{
          if (value){
             this.Services=value;
             this.IfService=true;
@@ -77,6 +82,12 @@ export class OrderReparationComponent implements OnInit {
       {}
      })
   }
+  ngOnChanges(changes) {
+   this.Lignes=[];
+   this.initGrid();
+   this.updateGridData();
+   this.CustomerONumber='';
+ }
   initGrid() {
     const options: SohoDataGridOptions = {
      selectable: 'single' as SohoDataGridSelectable,
@@ -107,10 +118,13 @@ export class OrderReparationComponent implements OnInit {
            resizable: true, filterType: 'text', sortable: true
         },
         {
-         width: 'auto', id: 'col-sern', field: 'Service', name: 'Designation',
+         width: 'auto', id: 'col-sern', field: 'TX40', name: 'Designation',
          resizable: true, filterType: 'text', sortable: true
       },
-        
+      {
+         width: 'auto', id: 'col-sern', field: 'Prix', name: 'Prix',
+         resizable: true, filterType: 'text', sortable: true
+      },
        ],
      dataset: [],
      emptyMessage: {
@@ -120,8 +134,8 @@ export class OrderReparationComponent implements OnInit {
   };
   this.datagridOptions = options;
  }
- private updateGridData(data :any){
-   this.datagrid ? this.datagrid.dataset = data : this.datagridOptions.dataset = data;
+ private updateGridData(){
+   this.datagrid ? this.datagrid.dataset = this.Lignes : this.datagridOptions.dataset = this.Lignes;
    
 }
 private setBusy(isBusy: boolean, isDetail?: boolean) 
@@ -129,19 +143,26 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
    isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
 }
  CreateMCO(){
+
    if (this.isBusy) { 
       return; 
       }
+   this.Lignes=[];
    this.setBusy(true);
     this.OrderReparationService.CreateMCO(this.CUNO,this.SERN,this.contrat,this.OrderType,this.service,this.ITNO).then(value=>{
     if(value){
       this.created=true;
       this.isBusy=false
-      this.OrderReparationService.CreateLigneService(value[0]['PONR'],this.service,this.service).then(res=>{
+      this.btnMCO=true;
+     
+      
+      this.OrderReparationService.CreateLigneService(this.IfPrinted,value[0]['PONR'],value[0]['ORNO'],this.service,this.serviceDescription).then(res=>{
+      this.Lignes=res;
       this.CustomerONumber = value[0]['ORNO'];
-      this.updateGridData (res);
+      this.updateGridData ();
       this.ToastCreateMCO()
-      console.log('------------'+this.created)
+      this.ngOnInit();
+      
       })
             
          }
@@ -152,11 +173,12 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
          
  }
  AddNewMCOLine(){
-   this.OrderReparationService.CreateMCOLine(this.CustomerONumber,this.service,this.SERN,this.ITNO).then(res=>{
+   this.OrderReparationService.CreateMCOLine(this.CustomerONumber,this.service,this.SERN,this.ITNO).then(value=>{
       
-      if(res){
-         this.OrderReparationService.CreateLigneService(res[0]['PONR'],this.service,this.service).then(res=>{
-            this.updateGridData (res);
+      if(value){
+         this.OrderReparationService.CreateLigneService(this.IfPrinted,value[0]['PONR'],value[0]['ORNO'],this.defaultService,this.serviceDescription).then(res=>{
+            this.Lignes=res;
+            this.updateGridData ();
            
             this.ToastAddNewMCOLine()
                   })
@@ -169,14 +191,21 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
     this.OrderReparationService.PrintMCO(this.CustomerONumber,this.CustomerONumber,this.copy).then(res=>{
        if (res)
        {
+          this.IfPrinted=true;
           console.log('print----------')
           console.log(this.CustomerONumber)
-          this.ToastPrintMCO()
+          this.ngOnInit();
+          this.initGrid();
+         this.updateGridData();
+         this.CustomerONumber='';
+          this.ToastPrintMCO();
+          this.btnMCO=false;
         this.copy='0';
        }
        else{
 
        }
+       this.Lignes=[];
     })
  }
    ToastAddNewMCOLine(position: SohoToastPosition = SohoToastService.TOP_RIGHT)
@@ -197,14 +226,33 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
    }  
    OnChangeContrat(contrat)
       {
+         this.Services=[];
          console.log('contrat:'+contrat)
          this.contrat=contrat;
+         this.OrderReparationService.GetListServices(this.ITNO,this.defaultContrat).then(value=>{
+            if (value){
+               console.log(this.Services.length)
+               console.log(value)
+               this.Services=value;
+               this.IfService=true;
+            }
+            else
+            {}
+         })
          
       }
-   OnChangeService(service)
+   OnChangeService(event:Event,service)
       {
-         console.log('service:'+service)
+         let selectedOptions = event.target['options'];
+         let selectedIndex = selectedOptions.selectedIndex;
+         let selectElementText = selectedOptions[selectedIndex].text;
+      
+       //  console.log(service.currentTarget['options'][0]['innerHTML']);
+         //console.log(service.currentTarget)
+         
+         this.serviceDescription=selectElementText;
          this.service=service;
+         
       }
    OnChangeOderType(OType)
       {

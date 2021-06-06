@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { from } from 'rxjs';
 import{ColorService} from 'src/app/color.service'
 @Component({
   selector: 'app-statistique',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import {IMIRequest, IMIResponse, MIRecord } from '@infor-up/m3-odin';
 import { curveMonotoneX } from 'd3-shape';
-import { Console } from 'node:console';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,12 @@ export class OrderReparationService {
   constructor(private miService: MIService, private userService: UserService) { }
   GetListContrat(): Promise<any>
           { 
-            const inputRecord = new MIRecord();
+            
             return new Promise((resolve, reject) => {
             this.userService.getUserContext().subscribe((context) => 
               {
+                this.Contrats=[];
+                const inputRecord = new MIRecord();
                 const request: IMIRequest = 
                   {
                     program: 'COS410MI',
@@ -52,7 +54,7 @@ export class OrderReparationService {
               });
             });
           }
-          GetListServices(CodeVehicule : string): Promise<any>
+          GetListServices(CodeVehicule : string , Contrat : string): Promise<any>
           { 
             
             return new Promise((resolve, reject) => {
@@ -61,29 +63,33 @@ export class OrderReparationService {
                 const inputRecord = new MIRecord();
                 const request: IMIRequest = 
                   {
-                    program: 'MOS300MI',
-                    transaction: 'LstByProduct',
+                    program: 'COS410MI',
+                    transaction: 'LstAgrLines',
                     record: inputRecord,
-                    outputFields: ["SUFI", "TX40"]
+                    outputFields: ["SRVP", "SUFI","PRTX","PRNO"]
                   };
-              
+            this.Services =[];
             inputRecord.setString("PRNO", CodeVehicule);
+            inputRecord.setString("AAGN", Contrat);
             request.record = inputRecord;
                     this.miService.execute(request).subscribe((response: IMIResponse) => {
                       if (!response.hasError()) 
                       {
                      
-                        response.items.forEach(element => {
-                          
-                          this.Services.push({
-                             'SUFI' : element['SUFI'],
-                             'TX40' : element['TX40'],
-                          })
-                       });
+                        for (let i=0;i<response.items.length ; i++){
+                          if (response.items[i]['PRNO'] == CodeVehicule){
+                            this.Services.push({
+                              'SUFI' : response.items[i]['SUFI'],
+                              'TX40' : response.items[i]['PRTX'],
+                              'MthdCalcul' : response.items[i]['SRVP'],
+                           })
+                          }
+                        }
+                        
                         resolve(this.Services)
                       
                       } else {
-                  
+                        reject(null)
                   }
                   return ;
                 }, (error) => {
@@ -108,8 +114,8 @@ export class OrderReparationService {
                     record: inputRecord,
                     outputFields: ["OTAOTY","OTTX15","OTTX40"]
                   };
-              
-                    this.miService.execute(request).subscribe((response: IMIResponse) => {
+                  this.OrderTypes=[];
+                  this.miService.execute(request).subscribe((response: IMIResponse) => {
                       if (!response.hasError()) 
                       {
                      
@@ -161,15 +167,15 @@ export class OrderReparationService {
             inputRecord.setString("SUFI", SUFI);
             inputRecord.setString("AURQ", '1');
             request.record = inputRecord;
-                    this.miService.execute(request).subscribe((response: IMIResponse) => {
-                      if (!response.hasError()) 
+            this.miService.execute(request).subscribe((M3response: IMIResponse) => {
+                      if (!M3response.hasError()) 
                       {
   
                       
                         console.log('--------------Cretae MCO')
-                     console.log(response.items)
+                        console.log(M3response.items)
                        
-                        resolve(response.items)
+                        resolve(M3response.items)
                       
                       } else {
                   
@@ -183,23 +189,27 @@ export class OrderReparationService {
               });
             });
           }
-          CreateLigneService(PONR,ORNO,service): Promise<any> {
+          CreateLigneService(Iscreated,PONR,ORNO,service,des): Promise<any> {
+            
             return new Promise((resolve, reject) => {
+              console.log('created:'+Iscreated)
+             if (Iscreated){
+              this.MCOs=[];
+             }
               this.MCOs.push({
                 'PONR' : PONR,
                 'ORNO': ORNO ,
                 'Service':service,
+                'TX40': des,
                    })
-                   resolve( this.MCOs);
-                   
-            
-          
+                   resolve(this.MCOs);
           })
         }
         CreateMCOLine(CustomerONumber:string,IdService:string,CodeVehicule:string,BANO:string): Promise<any>
         { 
           
           return new Promise((resolve, reject) => {
+          this.MCO=[];
           this.userService.getUserContext().subscribe((context) => 
             {
               const inputRecord = new MIRecord();
@@ -216,7 +226,7 @@ export class OrderReparationService {
           inputRecord.setString("BANO", BANO);
           inputRecord.setString("SUFI", IdService);
           inputRecord.setString("STRT", '002');
-          inputRecord.setString("FACI", 'TUN');
+          inputRecord.setString("FACI", 'BB1');
           inputRecord.setString("AURQ", '1');
           
           request.record = inputRecord;
@@ -243,8 +253,7 @@ export class OrderReparationService {
         }
         PrintMCO(FORINO:string,TORINO:string,copy:string): Promise<any>
         { 
-          console.log('FORINO:'+FORINO)
-          console.log('TORINO:'+TORINO)
+          
           return new Promise((resolve, reject) => {
           this.userService.getUserContext().subscribe((context) => 
             {
@@ -256,7 +265,7 @@ export class OrderReparationService {
                   record: inputRecord,
                  
                 };
-            
+          this.MCO=[];
           inputRecord.setString("FORNO", FORINO); 
           inputRecord.setString("TORNO", TORINO);
           inputRecord.setString("IDAT", "2021/05/28"); //invoice date

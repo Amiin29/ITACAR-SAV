@@ -1,7 +1,7 @@
 import {Component,HostBinding,ViewContainerRef,ViewChild,Output,EventEmitter} from '@angular/core';
 import {SohoModalDialogService} from 'ids-enterprise-ng';
 import { CalendarDemoService } from './calendar.demo.service';
-import { SohoCalendarComponent, SohoToastService } from 'ids-enterprise-ng';
+import { SohoCalendarComponent, SohoToastService, } from 'ids-enterprise-ng';
 import { event } from 'jquery';
 import {UpdateRDVComponent}from './update-rdv/update-rdv.component'
 import { AddRdvComponent } from './add-rdv/add-rdv.component';
@@ -25,6 +25,8 @@ export class CalendarDemoComponent
   constructor(private mycolor:ColorService,private modalService: SohoModalDialogService,private monthViewService: CalendarDemoService, private toastService: SohoToastService) { }
       isopen=true
       month:any
+      time1:any
+      time2:any
       public title = '';
       public initialMonth = 1;
       public initialYear = 2019;
@@ -39,12 +41,17 @@ export class CalendarDemoComponent
       {
         this.initialYear = (new Date()).getFullYear();
         this.initialMonth = (new Date()).getMonth();
+        this.items=[];
       }
-    
+      ngOnDestroy(): void {
+        this.items=[]  }
       public onRenderMonthCallback = (_node: Node, response: Function) => 
       {
+        this.items=[];
+       
         this.monthViewService.getMaintenanceOrders().then(value => //-------GetAll Maintenance Orders---------
           {
+          
             value.forEach(val => this.items.push(Object.assign({}, val)));
             response(this.items, this.eventTypes);   
           }
@@ -52,20 +59,23 @@ export class CalendarDemoComponent
         )      
         this.monthViewService.GetAllRdv().then(value =>   //-------------GetAllRdv----------
           {  
+            console.log(new Date(value[0]['date'].substring(6,10),value[0]['date'].substring(0,2),value[0]['date'].substring(3,5),value[0]['time'].substring(0,2),value[0]['time'].substring(3,5)).toISOString())
+            
             for (let i=0 ; i<value.length;i++)
             {
+
               this.items.push(
                 {
                   "id": `${value[i]['id']}`,
                   "subject": "Discretionary Time Off",
-                  "shortSubject": value[i]['name'],
-                  "comments": 'Button Gauche : Consulter un RDV  / Button Droite : Modifier un RDV  ',
+                  "shortSubject": 'Client : '+value[i]['name'] +' | Type de service :'+value[i]['type'],
+                  "comments": 'Button Gauche : Consulter un RDV  <br>Button Droite : Modifier un RDV',
                   "TypeRdv": value[i]['type'],
                   "numTel": value[i]['numTel'],
                   "location": "Us Office",
                   "status": "Approved",
-                  "starts": new Date(value[i]['date'].substring(5,9),value[i]['date'].substring(0,1)-1,value[i]['date'].substring(2,4),value[i]['time'].substring(0,2),value[i]['time'].substring(3,5)).toISOString(),
-                  "ends": new Date(value[i]['date'].substring(5,9),value[i]['date'].substring(0,1)-1,value[i]['date'].substring(2,4),value[i]['time'].substring(0,2),value[i]['time'].substring(3,5)).toISOString(),
+                  "starts": new Date(value[i]['date'].substring(6,10),value[i]['date'].substring(0,2)-1,value[i]['date'].substring(3,5),value[i]['time'].substring(0,2),value[i]['time'].substring(3,5)).toISOString(),
+                  "ends": new Date(value[i]['date'].substring(6,10),value[i]['date'].substring(0,2)-1,value[i]['date'].substring(3,5),value[i]['time'].substring(0,2),value[i]['time'].substring(3,5)).toISOString(),
                   "type": "dto",
                   "isAllDay": "true"
                 }) 
@@ -76,6 +86,7 @@ export class CalendarDemoComponent
             });
             response(this.items, this.eventTypes);     
           });
+          
      }
     onEventDblClicked(event: SohoCalendarEventClickEvent)
     {
@@ -139,14 +150,16 @@ export class CalendarDemoComponent
                   this.mycolor.sendEventUpdateRdv()
                   this.showToastUpdateRdv()
                   dialogRef.close('SUBMIT');
+                
+                //this.sohoCalendarComponent.calendarOptions()
                 }, isDefault: true
               }
             ])
           .open();
         }
       //-----------------------Double Click------------------------------
-  OnDbClick($event : SohoCalendarEventClickEvent){
-    if (event!=null)
+  OnDbClick(event : SohoCalendarEventClickEvent){
+    if (event['screenY'] > 240)
       {
         this.ModalAddRDV(); // double click nous affiche le modal ajouter RDV
       }    
@@ -170,9 +183,11 @@ export class CalendarDemoComponent
               text: 'Ajouter', click: () => 
               {
                 this.mycolor.sendEventAddrdv()
-                this.showToastAddRdv()
+                //this.showToastAddRdv()
                 dialogRef.close('SUBMIT');
-              }, isDefault: true
+               
+              }, isDefault: false,
+              id:'sendbutton'
             }
           ])
         
@@ -188,5 +203,10 @@ export class CalendarDemoComponent
     showToastUpdateRdv(position: SohoToastPosition = SohoToastService.TOP_RIGHT) 
     {
       this.toastService.show({ draggable: true, title: '', message: 'RDV Modifié avec succès', position });
+      
+    }
+    test(){
+     this.items=[];
+     console.log('ppppppppppppppppppppppppppppppppppppppppppp---')
     }
   }

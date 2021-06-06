@@ -9,10 +9,22 @@
       <label for="context-Type" class="required">Type</label>
       <input id="context-Type" aria-required="true" data-validate="required" name="context-Type" type="text" [(ngModel)]="typeRDV"  />
     </div>
-    <div class="field">
-      <label for="context-Tel" class="required">Tel</label>
-      <input id="context-Tel" aria-required="true" data-validate="required" name="context-Tel" type="number" maxlength="8" [(ngModel)]="tel"  />
-    </div>
+
+    <form [formGroup]="myForm" >
+      <div class="form-group">
+      <div class="field">
+        <label for="context-Tel" class="required">Tel</label>
+        <input id="context-name" aria-required="true" data-validate="required" name="context-name" type="text"  [(ngModel)]="tel" class="form-control" formControlName="telephone" [ngClass]="{'is-invalid': myForm.get('telephone').hasError('minlength')}"  (keyup)="handleinput()" />
+        <div class="invalid-feedback" >
+          <br>
+          <strong *ngIf="myForm.get('telephone').hasError('minlength')">La longueur de telephone doit être égale à 8</strong>
+          <br>
+          <strong *ngIf="myForm.get('telephone').hasError('pattern')">Telephone n'admet que 0-9</strong>
+          </div>
+      </div>
+      </div>
+      </form>
+
     <div class="row" >
       <div class="four columns">
         <div class="field" style="width: 111px;">
@@ -32,9 +44,12 @@
   
     </div>
 
-    <div class="field">
-      <label for="context-desc" class="required">Déscription</label>
-      <textarea id="context-Déscription" aria-required="true" data-validate="required" name="context-Déscription" maxlength="50"  [(ngModel)]="Description"></textarea>
-    </div>
-   
+    <form [formGroup]="myForm" >
+      <div class="form-group">
+      <div class="field">
+        <label for="context-desc" class="required">Déscription</label>
+        <textarea id="context-Déscription" aria-required="true" data-validate="required" name="context-name" maxlength="50" [(ngModel)]="Description" class="form-control" formControlName="Review"  (keyup)="handleinput()" ></textarea>
+      </div>
+        </div>
+        </form>
   </div>

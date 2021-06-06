@@ -13,7 +13,7 @@ export class InformationFinancereComponent implements OnInit
    BLCD : any;
    TXAP : any;
    CUCD : any;
-   TEPY: any;
+   PYCD: any;
    isBusy: boolean
    isDetailBusy = false;
    detailFinancialoByCustomer:any;
@@ -35,7 +35,7 @@ export class InformationFinancereComponent implements OnInit
          {
             program: 'CRS610MI',
             transaction: 'GetFinancial',
-            outputFields: ['BLCD', 'TXAP','CUCD', 'TEPY']
+            outputFields: ['BLCD', 'TXAP','CUCD', 'PYCD']
          };
       const CUNO = this.CUNO;
       const inputRecord : MIRecord = new MIRecord();
@@ -49,8 +49,10 @@ export class InformationFinancereComponent implements OnInit
                   this.detailFinancialoByCustomer = responseFinancial.item;
                   this.BLCD = this.detailFinancialoByCustomer['BLCD'];
                   this.CUCD = this.detailFinancialoByCustomer['CUCD'];
-                  this.TEPY = this.detailFinancialoByCustomer['TEPY'];
+                  this.PYCD = this.detailFinancialoByCustomer['PYCD'];
                   this.TXAP = this.detailFinancialoByCustomer['TXAP'];
+                  console.log('OKPYCD:'+this.detailFinancialoByCustomer['PYCD']+'/')
+                  console.log(responseFinancial.item)
                } 
                else 
               {

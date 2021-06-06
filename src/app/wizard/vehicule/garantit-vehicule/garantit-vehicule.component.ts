@@ -50,37 +50,37 @@ ngOnInit(): void {
        stretchColumn: 'favorite',
       columns: [
           {
-             width: 'auto', id: 'col-ITNO', field: 'ITNO', name: 'Item number',
+             width: 'auto', id: 'col-ITNO', field: 'ITNO', name: 'Numéro d article',
              resizable: true, filterType: 'text', sortable: true
           },
         
           {
-             width: 'auto', id: 'col-SERN', field: 'SERN', name: 'Serial no',
+             width: 'auto', id: 'col-SERN', field: 'SERN', name: 'Numero de Chassis',
              resizable: true, filterType: 'text', sortable: true
           },
           {
-             width: 'auto', id: 'col-MSEQ', field: 'STAT', name: 'Status',
+             width: 'auto', id: 'col-MSEQ', field: 'STAT', name: 'Statut',
              resizable: true, filterType: 'text', sortable: true
           },
           {
-             width: 'auto', id: 'col-MSEQ', field: 'CONO', name: 'Company',
+             width: 'auto', id: 'col-MSEQ', field: 'CONO', name: 'Divison',
              resizable: true, filterType: 'text', sortable: true
           },
           {
-           width: 'auto', id: 'col-WADT', field: 'WADT', name: 'Warranty date',
+           width: 'auto', id: 'col-WADT', field: 'WADT', name: 'Date Garantit',
            resizable: true, filterType: 'text', sortable: true
         },
           {
-             width: 'auto', id: 'col-STRT', field: 'WATP', name: 'Warranty Type',
+             width: 'auto', id: 'col-STRT', field: 'WATP', name: 'Type Garantit',
              resizable: true, filterType: 'text', sortable: true
           },
           {
-           width: 'auto', id: 'col-SUFI', field: 'PYNO', name: 'Payer',
+           width: 'auto', id: 'col-SUFI', field: 'PYNO', name: 'Payeur',
            resizable: true, filterType: 'text', sortable: true
          },
       
         {
-           width: 'auto', id: 'col-STDT', field: 'IDTY', name: 'Item type Id',
+           width: 'auto', id: 'col-STDT', field: 'IDTY', name: 'Type d article',
            resizable: true, filterType: 'text', sortable: true
         },
          

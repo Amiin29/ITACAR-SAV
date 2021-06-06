@@ -22,6 +22,7 @@ export class CalendarDemoService
     {
         return new Promise((resolve, reject) => 
         {
+          console.log('tit tit---------')
             const headers = new HttpHeaders ({
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -40,12 +41,15 @@ export class CalendarDemoService
     }
     getMaintenanceOrders(): Promise<any>
     {
+     
+      this.items=[];
       this.setBusy(true);
       const inputRecord = new MIRecord();
-      const fromStatus = "10";
-      const toStatus = "99";
-      inputRecord.setString("STSF", fromStatus);
-      inputRecord.setString("STST", toStatus);
+      inputRecord.setString("STSF", "0");
+      inputRecord.setString("STST", "80");
+      inputRecord.setString("FACF", 'BB1');
+      inputRecord.setString("FACT", 'BB1');
+      inputRecord.setString("REAR", 'PREP');
       return new Promise((resolve, reject) => 
       {
           this.userService.getUserContext().subscribe((context) => {
@@ -53,27 +57,37 @@ export class CalendarDemoService
           program: 'MOS100MI',
           transaction: 'Select',
           record: inputRecord,
-          outputFields: ["MFNO", "PRNO", "RORN", "STDT","FIDT","MSTI","MFTI"]
+          outputFields: ["MFNO", "PRNO", "RORN", "STDT","FIDT","MSTI","MFTI","ITDS","SUFI","BANO","WHST"]
         };
         this.miService.execute(request).subscribe((response: IMIResponse) => 
         {
           if (!response.hasError()) 
           {
+            console.log('MCOS-------------')
+            console.log(response.items)
             response.items.forEach((elem) =>
                 this.items.push(
                 {
                   "id": elem.MFNO,
-                  "subject": "Discretionary Time Off",
-                  "shortSubject": elem.PRNO,
-                  "comments": "Short getaway",
-                  "location": "Us Office",
-                  "status": "Draft",
-                  "starts": new Date(elem.STDT.substring(0,4),elem.STDT.substring(4,6),elem.STDT.substring(6,8),elem.MSTI.substring(0,2),elem.MSTI.substring(2,4)).toISOString(),
-                  "ends": new Date(elem.FIDT.substring(0,4),elem.FIDT.substring(4,6),elem.FIDT.substring(6,8),elem.MFTI.substring(0,2),elem.MFTI.substring(2,4)).toISOString(),
-                  "type": "sick",
-                  "isAllDay": "true"
+                  "subject": elem.ITDS,
+                  "shortSubject": 'N° Commande de maintenance : '+elem.RORN+'   ||   '+'N° Ordre de travail : '+elem.MFNO+' | '
+                 + ' Vehicule : '+elem.PRNO+' | '+'chassie : '+elem.BANO+' | '+'Service : '+elem.SUFI,
+                  "TypeRdv": elem.ITDS,
+                  "comments": 'Vehicule : '+elem.PRNO+' | '+'chassie : '+elem.BANO+' | '+'Service : '+elem.SUFI,
+                  
+                  "location": "Canada Office",
+                  "status": "Approved",
+                  "starts": new Date(elem.STDT.substring(0,4),elem.STDT.substring(4,6)-1,elem.STDT.substring(6,8),elem.MSTI.substring(0,2),elem.MSTI.substring(2,4)).toISOString(),
+                  "ends": new Date(elem.FIDT.substring(0,4),elem.FIDT.substring(4,6)-1,elem.FIDT.substring(6,8),elem.MFTI.substring(0,2),elem.MFTI.substring(2,4)).toISOString(),
+                  "type": "team",
+                  "isAllDay": "true",
+                  "translationKey": "SickTime"
                 })
+
+               
             )
+         
+               
             resolve(this.items)
           } 
             else 

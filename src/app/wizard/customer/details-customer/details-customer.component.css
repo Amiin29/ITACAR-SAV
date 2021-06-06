@@ -11,7 +11,7 @@
 .row:last-child 
   { /*distance entre les 4 premiers inputs grp cl onglet lst prix ... */
     margin-bottom: 20px;
-    padding: 3rem 1rem;
+    padding: -7rem 4rem;
   }
 input{/*distance entre les inputs*/
       min-width: 30rem;

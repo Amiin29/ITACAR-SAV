@@ -36,13 +36,14 @@ export class AddVehiculeComponent implements OnInit {
    })
   }
    ngOnInit(): void {
+      ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
      this.GetModelsVehicul();
     this.CUNO=this.VSService.GetCustomerNumber();
-     this.chassis = new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(11), Validators.maxLength(11)]);
-     this.matricule = new FormControl('', [Validators.pattern('[t-uT-U]*[0-9]'), Validators.minLength(8), Validators.maxLength(9)]);
+     this.chassis = new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(17), Validators.maxLength(17),Validators.required]);
+     this.matricule = new FormControl('', [Validators.pattern('[0-9][0-9][0-9]TU[0-9][0-9][0-9][0-9]'), Validators.minLength(9), Validators.maxLength(9),Validators.required]);
      this.myForm = new FormGroup({
-      'chassis': this.chassis,
-      'matricule':this.matricule,
+      'chassis': new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(17), Validators.maxLength(17),Validators.required]),
+      'matricule':new FormControl('', [Validators.pattern('[0-9][0-9][0-9]TU[0-9][0-9][0-9][0-9]'), Validators.minLength(9), Validators.maxLength(9),Validators.required]),
      });
     }
    GetModelsVehicul() {
@@ -62,11 +63,9 @@ export class AddVehiculeComponent implements OnInit {
             this.Models = response.items;           
          }
          else {
-            this.handleError(response.error);
          }
       }, (response) => {
      
-         this.handleError(response, 'customer');
       }); 
    }
    showToast(position: SohoToastPosition = SohoToastService.TOP_RIGHT) {
@@ -107,21 +106,19 @@ export class AddVehiculeComponent implements OnInit {
      }, (error) => 
      {
        
-        this.handleError('Failed to get details', error);
      });
 
  } 
- 
- private handleError(message: string, error?: any) 
- {
-      
-       const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-       this.messageService.error()
-       .title('An error occured')
-       .message(message + '. More details might be available in the browser console.')
-       .buttons(buttons)
-       .open();
- }
+ handleinput(){
+    
+   if(this.myForm.valid){
+     ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=false
+   }
+   else{
+      (document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
+   
+   }
+    }
  
   
 }

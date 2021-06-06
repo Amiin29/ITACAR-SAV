@@ -16,7 +16,7 @@ export class CalendarUpdatedDemoComponent {
   @ViewChild('SohoCalendarComponent') sohoCalendarComponent?: SohoCalendarComponent;
 
   public initialMonth = 1;
-  public initialYear = 2019;
+  public initialYear = 2021;
   public showViewChanger = false;
   public eventTypes?: [];
   public events?: [];
@@ -56,5 +56,8 @@ export class CalendarUpdatedDemoComponent {
 
   onDblClick(event: MouseEvent) {
     console.log('onDblClick', event);
+  }
+  onRefresh(){
+    this.eventsLoaded = true;
   }
 }

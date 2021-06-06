@@ -191,9 +191,11 @@ export class VehiculeComponent extends CoreBase implements OnInit {
          {
            text: 'Submit', click: () => {
             this.VehiculeServiceService.sendEventAddVehicule()
+            this.updateGridData()
             this.ToastAddVehicule()
              dialogRef.close('SUBMIT');
-           }, isDefault: true
+           }, isDefault:false,
+           id:'sendbutton'
          }
        ])
      .open();

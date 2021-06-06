@@ -12,6 +12,8 @@ export class ConsultRdvComponent implements OnInit {
   @Input() item: string;
   clickEventsubscription:Subscription;
   id:any
+  todayISOString : string = new Date().toISOString();
+
   nom:any
   type:any;
   date:any;
@@ -46,6 +48,34 @@ export class ConsultRdvComponent implements OnInit {
       })
   }
    GetRdvByID(val): Promise<any>{
+    
+
+    console.log(this.todayISOString.substring(5,7)+'/'+this.todayISOString.substring(8,10)+'/'+this.todayISOString.substring(0,4))
+    console.log(this.todayISOString.substring(11,13)+':'+this.todayISOString.substring(14,16))
+    console.log('date='+this.date)
+    console.log('Heure='+this.heure)
+    console.log(this.todayISOString)
+    console.log(this.todayISOString.substring(5,7)+' '+this.todayISOString.substring(8,10)+','+this.todayISOString.substring(0,4)+' ')
+              console.log(this.todayISOString.substring(11,13)+':'+this.todayISOString.substring(14,16))
+
+              var date1 = new Date(this.todayISOString.substring(5,7)+' '+this.todayISOString.substring(8,10)+','+this.todayISOString.substring(0,4)+' '+this.todayISOString.substring(11,13)+':'+this.todayISOString.substring(14,16));
+              var date2 = new Date('05 31, 2021 16:04');
+              
+              //best to use .getTime() to compare dates
+              if(date1.getTime() === date2.getTime()){
+                console.log('date1.getTime() === date2')
+              }
+              
+              else if(date1.getTime() > date2.getTime()){
+                console.log('date1.getTime() > date2')
+              }
+              else {
+                console.log('date1.getTime() < date2')
+
+              }
+    
+
+
     return new Promise((resolve, reject) => {
       let params = new HttpParams();
       params = params.append('id', val);

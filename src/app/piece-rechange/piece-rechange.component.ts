@@ -83,7 +83,7 @@ export class PieceRechangeComponent extends CoreBase implements OnInit {
             resizable: true, filterType: 'text', sortable: true
          },
            {
-              width: 'auto', id: 'col-STAT', field: 'STAT', name: 'Status',
+              width: 'auto', id: 'col-STAT', field: 'STAT', name: 'Statut',
               resizable: true, filterType: 'text', sortable: true
            },
          
@@ -172,10 +172,6 @@ export class PieceRechangeComponent extends CoreBase implements OnInit {
          this.itemPareHouseITNO=selected['ITNO']
          this.itemRelation=selected['ITNO']
          this.itemAlias=selected['ITNO']
-
-        // this.GetBasicInfoByCustomer(selected);
-        // this.GetDetailsByCustomer(selected);
-         //this.GetFinancialInfoByCustomer(selected);
          }
          else {
             this.itemSelected=false;

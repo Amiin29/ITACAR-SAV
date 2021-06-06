@@ -11,7 +11,6 @@ export class DetailsCustomerComponent implements OnInit
   @Input() 
   CUNO: any;
   OKCUCL:any
-  OKPYCDa:any
   OKAICD:any
   OKPLTB:any
   OKIVGP:any
@@ -49,13 +48,32 @@ export class DetailsCustomerComponent implements OnInit
                this.detailItem = response.item;
                this.OKCUCL=this.detailItem['OKCUCL']
                this.OKPLTB=this.detailItem['OKPLTB']
-               this.OKIVGP=this.detailItem['OKIVGP']
-               this.OKTEPY=this.detailItem['OKTEPY']
+               
+               
                this.OKCUCD=this.detailItem['OKCUCD']
                this.OKSMCD=this.detailItem['OKSMCD']
-               this.OKLHCD=this.detailItem['OKLHCD']
-               this.OKPYCD=this.detailItem['OKLHCD']
-               this.OKAICD=this.detailItem['OKLHCD']
+              
+               this.OKPYCD=this.detailItem['OKPYCD']
+               this.OKAICD=this.detailItem['OKAICD']
+              
+               if (this.detailItem['OKIVGP'].length != 0){
+                  this.OKIVGP=this.detailItem['OKIVGP'];
+               }
+               else{
+                  this.OKIVGP="Non utilisé"
+               }
+
+               if (this.detailItem['OKLHCD'].length!=0){
+                  this.OKLHCD=this.detailItem['OKLHCD'];
+               }else{
+                  this.OKLHCD="Non utilisé";
+               }
+
+               if (this.detailItem['OKTEPY'].length!=0){
+                  this.OKTEPY=this.detailItem['OKTEPY']
+               }else{
+                  this.OKTEPY="Non utilisé";
+               }
             } 
             else 
                {

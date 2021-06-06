@@ -1,5 +1,4 @@
 
-<form name="verifform">
   <div class="full-width column">
     <div class="field">
       <label for="context-name" >Template</label>
@@ -37,26 +36,52 @@
       <label for="context-name" class="required">Adresse2</label>
       <input  [(ngModel)]="Adresse2" id="context-Adresse2" aria-required="true" data-validate="required" name="context-Adresse2" type="text"/>
     </div>
-
-    <div class="field">
-      <label for="context-name" class="required">Code Postale</label>
-      <input FormControl="codePostale" [(ngModel)]="codePostale"id="context-Code" aria-required="true" data-validate="required" name="context-Code" type="text" />
+  
+    <form [formGroup]="myForm" >
+      <div class="form-group">
+      <div class="field">
+        <label for="context-name" class="required">Code Postale</label>
+        <input FormControl="codePostale" [(ngModel)]="codePostale" id="context-Code" aria-required="true" data-validate="required" name="context-Code" type="text"  class="form-control" formControlName="Code_Postale" [ngClass]="{'is-invalid': myForm.get('Code_Postale').hasError('minlength')}"  (keyup)="handleinput()"/>
+        <div class="invalid-feedback" >
+        <br>
+        <strong *ngIf="myForm.get('Code_Postale').hasError('minlength')">La longueur du code postale doit être égale à 4</strong>
+        <br>
+        <strong *ngIf="myForm.get('Code_Postale').hasError('pattern')">Code postale n'admet que 1-5</strong>
+        </div>
+      </div>
+      </div>
+  
+      <div class="form-group">
+      <div class="field">
+        <label for="context-name" >Téléphone</label>
+        <input  aria-required="true" data-validate="required" [(ngModel)]="MobileNumber" id="context-name"   name="context-name" type="text"  class="form-control" formControlName="Telephone" [ngClass]="{'is-invalid': myForm.get('Telephone').hasError('minlength')}"  (keyup)="handleinput()"/>
+        <br>
+        <strong *ngIf="myForm.get('Telephone').hasError('minlength')">la longueur de téléphone doit être égale à 8</strong>
+        <br>
+        <strong *ngIf="myForm.get('Telephone').hasError('pattern')">Téléphone n'admet que 0-9 </strong>
+      </div>
+      </div>
+  
+      <div class="form-group">
+      <div class="field">
+        <label for="context-name" >Numéro Faxe</label>
+        <input aria-required="true" data-validate="required" [(ngModel)]="FaxNumber" id="context-name" name="context-name" type="text"  class="form-control" formControlName="NumeroFaxe" [ngClass]="{'is-invalid': myForm.get('NumeroFaxe').hasError('minlength')}"  (keyup)="handleinput()" />
+        <br>
+        <strong *ngIf="myForm.get('NumeroFaxe').hasError('minlength')">la longueur de téléphone doit être égale à 8</strong>
+        <br>
+        <strong *ngIf="myForm.get('NumeroFaxe').hasError('pattern')">Numéro Faxe n'admet que 0-9 </strong>
+      </div>
+      </div>
+  
+      <div class="form-group">
+      <div class="field">
+        <label for="context-name" >E-mail</label>
+        <input aria-required="true" data-validate="required" [(ngModel)]="Email" id="context-name"  name="context-name" type="text"  class="form-control" formControlName="E_mail" [ngClass]="{'is-invalid': myForm.get('E_mail').hasError('minlength')}"  (keyup)="handleinput()" />
+        <br>
+        <strong *ngIf="myForm.get('E_mail').hasError('pattern')">E-mail non valide,Ressayer</strong>
+      </div>
+      </div>
+      </form>
     </div>
-
-    <div class="field">
-      <label for="context-name" >Téléphone</label>
-      <input  aria-required="true" data-validate="required" [(ngModel)]="MobileNumber"id="context-Téléphone"   name="context-Téléphone" type="text" />
-    </div>
-
-    <div class="field">
-      <label for="context-name" >Numéro Faxe</label>
-      <input aria-required="true" data-validate="required" [(ngModel)]="FaxNumber" id="context-NuméroF " name="context-NuméroF" type="text" />
-    </div>
-    
-    <div class="field">
-      <label for="context-name" >E-mail</label>
-        <input aria-required="true" data-validate="required" [(ngModel)]="Email" id="context-mail"  name="context-mail" type="text" />
-    </div>
-
-  </div>
-</form>
+  
+   

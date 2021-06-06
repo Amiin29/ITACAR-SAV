@@ -29,9 +29,8 @@ export class InspectionService {
             'matricule' :element['value']['matricule'],
             'observation' :element['value']['observation'],
             'qualite' :element['value']['qualite'],
-            'reception' :element['value']['reception'],
-
-            
+            'reception' :element['value']['reception'], 
+            'medias' :element['value']['medias'], 
           }
         }
 

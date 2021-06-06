@@ -67,13 +67,7 @@ openFullSize() {
         {
         }
       ])
-    .beforeOpen((ref?: SohoModalDialogRef<DetailsParehouseComponent>) => {
-      (ref as any).buttonsetAPI.at(2).disabled = true;
-      return true;
-    }).afterOpen((_: any, ref: SohoModalDialogRef<DetailsParehouseComponent>) => {
-      (ref as any).buttonsetAPI.at(3).disabled = false;
-      return true;
-    })
+    
     .open();
   }
 initPareHouseGrid(){
@@ -100,16 +94,16 @@ initPareHouseGrid(){
               resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox
            },
            {
-            width: 'auto', id: 'col-MBWHLO', field: 'WHLO', name: 'whlo',
+            width: 'auto', id: 'col-MBWHLO', field: 'WHLO', name: 'Code dépot',
             resizable: true, filterType: 'text', sortable: true
          },
         {
-           width: 'auto', id: 'col-MBFACI', field: 'FACI', name: 'facility',
+           width: 'auto', id: 'col-MBFACI', field: 'FACI', name: 'Établissement',
            resizable: true, filterType: 'text', sortable: true
         },
       
         {
-           width: 'auto', id: 'col-MBWHTY', field: 'WHTY', name: 'Warehouse type',
+           width: 'auto', id: 'col-MBWHTY', field: 'WHTY', name: 'Type de Dépot',
            resizable: true, filterType: 'text', sortable: true
         },
         {
@@ -118,7 +112,7 @@ initPareHouseGrid(){
         },
        
         {
-         width: 'auto', id: 'col-MWWHNM', field: 'WHNM', name: 'Description',
+         width: 'auto', id: 'col-MWWHNM', field: 'WHNM', name: 'Déscription',
          resizable: true, filterType: 'text', sortable: true
       },
        

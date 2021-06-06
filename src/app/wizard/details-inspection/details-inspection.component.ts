@@ -1,5 +1,5 @@
 import { Component, OnInit,Input,SimpleChanges } from '@angular/core';
-
+import{ServiceDetailInspectionService} from 'src/app/wizard/details-inspection/service/service-detail-inspection.service'
 @Component({
   selector: 'app-details-inspection',
   templateUrl: './details-inspection.component.html',
@@ -7,11 +7,35 @@ import { Component, OnInit,Input,SimpleChanges } from '@angular/core';
 })
 export class DetailsInspectionComponent implements OnInit {
   @Input() inspec:any
-  constructor() { }
+  url:any
+  taille:any
+  img:string;
+  imgs=[];
+  constructor(private ServiceDetailInspectionService:ServiceDetailInspectionService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
   }
-  ngOnInit(): void {
+  ngOnInit(): void 
+    {
+      console.log('detain inspec-------')
+     
+     // this.img='http://172.16.0.43:8081/load/'+this.inspec[0]['medias'][2]['link'];
+     
+      this.ServiceDetailInspectionService.GetImgs(this.inspec[0]["medias"]).then(value =>{
+        console.log('imgs---------')
+      this.imgs=value;
+      })
+      
+      
+        
+      /*  ObjectToArray.forEach(element => 
+          {
+            console.log(element[0]['link'])
+            console.log('http://172.16.0.43:8081/load/'+this.inspec[0]['medias'][0]['link'])
+           // 
+
+          });*/
   }
 
 }
+
