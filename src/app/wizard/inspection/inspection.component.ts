@@ -26,6 +26,10 @@ export class InspectionComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+  intervalId = setInterval(this.GetInspectionselectionne, 1000);
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
   GetInspectionselectionne(){
     this.InspService.GetinspectionByMat(this.currentVISelected).then(value =>
       {
@@ -59,6 +63,7 @@ export class InspectionComponent implements OnInit {
   }
   onDeselected(args: any) {
     this.WizardDemoComponent.ifInspectionSelected(false);
+    console.log('-----------')
    }
     SendCurrentInspectionIsSelected(value) {
      

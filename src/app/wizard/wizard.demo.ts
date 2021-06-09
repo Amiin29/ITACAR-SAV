@@ -16,40 +16,14 @@ export class WizardDemoComponent {
   VehiculeIsSelected=false
   currentItemSelected =null;
   inspec=null;
-  public buttons = [
-    {
-      id: 'prevous',
-      text: Soho.Locale.translate('Previous'),
-      click: () => this.wizard.previous(),
-      disabled: () => !this.wizard.hasPrevious(),
-      position: 'middle'
-    },
-    {
-      id: 'next',
-      text: Soho.Locale.translate('Next'),
-      click: () => this.wizard.next(),
-      isDefault: true,
-      disabled: () => this.nextButtonDisabled(),
-      position: 'middle'
-    },
-    {
-      id: 'finish',
-      text: 'Finish', // Soho.Locale.translate('Finish'),
-      click: () => this.wizard.finish(),
-      disabled: () => !this.wizard.hasFinished(),
-      position: 'middle'
-    }
-  ];
- constructor(private toastService:SohoToastService) {}
 
- 
-  
- 
+ constructor(private toastService:SohoToastService) {}
   nextButtonDisabled() 
   {
     if(this.wizard.currentTickId=="app-customer")
     {
       if(this.customerIsSelected){
+
         return false
       }
       else
@@ -73,12 +47,8 @@ ReciveIspectionSelected (event){
      this.inspec =event;
   }else {
     this.InspectionIsSelected=false;
-    
     this.toastService.show({ draggable: true, title: '', message: 'Inspection invalide' });
   }
- 
-
-  
 }
 ReciveSelectedVehicule (event){
   this.currentVehculeSelected =event;
@@ -91,18 +61,15 @@ customerSelectedEvent(event)
   if(event)
     {
       this.customerIsSelected = true;      
-      this.currentItemSelected =event ;
-
-     
+      this.currentItemSelected =event ; 
+      console.log('-----------true-----------'+event)
     }
   else
     {
       this.customerIsSelected = false;
-    }
+      console.log('-----------false-----------')
 
-  const newbutton=[...this.buttons]
-  newbutton[2].disabled()
-  this.buttons=newbutton
+    }
 }
 addItem(newItem: string) {
   this.currentItemSelected.push(newItem);

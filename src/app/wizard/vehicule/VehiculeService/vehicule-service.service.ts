@@ -23,8 +23,10 @@ export class VehiculeServiceService {
     return this.subject.asObservable();
     
   }
-  sendEventAddVehicule() {
-    this.subject.next();
+  sendEventAddVehicule() : Promise<any> {
+    return new Promise((resolve, reject) => {
+      resolve(this.subject.next());
+    });
   }
   
   GetCustomerNumber(){

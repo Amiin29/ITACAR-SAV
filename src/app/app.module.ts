@@ -114,6 +114,7 @@ import { OrderReparationComponent } from './wizard/order-reparation/order-repara
       PieceRechangeComponent,
       AliasComponent,
       ObservationComponent,
+      VehiculeComponent,
       OrderReparationComponent],
      
       
@@ -132,12 +133,10 @@ import { OrderReparationComponent } from './wizard/order-reparation/order-repara
     
   ],
   providers: [
+    WizardDemoComponent,
     SohoRenderLoopService,
     InformationBasiqueCsutomerComponent,
     GarantitVehiculeComponent,
-    AddVehiculeComponent,
-    
-    
   ],
   entryComponents: [
   ],

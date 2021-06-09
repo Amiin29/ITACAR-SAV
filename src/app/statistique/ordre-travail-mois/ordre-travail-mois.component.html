@@ -1,14 +1,28 @@
 <div class="row top-padding" >
     <div class="two-thirds column">
-        <div class="widget" style="top: -19px;
-        margin-left: -111px;
-        width: 102%;">
-          <div class="widget-header">
+      
+        <div style="background-color: #ffffff;
+        border: 1px solid #bdbdbd;
+        border-radius: 2px;
+        margin-bottom: 20px;
+        min-height: 255px;
+        position: relative;
+        top: -27px;
+        margin-left: -14px;
+        width: 608px;" >
+          
               <h2 class="widget-title">Ordre de Travail par Mois</h2>
             </div>
-              <div class="widget-content" *ngIf="test && tab.length > 0 ">
+              <div *ngIf="test && tab.length > 0 " style="background-color: #ffffff;
+                border: 1px solid #bdbdbd;
+                border-radius: 2px;
+                margin-bottom: 20px;
+                min-height: 255px;
+                position: relative;
+                top: -275px;
+                margin-left: -14px;
+                width: 608px;" >
                 <div  soho-line [dataset]="areaData"[isArea]="false"></div>
-              </div>
         </div>
      </div>
 </div>

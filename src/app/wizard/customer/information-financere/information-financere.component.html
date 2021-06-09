@@ -1,36 +1,45 @@
-<div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0"readonly>
-   <div class="row card"> 
-      <div class="six columns" style="    margin-left: 34px;">
-         <div class="field"><label>Arrêt client </label>
-            <select class="select-1 field"  required [(ngModel)]="BLCD" readonly>
-               <option value="0">0-Non bloquer</option>
-               <option value="1">1-Bloquer partiellement</option>
-               <option value="2">3-Bloquer CO,EQM</option>
-            </select>
+<div soho-busyindicator [activated]="isDetailBusy" [blockUI]="true" [displayDelay]="0">
+   <div  class="row card">
+       <div class="twelve columns"></div>
+         <div class="num">
+            <div class="six columns">
+               <div class="field"><label>Arrêt client </label>
+                  <select class="select-1 field"  required [(ngModel)]="BLCD" disabled=true>
+                     <option value="0">0-Non bloquer</option>
+                     <option value="1">1-Bloquer partiellement</option>
+                     <option value="2">3-Bloquer CO,EQM</option>
+                  </select>
+               </div>
+            </div>
          </div>
-      </div>        
-      <div class="six columns" style="margin-left: 148px;">
-         <div class="field"><label>Taxe applicable   </label>
-            <select class="select-1 field"  required [(ngModel)]="TXAP" readonly>
-               <option value="0">0-Non</option>
-               <option value="1">1-Oui</option>
-               <option value="2">2-Non VAT expemt</option>
-            </select>
-         </div>
-      </div>              
+         <div class="cle">
+            <div class="six columns" >
+               <div class="field" style="    margin-left: 207px;"><label>Taxe applicable   </label>
+                  <select class="select-1 field"  required [(ngModel)]="TXAP" disabled=true>
+                     <option value="0">0-Non</option>
+                     <option value="1">1-Oui</option>
+                     <option value="2">2-Non VAT expemt</option>
+                  </select>
+               </div>
+            </div>                              
+         </div>                 
       <div class="">
          <div class="six columns">
-            <div class="field">Devise 
+            <div class="field" style="top: 6px;
+            margin-left: -13px;">Devise 
                <label for="di-cumn"><input id="di-cunm" [(ngModel)]="CUCD" readonly/></label>                                     
             </div>
          </div>                                
       </div>                    
-      <div >
-         <div class="six columns" style="margin-left: 116px;">
-            <div class="field" style="    margin-left: 18px;">Méthode de paiement 
+      <div class="">
+         <div class="six columns">
+            <div class="field" style="top: 6px;
+               margin-left: 191px;">Méthode de paiement 
                <label for="di-town"><input id="di-town" [(ngModel)]="PYCD" readonly/></label>                                      
             </div>
-         </div>   
-      </div>  
+         </div>                                
+      </div>   
+        
+         
    </div>
 </div>

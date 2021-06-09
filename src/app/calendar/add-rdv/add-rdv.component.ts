@@ -33,6 +33,8 @@ export class AddRdvComponent implements OnInit
         this.AddRdv()
       })
     }
+    ngOnDestroy(): void {
+      this.clickEventsubscription.unsubscribe()  }
    ngOnInit(): void {
     ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
     this.telephone= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]);
@@ -54,7 +56,20 @@ export class AddRdvComponent implements OnInit
             'Access-Control-Allow-Methods': 'POST',
             'Access-Control-Allow-Headers':'*',
           });
-      
+          console.log(this.date)
+          let index1=this.date.indexOf("/",0)
+          let month=this.date.substring(0,index1)
+          let index2=this.date.indexOf("/",index1+1)
+          let day=this.date.substring(index1+1,index2)
+          let annne=this.date.substring(index2,this.date.length)
+       if(month.length==1){
+         month = '0' + month
+       }
+       if(day.length==1){
+        day = '0' + day
+      }
+          let newanne = month + "/" + day  + annne
+    console.log(newanne)
       const object=
       {
         name:this.nom,
@@ -62,31 +77,13 @@ export class AddRdvComponent implements OnInit
         type:this.typeRDV,
         description:this.Description,
         time :this.heure,
-        date:this.date
+        date:newanne
       }
-
-      var lengthdate=this.date.substring(2,4)
-      if (lengthdate.length==2){
-        //console.log(this.date.substring(0,1)+' '+this.date.substring(2,4)+' '+this.date.substring(5,10)+' '+this.heure)
-      var datesysteme = new Date(this.todayISOString.substring(5,7)+' '+this.todayISOString.substring(8,10)+' '+this.todayISOString.substring(0,4)+' '+this.todayISOString.substring(11,13)+':'+this.todayISOString.substring(14,16));
-    var dateInput=new Date(this.date.substring(0,1)+' '+this.date.substring(2,4)+' '+this.date.substring(5,10)+' '+this.date.substring(0,1)+':'+this.date.substring(2,4))
-    //console.log('date Input='+dateInput)
-   // console.log('date system ='+datesysteme)
-      }
-      else if (lengthdate.length==1){
-      //console.log(this.date.substring(0,1)+' '+this.date.substring(2,4)+' '+this.date.substring(5,10)+' '+this.heure)
-      var datesysteme = new Date(this.todayISOString.substring(5,7)+' '+this.todayISOString.substring(8,10)+' '+this.todayISOString.substring(0,4)+' '+this.todayISOString.substring(11,13)+':'+this.todayISOString.substring(14,16));
-      var dateInput=new Date(this.date.substring(0,1)+' '+this.date.substring(2,4)+' '+this.date.substring(4,9)+' '+this.date.substring(0,1)+':'+this.date.substring(2,4))
-      //console.log('date Input='+dateInput)
-      //console.log('date system ='+datesysteme)
-      }
- 
-
       this.http.post('http://172.16.0.43:8081/rdv/',object,{headers:headers}).toPromise().then
       (
-        
           res => 
           { // Success 
+            console.log(res)
             resolve(res);
           },msg => 
             { // Error

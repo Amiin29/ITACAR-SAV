@@ -27,6 +27,10 @@ export class DetailsCustomerComponent implements OnInit
   ngOnInit(): void {
     this.GetDetailsByCustomer()
   }
+  ngOnChanges(changes) 
+  {
+     this.GetDetailsByCustomer();
+  } 
    GetDetailsByCustomer()
    {
       this.setBusy(true, true);

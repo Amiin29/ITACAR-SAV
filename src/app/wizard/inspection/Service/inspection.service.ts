@@ -6,7 +6,7 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 export class InspectionService {
 
   constructor(private http:HttpClient) { }
-
+  
   GetinspectionByMat(val): Promise<any>{
     return new Promise((resolve, reject) => {
 

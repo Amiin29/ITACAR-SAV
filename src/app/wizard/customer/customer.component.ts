@@ -31,15 +31,19 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
    itemCUNO:any
    hasSelected: boolean;
    items: any[] = [];   
+   i=0;
    constructor(private VehiculeServiceService:VehiculeServiceService,private toastService: SohoToastService,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
          super('CustomerSampleComponent');
+         
          this.initGrid();
       }
    ngOnInit() {
       this.listItems();
+      this.updateGridData();
    }
    ngOnChanges(changes) {
       this.listItems(); 
+      this.updateGridData();
    }
    private initGrid() 
       {  
@@ -100,6 +104,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
       }
 
    listItems() {
+
       if (this.isBusy) { 
          return; 
          }
@@ -117,15 +122,14 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
             inputrecord.setString ('F_STAT','20')
             inputrecord.setString ('T_STAT','20')
             inputrecord.setString ('F_CUTP','0')
-            inputrecord.setString ('T_CUTP','8')
+            inputrecord.setString ('T_CUTP','0')
             request.record = inputrecord;
             this.miService.execute(request).subscribe((response: IMIResponse) => 
             {
+
                if (!response.hasError()) {
                   this.items = response.items;
                   this.updateGridData();
-                  console.log('----------Customer---------')
-                  console.log(this.items)
                }else{
                }
                this.setBusy(false);
@@ -136,10 +140,9 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
                      this.setBusy(false);
                   });
    }
-
-
    onSelected(args: any[], isSingleSelect?: boolean) 
       {
+         
          if (this.isBusy)
             {
             return; 
@@ -154,8 +157,13 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
                this.VehiculeServiceService.SetCustomerNumber(selected['OKCUNO'])
 
             }
-            else {}
+            else {
+
+            }
       } 
+      onDeselected(args: any[], isSingleSelect?: boolean){
+         console.log('deselected')
+      }
    private updateGridData(){
       this.datagrid ? this.datagrid.dataset = this.items : this.datagridOptions.dataset = this.items;
    }
@@ -180,8 +188,15 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
             },
             {
               text: 'Ajouter', click: () => {
+               
+               this.isBusy=true;
                this.mycolor.sendEventAddCustomer()
                this.ToastAddCutsomer()
+               setTimeout(() => {  
+                  this.isBusy=false;
+                  this.ngOnInit() ; 
+               }
+                  , 4300);
                 dialogRef.close('SUBMIT');
               }, isDefault: false,
               id:'sendbutton'
@@ -193,7 +208,6 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
    ToastAddCutsomer(position: SohoToastPosition = SohoToastService.TOP_RIGHT)
       {
       this.toastService.show({ draggable: true, title: '', message: 'Client Ajouté avec succès', position });
-      this.listItems();
       }
 
    onBeforeActivated(e: SohoWizardEvent) {}

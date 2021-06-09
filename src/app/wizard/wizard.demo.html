@@ -5,7 +5,7 @@
         (activated)="onActivated($event)">
       <div soho-wizard-header>
         <a soho-wizard-tick tickId="app-customer" shortLabel="app-customer" current="true">Client</a>
-        <a soho-wizard-tick tickId="app-vehicule" shortLabel="Target" [disabled]="!customerIsSelected">Véhicule</a>
+        <a soho-wizard-tick tickId="app-vehicule" shortLabel="Target"  [disabled]="!customerIsSelected">Véhicule</a>
         <a soho-wizard-tick tickId="backup-rule" shortLabel="Backup" [disabled]="!VehiculeIsSelected">Inspections</a>
         <a soho-wizard-tick tickId="validation-rule" shortLabel="Rule" [disabled]="!InspectionIsSelected">Details Inspection</a>
         <a soho-wizard-tick tickId="confirmation" shortLabel="Conf." [disabled]="true" [disabled]="!InspectionIsSelected">Ordre de réparation - Devis</a>
@@ -29,6 +29,5 @@
         </div>
         <div soho-wizard-page tickId="result"></div>
     </div>
-    <div soho-wizard-buttonbar [buttons]="buttons"></div>
   </div>
 </div>

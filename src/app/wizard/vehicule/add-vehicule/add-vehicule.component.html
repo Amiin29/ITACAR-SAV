@@ -14,8 +14,11 @@
     <div class="field">
       <label for="context-type" class="required">Modèle</label>
       <select soho-dropdown id="context-type" name="type" aria-required="true" data-validate="required" [(ngModel)]="ValueOfModelSelected">
-        <option [selected]="Model.MMITNO" *ngFor="let Model of Models" value="{{Model['MMITNO']}}" >{{Model["MMITNO"]}}</option>
+        <option [selected]="Model.MMITNO" *ngFor="let Model of Models" value="{{Model['MMITNO']}}" >{{Model['MMITNO']}} | {{Model["MMITDS"]}}</option>
+     
       </select>
+  
+      
     </div>
  
     <form [formGroup]="myForm">
@@ -24,7 +27,7 @@
         <label for="context-name" class="required">Chassis</label>
         <input id="context-name" aria-required="true" data-validate="required" [(ngModel)]="Vinnumber" ngModel ng-model="Vinnumber" name="context-name" type="text" class="form-control" formControlName="chassis" [ngClass]="{'is-invalid': myForm.get('chassis').hasError('minlength')}" (keyup)="handleinput()"/>
         <div class="invalid-feedback" >
-        <strong *ngIf="myForm.get('chassis').hasError('minlength')">La longueur du chassis doit être égale à 11 </strong>
+        <strong *ngIf="myForm.get('chassis').hasError('minlength')">La longueur du chassis doit être égale à 17 </strong>
         <strong *ngIf="myForm.get('chassis').hasError('pattern')">Chassis n'admet que A-Z et 0-9 </strong>
         </div>
         </div>

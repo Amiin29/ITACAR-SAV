@@ -1,11 +1,10 @@
 :host .card-content {
-  height: 450px;
-}
+  height: 450px;}
 :host .slide-content {
   height: 450px;
-  padding: 350px 20px 20px 20px;
-  text-align: center;
-  width: 100%;
+    padding: -14px 20px 20px 20px;
+    text-align: center;
+    width: 100%;
 }
 /*:host .slides .slide-content {
   background-size: 1038px 452px !important;

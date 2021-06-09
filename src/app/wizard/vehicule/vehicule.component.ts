@@ -5,12 +5,13 @@ import { SohoDataGridComponent, SohoMessageService,SohoModalDialogService,SohoTo
 import { VehiculeServiceService } from 'src/app/wizard/vehicule/VehiculeService/vehicule-service.service';
 import {AddVehiculeComponent} from './add-vehicule/add-vehicule.component';
 import { WizardDemoComponent } from 'src/app/wizard/wizard.demo';
-import { Console } from 'node:console';
+import { ColorService } from 'src/app/color.service';
 
 @Component({
   selector: 'vehicule',
   templateUrl: './vehicule.component.html',
   styleUrls: ['./vehicule.component.css']
+  
 })
 export class VehiculeComponent extends CoreBase implements OnInit {
    @Output() newVehculeEvent:EventEmitter<string>= new EventEmitter<string>();
@@ -37,7 +38,8 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   ServiceClosed: any[] =[];
   hasSelected: boolean;
   test = false;
-  constructor(private toastService:SohoToastService,private VehiculeServiceService : VehiculeServiceService,private WDC:WizardDemoComponent,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService) {
+  i=0
+  constructor(private mycolor:ColorService,private toastService:SohoToastService,private VehiculeServiceService : VehiculeServiceService,private WDC:WizardDemoComponent,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService) {
    super('VehiculeComponent');
       this.initGrid();
     }
@@ -79,7 +81,7 @@ export class VehiculeComponent extends CoreBase implements OnInit {
            resizable: true, filterType: 'text', sortable: true
         },
         {
-           width: 'auto', id: 'col-sern', field: 'LISERN', name: 'Numéro Chasis',
+           width: 'auto', id: 'col-sern', field: 'LISERN', name: 'Numéro Chassis',
            resizable: true, filterType: 'text', sortable: true
         },
         {
@@ -114,8 +116,7 @@ export class VehiculeComponent extends CoreBase implements OnInit {
             request.record = inputrecord;
             this.miService.execute(request).subscribe((response: IMIResponse) => 
             {
-               console.log(response)
-                             if (!response.hasError()) 
+               if (!response.hasError()) 
                {
                   this.Vehiculs = response.items;
                   this.updateGridData();
@@ -164,7 +165,6 @@ export class VehiculeComponent extends CoreBase implements OnInit {
         this.hasSelected = !!selected;
      if (this.hasSelected)
         {
-          // console.log(selected)
          this.SendCurrentVeheculeIsSelected(selected['LIRFIA']);
          this.itemGarantitITNO=selected['LIITNO']
          this.itemGarantitSERN=selected['LISERN']
@@ -175,7 +175,7 @@ export class VehiculeComponent extends CoreBase implements OnInit {
 
           }
       }
-   openFullSize() {
+      ModalAddVhehicule() {
    const dialogRef = this.modalService
    .modal<AddVehiculeComponent>(AddVehiculeComponent, this.placeholder, { fullsize: 'responsive' })
    .title('')
@@ -189,10 +189,18 @@ export class VehiculeComponent extends CoreBase implements OnInit {
          {
          },
          {
-           text: 'Submit', click: () => {
-            this.VehiculeServiceService.sendEventAddVehicule()
-            this.updateGridData()
+           text: 'Ajouter', click: () => {
+               
+            this.isBusy=true;
+            this.mycolor.sendEventAddVehicule()
             this.ToastAddVehicule()
+            setTimeout(() => {  
+               this.isBusy=false;
+               this.ngOnInit() ; 
+            }
+               , 2000);
+           
+            
              dialogRef.close('SUBMIT');
            }, isDefault:false,
            id:'sendbutton'
@@ -205,8 +213,8 @@ export class VehiculeComponent extends CoreBase implements OnInit {
  }
  ToastAddVehicule(position: SohoToastPosition = SohoToastService.TOP_RIGHT)
       {
-      this.toastService.show({ draggable: true, title: '', message: 'Client Ajouté avec succès', position });
-      this.listVehicule();
+      this.toastService.show({ draggable: true, title: '', message: 'Véhicule Ajouté avec succès', position });
+     
       }
 
 }

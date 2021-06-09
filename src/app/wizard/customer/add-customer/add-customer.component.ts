@@ -4,22 +4,18 @@ import { MIService} from '@infor-up/m3-odin-angular';
 import { Subscription } from 'rxjs';
 import { FormControl,FormGroup, Validators } from '@angular/forms';
 import { ColorService } from 'src/app/color.service';
-
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.css']
 })
-export class AddCustomerComponent implements OnInit {
- 
+export class AddCustomerComponent implements OnInit 
+{
    clickEventsubscription:Subscription;
-
-  isDetailBusy = false;
-  isBusy = false;
-  detailItem: any;
-  countrys: any[] = [];
-  display=false;
-  public closeResult = '(N/A)';
+   isDetailBusy = false;
+   isBusy = false;
+   display=false;
+   detailItem: any;
    Custmername: string;
    Adresse1: string;
    Adresse2 :string
@@ -33,42 +29,44 @@ export class AddCustomerComponent implements OnInit {
    ValueOfAreaSelected : any ;
    items: any[] = [];
    Area: any[] = [];
+   countrys: any[] = [];
    myForm: FormGroup;
    Code_Postale:FormControl;
    Telephone:FormControl;
    NumeroFaxe:FormControl;
    E_mail:FormControl;
-  
-  constructor(private mycolor:ColorService,private miService: MIService) {
-     this.clickEventsubscription=this.mycolor.getAddCustomer().subscribe(()=>{
-        this.AddCustomer()
-        console.log('-------')
-     })
-   }
-   ngOnDestroy(): void {
-      this.clickEventsubscription.unsubscribe()  }
-  ngOnInit(): void {
-   ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
-   console.log('ValueOfTownSelected:'+this.ValueOfCountrySelected)
-    this.GetAllCountrys();
-    this.Code_Postale = new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(4), Validators.maxLength(4),Validators.required]);
-    this.Telephone= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]);
-    this.NumeroFaxe= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]);
-    this.E_mail= new FormControl('',[Validators.pattern('[a-z]*.[a-z]*@[a-z]*.[a-z]*'), Validators.minLength(10), Validators.maxLength(30),Validators.required]);
-    this.myForm = new FormGroup({
-     'Code_Postale': new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(4),Validators.maxLength(4),Validators.required]),
-     'Telephone':new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]),
-     'NumeroFaxe':new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]),
-     'E_mail':new FormControl('', [Validators.pattern('[a-z]*@[a-z]*[.][a-z]*'), Validators.minLength(10), Validators.maxLength(30),Validators.required]),
-     
-     });
-
-  }
+   constructor(private mycolor:ColorService,private miService: MIService) 
+      {
+         this.clickEventsubscription=this.mycolor.getAddCustomer().subscribe(()=>{
+            this.AddCustomer()
+         })
+      }
+   ngOnDestroy(): void 
+      {
+         this.clickEventsubscription.unsubscribe()
+      }
+  ngOnInit(): void 
+      {
+         ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
+         this.GetAllCountrys();
+         this.Code_Postale = new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(4), Validators.maxLength(4),Validators.required]);
+         this.Telephone= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]);
+         this.NumeroFaxe= new FormControl('',[Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]);
+         this.E_mail= new FormControl('',[Validators.pattern('[a-zA-Z]*@[a-zA-Z]*[.][a-z]*'), Validators.minLength(10), Validators.maxLength(50),Validators.required]);
+         this.myForm = new FormGroup
+         ({
+            'Code_Postale': new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(4),Validators.maxLength(4),Validators.required]),
+            'Telephone':new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8),Validators.required]),
+            'NumeroFaxe':new FormControl('', [Validators.pattern('[0-9]*'), Validators.minLength(8), Validators.maxLength(8)]),
+            'E_mail':new FormControl('', [Validators.pattern('[a-zA-Z]*@[a-zA-Z]*[.][a-z]*'), Validators.minLength(10), Validators.maxLength(50),Validators.required]),
+         });
+      }
   private setBusy(isBusy: boolean, isDetail?: boolean) 
   {
      isDetail ? this.isDetailBusy = isBusy : this.isBusy = isBusy;
   }
-  AddCustomer(){
+  AddCustomer()
+   {
          const inputRecord = new MIRecord();
          const request: IMIRequest = 
          {
@@ -97,7 +95,6 @@ export class AddCustomerComponent implements OnInit {
             if (!response.hasError()) 
             {
                this.detailItem = response.item;
-               console.log (response)
             } 
             else 
                {
@@ -108,25 +105,24 @@ export class AddCustomerComponent implements OnInit {
             this.setBusy(false, true);
             this.detailItem = undefined;
          });
-
-}
-
-//-------------------------------chargement de Ville-------------------------------------------------------
-  GetAllStates(ville :string){
-     const inputRecord = new MIRecord();
-     inputRecord.setString('CSCD', ville);
-     const request: IMIRequest = {
-     program: "CRS046MI",
-     transaction: "LstAreaCodes",
-     outputFields: ["ECAR", "TX15", "TX40"]
-        };
+   }
+   //-------------------------------chargement de Ville----------------------------------------
+  GetAllStates(ville :string)
+      {
+         const inputRecord = new MIRecord();
+         inputRecord.setString('CSCD', ville);
+         const request: IMIRequest = 
+            {
+               program: "CRS046MI",
+               transaction: "LstAreaCodes",
+               outputFields: ["ECAR", "TX15", "TX40"]
+            };
         request.record = inputRecord;
         this.setBusy(true);
         this.miService.execute(request).subscribe((response: IMIResponse) => {
            this.setBusy(false);
            if (!response.hasError()) {
               this.Area = response.items;
-          
               this.ValueOfAreaSelected='TU';
            }
            else {
@@ -134,53 +130,48 @@ export class AddCustomerComponent implements OnInit {
         }, (response) => {
            this.setBusy(false);
         });  
-}
-//-------------------------------chargement de TEMPLATE----------------------------------------------------
-
-//-------------------------------chargement de Pays--------------------------------------------------------------------
-GetAllCountrys(){
-  const inputRecord = new MIRecord();
-  inputRecord.setString("CONO", "860");
-  const request: IMIRequest = {
-
-     program: "CRS045MI",
-     transaction: "LstCountry",  
-     outputFields: ["CONO", "CSCD", "TX40"]
-
-  };
-  this.setBusy(true);
-  this.miService.execute(request).subscribe((response: IMIResponse) => {
-     this.setBusy(false);
-     if (!response.hasError()) {
-        this.countrys = response.items;
-        this.ValueOfCountrySelected='TN';
-        this.GetAllStates (  this.ValueOfCountrySelected)
-     }
-     else {
-     }
-  }, (response) => {
-     this.setBusy(false);
-  }); 
-} 
-//---------county bled fibeli w----------------anahy el state?------------------------------------------------------------
-onChangeCountry(event): void { 
-  this.ValueOfCountrySelected = event;
-   this.GetAllStates(event)
-   console.log('ValueOfTownSelected:'+this.ValueOfCountrySelected)
- }
-
- onChangeState(event): void { 
-   this.ValueOfAreaSelected = event;
-   console.log('ValueOfAreaSelected:'+this.ValueOfAreaSelected)
- }
- handleinput(){
-    
-   if(this.myForm.valid){
-     ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=false
-   }
-   else{
-      (document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
-   
-   }
+      }
+   //-------------------------------chargement de Pays----------------------------------------
+   GetAllCountrys()
+      {
+         const inputRecord = new MIRecord();
+         inputRecord.setString("CONO", "860");
+         const request: IMIRequest = 
+            {
+               program: "CRS045MI",
+               transaction: "LstCountry",  
+               outputFields: ["CONO", "CSCD", "TX40"]
+            };
+         this.setBusy(true);
+         this.miService.execute(request).subscribe((response: IMIResponse) => {
+            this.setBusy(false);
+            if (!response.hasError()) {
+               this.countrys = response.items;
+               this.ValueOfCountrySelected='TN';
+               this.GetAllStates (  this.ValueOfCountrySelected)
+            }
+            else
+            {}
+         }, (response) => {
+            this.setBusy(false);
+         }); 
+      } 
+   onChangeCountry(event): void 
+      { 
+         this.ValueOfCountrySelected = event;
+         this.GetAllStates(event)
+      }
+   onChangeState(event): void 
+      { 
+         this.ValueOfAreaSelected = event;
+      }
+ handleinput()
+   {
+      if(this.myForm.valid){
+      ( document.getElementById("sendbutton") as HTMLButtonElement).disabled=false
+      }
+      else{
+         (document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
+      }
     }
 }

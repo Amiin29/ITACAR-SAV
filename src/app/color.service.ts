@@ -84,13 +84,19 @@ CurrentYear =new Date().getFullYear();
         getTel(){
           return this.theme.tel
         }
-
-      sendEventAddCustomer() {
-        this.subject.next();
+        sendEventAddVehicule() {
+            this.subject.next();
+        }
+      sendEventAddCustomer(){    
+          this.subject.next();       
+      }
+      getAddVehicule(): Observable<any>{ 
+        return this.subject.asObservable(); 
       }
       getAddCustomer(): Observable<any>{ 
         return this.subject.asObservable(); 
       }
+      
       getMaintenanceOrders(): Promise<any> //--------------------MaintenanceOrders de statestiques--------
         { 
           const inputRecord = new MIRecord();
@@ -319,7 +325,5 @@ CurrentYear =new Date().getFullYear();
     getUpdateConsultRdv(): Observable<any>{ 
       return this.subject.asObservable();
     }
-    sendEventAddVehicule() {
-      this.subject.next();
-    }
+   
 }

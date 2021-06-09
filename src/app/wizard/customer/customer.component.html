@@ -20,7 +20,8 @@
        </soho-toolbar>
        <div>
          <div  #customersDatagrid soho-datagrid [gridOptions]="datagridOptions"  (selected)="onSelected($event.rows)"
-         soho-busyindicator [activated]="isBusy" [blockUI]="true" [displayDelay]="0"></div>
+         soho-busyindicator [activated]="isBusy" (deselected)="onDeselected($event.rows)"
+         [blockUI]="true" [displayDelay]="0"></div>
        </div>
        
        <div soho-tabs>
