@@ -14,7 +14,7 @@ export class InspectionService {
         res => {
           resolve(res);
         },msg => { // Error
-          reject(msg);
+          reject(null);
           }
       );
     

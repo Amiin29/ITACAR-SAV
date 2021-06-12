@@ -63,10 +63,13 @@ IfPrinted = false;
       else {
          this.ToastErrorContart()         
       }
+      console.log('itno='+this.ITNO,'contrat='+this.defaultContrat)
       this.OrderReparationService.GetListServices(this.ITNO,this.defaultContrat).then(value=>{
          if (value){
             this.Services=value;
             this.IfService=true;
+            console.log(this.Services)
+
          }
          else
          {}
@@ -173,7 +176,7 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
          
  }
  AddNewMCOLine(){
-   this.OrderReparationService.CreateMCOLine(this.CustomerONumber,this.service,this.SERN,this.ITNO).then(value=>{
+   this.OrderReparationService.CreateMCOLine(this.CustomerONumber,this.service,this.ITNO,this.SERN).then(value=>{
       
       if(value){
          this.OrderReparationService.CreateLigneService(this.IfPrinted,value[0]['PONR'],value[0]['ORNO'],this.defaultService,this.serviceDescription).then(res=>{

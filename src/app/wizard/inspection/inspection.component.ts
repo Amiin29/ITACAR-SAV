@@ -6,6 +6,7 @@ import { WizardDemoComponent } from 'src/app/wizard/wizard.demo';
 import { InspectionService } from 'src/app/wizard/inspection/Service/inspection.service';
 import { DATA} from './data';
 import { DomSanitizer } from '@angular/platform-browser';
+import { promise } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-inspection',
@@ -22,20 +23,43 @@ export class InspectionComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer,private InspService :InspectionService,private http: HttpClient,private WizardDemoComponent:WizardDemoComponent) { }
   public data =DATA;
   ngOnChanges(changes: SimpleChanges): void {
-    this.GetInspectionselectionne()
+    this.ngOnInit()
+   
   }
   ngOnInit(): void {
+  
+   
   }
   intervalId = setInterval(this.GetInspectionselectionne, 1000);
   ngOnDestroy() {
-    clearInterval(this.intervalId);
-  }
-  GetInspectionselectionne(){
+    if(this.intervalId){
+      clearInterval(this.intervalId);
+    }
+    else{
+      console.log('/////pas encore')
+    }
+    
+   }
+   
+  public GetInspectionselectionne(): Promise<boolean>{
+    this.Inspections=[]
+    return new Promise((resolve, reject) => {
+   this.getMatricule().then(res=>{
+
+   })
+  });
+}
+getMatricule (): Promise<boolean>{
+
+  return new Promise((resolve,reject)=>{
     this.InspService.GetinspectionByMat(this.currentVISelected).then(value =>
       {
+        if(value!=null){
+        console.log('Vehicule 1:'+this.currentVISelected)
         this.BasicData = Object.entries(value).map(([type, value]) => ({type, value}));
         console.log('/////******//')
         console.log(value)
+        
         this.BasicData.forEach(elm => {
     
           this.Inspections.push (
@@ -44,11 +68,17 @@ export class InspectionComponent implements OnInit {
               'title' :`${elm['value']['id']}`,
               'subtitle' :`${elm['value']['date_creation']}`             
             }
-          ) 
+          )
+          resolve(true); 
          })
         }
+        else{
+          reject(false)
+        }
+        }
       );
-  }
+  });
+}
   ngAfterViewInit() {
     this.blockGrid?.activateBlock(1);
     this.blockGrid?.selectBlocks([3, 4, 10]);

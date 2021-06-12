@@ -27,6 +27,7 @@ export class AddVehiculeComponent implements OnInit {
    chassis: FormControl;
    matricule: FormControl;
    detailItem:any
+   date:any
  constructor(private mycolor:ColorService,private VSService : VehiculeServiceService,private miService: MIService,private messageService: SohoMessageService,private toastService: SohoToastService ) 
    {
       this.clickEventsubscription=this.mycolor.getAddVehicule().subscribe(()=>{
@@ -41,11 +42,11 @@ export class AddVehiculeComponent implements OnInit {
          (document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
             this.GetModelsVehicul();
             this.CUNO=this.VSService.GetCustomerNumber();
-            this.chassis = new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(17), Validators.maxLength(17),Validators.required]);
+            this.chassis = new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(11), Validators.maxLength(11),Validators.required]);
             this.matricule = new FormControl('', [Validators.pattern('[0-9][0-9][0-9]TU[0-9][0-9][0-9][0-9]'), Validators.minLength(9), Validators.maxLength(9),Validators.required]);
             this.myForm = new FormGroup
                ({
-                  'chassis': new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(17), Validators.maxLength(17),Validators.required]),
+                  'chassis': new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(11), Validators.maxLength(11),Validators.required]),
                   'matricule':new FormControl('', [Validators.pattern('[0-9][0-9][0-9]TU[0-9][0-9][0-9][0-9]'), Validators.minLength(9), Validators.maxLength(9),Validators.required]),
                });
       }
@@ -78,6 +79,19 @@ export class AddVehiculeComponent implements OnInit {
       }
   public AddVehicule()
    {
+          let index1=this.date.indexOf("/",0)
+          let month=this.date.substring(0,index1)
+          let index2=this.date.indexOf("/",index1+1)
+          let day=this.date.substring(index1+1,index2)
+          let annne=this.date.substring(index2,this.date.length)
+       if(month.length==1){
+         month = '0' + month
+       }
+       if(day.length==1){
+        day = '0' + day
+      }
+      let newanne =annne.substring(1,5)+"/"+ month + "/" + day
+    console.log(newanne)
       const inputRecord = new MIRecord();
       const request: IMIRequest = 
          {
@@ -90,15 +104,18 @@ export class AddVehiculeComponent implements OnInit {
       inputRecord.setString('SERN', this.Vinnumber);     
       inputRecord.setString('RFIA', this.Numserie);
       inputRecord.setString('FACI', 'BB1');
+      inputRecord.setString('CMDD', newanne);
       request.record = inputRecord;
       request.record = inputRecord;
       this.setBusy(true, true);
      this.miService.execute(request).subscribe((response: IMIResponse) => 
      {
+        console.log(response)
       this.setBusy(false, true);
         if (!response.hasError()) 
          {
             this.detailItem = response.item;
+            console.log(this.detailItem)
          } 
         else 
          {

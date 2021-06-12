@@ -14,12 +14,13 @@ export class DetailsInspectionComponent implements OnInit {
   constructor(private ServiceDetailInspectionService:ServiceDetailInspectionService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.ngOnInit();
   }
   ngOnInit(): void 
     {
-      console.log('detain inspec-------')
-     
-     // this.img='http://172.16.0.43:8081/load/'+this.inspec[0]['medias'][2]['link'];
+      console.log('inspection :')
+      console.log(this.inspec)
+      this.imgs=[];
      
       this.ServiceDetailInspectionService.GetImgs(this.inspec[0]["medias"]).then(value =>{
         console.log('imgs---------')

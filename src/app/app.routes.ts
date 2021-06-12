@@ -15,14 +15,14 @@ import { PieceRechangeComponent } from './piece-rechange/piece-rechange.componen
 import { CustomerSampleComponent } from './wizard/customer/customer.component';
 export const routes: Routes = 
   [
-    { path:'' ,component:StatistiqueComponent},
+    { path:'wizard' ,component:StatistiqueComponent},
     { path: 'calendar-monthview',component: CalendarDemoComponent},
     { path: 'calendar-monthview-legend',component: CalendarLegendDemoComponent},
     { path: 'calendar-updated',component: CalendarUpdatedDemoComponent},
     { path: 'header-toggle-buttons',component: HeaderToggleButtonsDemoComponent},
     { path: 'header-toolbar',component: HeaderToolbarDemoComponent },
     { path: 'header-toolbar-tabs',component: HeaderToolbarAndTabsDemoComponent},
-    { path: 'wizard',component: WizardDemoComponent},
+    { path: 'Services',component: WizardDemoComponent},
     { path: 'customer',component: CustomerSampleComponent},
     { path: 'PieceRechangeComponent',component: PieceRechangeComponent },
     { path: 'vehicule',component: VehiculeComponent },
