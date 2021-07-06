@@ -72,7 +72,7 @@ initAlias(){
        ],
      dataset: [],
      emptyMessage: {
-        title: 'No références complémentaires available',
+        title: 'pas de références complémentaires',
         icon: 'icon-empty-no-data'
      }
   };
@@ -99,15 +99,9 @@ GetAlias(){
               this.Alias = response.items;
               this.updateGridAlias();
            } 
-           else
-           {
-              //this.handleError('Failed to list  RELATION');
-           }
-           this.setBusy(false);
         }, (error) => 
         {
            this.setBusy(false);
-           //this.handleError('Failed to list  RELATION', error);
         });
 }
 private setBusy(isBusy: boolean, isDetail?: boolean) 
@@ -118,15 +112,4 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
 updateGridAlias() {
     this.RelationDatagrid ? this.RelationDatagrid.dataset = this.Alias : this.datagridOptionsAlias.dataset = this.Alias;
    }
-private handleError(message: string, error?: any) 
-   {
-        // this.logError(message, error ? '- Error: ' + JSON.stringify(error) : '');
-         const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-         this.messageService.error()
-         .title('An error occured')
-         .message(message + '. More details might be available in the browser console.')
-         .buttons(buttons)
-         .open();
-   }
-
 }

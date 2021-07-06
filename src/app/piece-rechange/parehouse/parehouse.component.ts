@@ -50,7 +50,7 @@ constructor(private ParhouseService:ParhouseService, private modalService: SohoM
    this.itemITNO=this.ITNO; 
    this.ParhouseService.SetIDParehouse(this.ITNO);
 }
-openFullSize() {
+ModaleDetailsParhouse() {
   const dialogRef = this.modalService
     .modal<DetailsParehouseComponent>(DetailsParehouseComponent, this.placeholder, { fullsize: 'responsive' })
     .title('')
@@ -181,17 +181,13 @@ private handleError(message: string, error?: any)
    }
    onSelected(args: any[], isSingleSelect?: boolean) 
    {
-      if (this.isBusy)
-         {
-          return; 
-         }
          const newCount = args.length;
          const selected = args && newCount === 1 ? args[0].data : null;
          this.hasSelected = !!selected;
         
       if (this.hasSelected)
          {
-           this.openFullSize()
+           this.ModaleDetailsParhouse()
          this.itemSelected=true
          
          this.itemITNO=selected['ITNO']

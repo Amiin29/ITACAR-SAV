@@ -69,11 +69,10 @@ export class OrderReparationService
             inputRecord.setString("PRNO", CodeVehicule);
             inputRecord.setString("AAGN", Contrat);
             request.record = inputRecord;
-            console.log("PRNO", CodeVehicule,"AAGN", Contrat)
-
                     this.miService.execute(request).subscribe((response: IMIResponse) => 
                       {
                       if (!response.hasError()){
+                         console.log(response.items)
                         for (let i=0;i<response.items.length ; i++)
                           {
                             console.log('+++++++++')
@@ -86,9 +85,6 @@ export class OrderReparationService
                               })
                             }
                           }
-                          console.log('---------------------------')
-
-                          console.log(this.Services)
                         resolve(this.Services)
                       } else {
                       reject(null)
@@ -156,7 +152,7 @@ export class OrderReparationService
                   outputFields: ["ORNO", "PONR"]
                 };
             inputRecord.setString("CONO", '860'); 
-            inputRecord.setString("FACI", 'TUN');
+            inputRecord.setString("FACI", 'BB1');
             inputRecord.setString("STRT", '002');
             inputRecord.setString("CUNO", CUNO);
             inputRecord.setString("PRNO", PRNO);
@@ -169,16 +165,17 @@ export class OrderReparationService
             this.miService.execute(request).subscribe((M3response: IMIResponse) => {
                       if (!M3response.hasError()) 
                       {
-                        console.log('--------------Cretae MCO')
-                        console.log(M3response.items)
                         resolve(M3response.items)
                       } else {
                   }
                   return ;
                 }, (error) => {
+                  console.log(error)
                   reject(error)
                 });
               }, (error) => {
+                console.log(error)
+
                 reject(error)
               });
             });
@@ -187,7 +184,6 @@ export class OrderReparationService
     {
       return new Promise((resolve, reject) => 
         {
-          console.log('created:'+Iscreated)
             if (Iscreated){
               this.MCOs=[];
             }

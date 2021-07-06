@@ -25,14 +25,7 @@ export class DetailsParehouseComponent implements OnInit {
   detailItem: any;
   constructor(private miService: MIService, private ParhouseService:ParhouseService) { }
   ngOnInit(): void {
-   
-   
    this.GetDetailspiecesRechanges();
-   
-  
-   
-
-
   }
 
   
@@ -47,9 +40,9 @@ private GetDetailspiecesRechanges()
          outputFields: ['ITNO', 'WHNM', 'RESP', 'BUYE', 'ORTY','FACY','SUNO','WHSL' ,'WHTY']
       }; 
       const inputrecord : MIRecord = new MIRecord()
-      inputrecord.setString('ITNO',this.ParhouseService.GetIDParehouse());
+         inputrecord.setString('ITNO',this.ParhouseService.GetIDParehouse());
          inputrecord.setString('WHLO',this.ParhouseService.GetCodeWHS()); 
-      requestInfoByCustomer.record = inputrecord;
+         requestInfoByCustomer.record = inputrecord;
    this.miService.execute(requestInfoByCustomer).subscribe((responseInfoByCustomer: IMIResponse) => 
    {
       this.setBusy(false, true);

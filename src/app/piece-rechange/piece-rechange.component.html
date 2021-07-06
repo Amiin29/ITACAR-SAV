@@ -1,24 +1,8 @@
 <div class="full-width full-height scrollable-flex">
-
-
-    <!--<odin-sample-viewer ></odin-sample-viewer>-->
     <div>
- 
-       <soho-toolbar [maxVisibleButtons]="6" [resizeContainers]="true" [favorButtonset]="true"
-          (selected)="onSelected($event)">
- 
-          <soho-toolbar-title>
-             <span soho-toolbar-section-title></span>
-          </soho-toolbar-title>
- 
- 
-       </soho-toolbar>
- 
        <div class="display-grid">
-          <div         class="item1"
-          >
-          <div
-         #PieceRechangeDatagrid soho-datagrid [gridOptions]="datagridOptions"
+          <div         class="item1">
+          <div #PieceRechangeDatagrid soho-datagrid [gridOptions]="datagridOptions"
              (selected)="onSelected($event.rows)" soho-busyindicator>
           </div>
        </div>

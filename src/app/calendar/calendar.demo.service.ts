@@ -63,7 +63,6 @@ export class CalendarDemoService
         {
           if (!response.hasError()) 
           {
-            console.log('MCOS-------------')
             console.log(response.items)
             response.items.forEach((elem) =>
                 this.items.push(
@@ -74,14 +73,13 @@ export class CalendarDemoService
                  + ' Vehicule : '+elem.PRNO+' | '+'chassie : '+elem.BANO+' | '+'Service : '+elem.SUFI,
                   "TypeRdv": elem.ITDS,
                   "comments": 'Vehicule : '+elem.PRNO+' | '+'chassie : '+elem.BANO+' | '+'Service : '+elem.SUFI,
-                  
-                  "location": "Canada Office",
-                  "status": "Approved",
+                 // //"location": "Canada Office",
+                 //"status": "Approved",
                   "starts": new Date(elem.STDT.substring(0,4),elem.STDT.substring(4,6)-1,elem.STDT.substring(6,8),elem.MSTI.substring(0,2),elem.MSTI.substring(2,4)).toISOString(),
                   "ends": new Date(elem.FIDT.substring(0,4),elem.FIDT.substring(4,6)-1,elem.FIDT.substring(6,8),elem.MFTI.substring(0,2),elem.MFTI.substring(2,4)).toISOString(),
                   "type": "team",
                   "isAllDay": "true",
-                  "translationKey": "SickTime"
+                  //"translationKey": "SickTime"
                 })
 
                

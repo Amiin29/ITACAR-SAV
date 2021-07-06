@@ -5,6 +5,7 @@ import { SohoDataGridComponent, SohoMessageService, SohoToastService,SohoModalDi
 import { ColorService } from 'src/app/color.service';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { VehiculeServiceService } from 'src/app/wizard/vehicule/VehiculeService/vehicule-service.service';
+import { WizardDemoComponent } from 'src/app/wizard/wizard.demo';
 
 @Component({
    templateUrl: './customer.component.html',
@@ -32,7 +33,7 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
    hasSelected: boolean;
    items: any[] = [];   
    i=0;
-   constructor(private VehiculeServiceService:VehiculeServiceService,private toastService: SohoToastService,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
+   constructor(private WizardDemoComponent:WizardDemoComponent,private VehiculeServiceService:VehiculeServiceService,private toastService: SohoToastService,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService ,private mycolor:ColorService) {
          super('CustomerSampleComponent');
          
          this.initGrid();
@@ -158,12 +159,15 @@ export class CustomerSampleComponent extends CoreBase implements OnInit
 
             }
             else {
-
-            }
-      } 
-      onDeselected(args: any[], isSingleSelect?: boolean){
-         console.log('deselected')
-      }
+                this.WizardDemoComponent.ifclientSelected(false)
+ 
+ 
+             }
+       } 
+       // this.VehiculeServiceService.SetCustomerNumber(selected['OKCUNO'])
+       onDeselected(args: any) {
+          this.WizardDemoComponent.ifclientSelected(false)
+         }
    private updateGridData(){
       this.datagrid ? this.datagrid.dataset = this.items : this.datagridOptions.dataset = this.items;
    }

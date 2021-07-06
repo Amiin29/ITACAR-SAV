@@ -20,7 +20,7 @@ export class OrderReparationComponent implements OnInit {
   IfContrat =false;
   IfService =false;
   IfOrderType =false;
-IfPrinted = false;
+ IfPrinted = false;
   created=false;
   btnMCO=false;
   SERN=null
@@ -63,7 +63,6 @@ IfPrinted = false;
       else {
          this.ToastErrorContart()         
       }
-      console.log('itno='+this.ITNO,'contrat='+this.defaultContrat)
       this.OrderReparationService.GetListServices(this.ITNO,this.defaultContrat).then(value=>{
          if (value){
             this.Services=value;
@@ -122,10 +121,6 @@ IfPrinted = false;
         },
         {
          width: 'auto', id: 'col-sern', field: 'TX40', name: 'Designation',
-         resizable: true, filterType: 'text', sortable: true
-      },
-      {
-         width: 'auto', id: 'col-sern', field: 'Prix', name: 'Prix',
          resizable: true, filterType: 'text', sortable: true
       },
        ],
@@ -196,6 +191,8 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
        {
           this.IfPrinted=true;
           console.log('print----------')
+          console.log(res)
+
           console.log(this.CustomerONumber)
           this.ngOnInit();
           this.initGrid();
@@ -212,7 +209,7 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
     })
  }
    ToastAddNewMCOLine(position: SohoToastPosition = SohoToastService.TOP_RIGHT)
-      {
+      { //Ajouter une 
          this.toastService.show({ draggable: true, title: '', message: 'New MCO Line', position });
       }
  ToastPrintMCO(position: SohoToastPosition = SohoToastService.TOP_RIGHT)
@@ -234,8 +231,6 @@ private setBusy(isBusy: boolean, isDetail?: boolean)
          this.contrat=contrat;
          this.OrderReparationService.GetListServices(this.ITNO,this.defaultContrat).then(value=>{
             if (value){
-               console.log(this.Services.length)
-               console.log(value)
                this.Services=value;
                this.IfService=true;
             }

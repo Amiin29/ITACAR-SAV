@@ -150,7 +150,9 @@ export class OrdreTravailMoisComponent implements OnInit
               })
 
           this.areaData = 
-          [{data:this.tab}];
+          [{
+            data:this.tab
+          }];
        }
 
     public M3DateToYear (M3Date : string){

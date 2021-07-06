@@ -157,10 +157,10 @@ export class PieceRechangeComponent extends CoreBase implements OnInit {
 
    onSelected(args: any[], isSingleSelect?: boolean) 
    {
-      if (this.isBusy)
-         {
-          return; 
-         }
+     // if (this.isBusy)
+       //  {
+        //  return; 
+        // }
          const newCount = args.length;
          const selected = args && newCount === 1 ? args[0].data : null;
          this.hasSelected = !!selected;

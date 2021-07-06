@@ -51,8 +51,9 @@ export class CalendarDemoComponent
        
         this.monthViewService.getMaintenanceOrders().then(value => //-------GetAll Maintenance Orders---------
           {
-          
+
             value.forEach(val => this.items.push(Object.assign({}, val)));
+
             response(this.items, this.eventTypes);   
           }
       

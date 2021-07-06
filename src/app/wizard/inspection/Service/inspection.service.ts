@@ -6,7 +6,10 @@ import { HttpClient,HttpParams } from '@angular/common/http';
 export class InspectionService {
 
   constructor(private http:HttpClient) { }
-  
+  intervalId = setInterval(this.GetinspectionByMat ,1000);
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+   }
   GetinspectionByMat(val): Promise<any>{
     return new Promise((resolve, reject) => {
 
@@ -14,7 +17,7 @@ export class InspectionService {
         res => {
           resolve(res);
         },msg => { // Error
-          reject(null);
+          reject(msg);
           }
       );
     

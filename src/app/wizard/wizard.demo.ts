@@ -9,7 +9,6 @@ export class WizardDemoComponent {
   @ViewChild(SohoWizardComponent, { static: true }) wizard!: SohoWizardComponent;
   @Output() newItemEventSend = new EventEmitter<MIRecord>();
   customerIsSelected = false ;
-  currentCustomerSelected=null ;
   selectboolean = false ;
   InspectionIsSelected=false;
   currentVehculeSelected;
@@ -42,19 +41,26 @@ export class WizardDemoComponent {
    
   this.InspectionIsSelected=data;
 }
+ifclientSelected(data){
+   
+  this.customerIsSelected=data;
+}
+ifvehiculeSelected(data){
+   
+  this.VehiculeIsSelected=data;
+}
 ReciveIspectionSelected (event){
   if (event.length > 0){
      this.inspec =event;
   }else {
     this.InspectionIsSelected=false;
-    this.toastService.show({ draggable: true, title: '', message: 'Inspection invalide' });
   }
 }
 ReciveSelectedVehicule (event){
   this.currentVehculeSelected =event;
-if (event){
-  this.VehiculeIsSelected=true;
-}
+  if (event){
+    this.VehiculeIsSelected=true;
+  }
 }
 customerSelectedEvent(event)
 {
@@ -71,8 +77,8 @@ customerSelectedEvent(event)
 
     }
 }
-addItem(newItem: string) {
-  this.currentItemSelected.push(newItem);
-}
+//addItem(newItem: string) {
+  //this.currentItemSelected.push(newItem);
+//}
 
 }

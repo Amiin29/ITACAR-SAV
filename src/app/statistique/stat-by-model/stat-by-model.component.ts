@@ -18,6 +18,7 @@ export class StatByModelComponent implements OnInit
     PData : any[] |undefined=[];
   @ViewChild(SohoPieComponent, { static: true }) sohoPieComponent?: SohoPieComponent;
   private selection: SohoPieSelected  = {index: 1};
+
   public pieData = [{
     data: [{}]
   }];
@@ -33,14 +34,14 @@ export class StatByModelComponent implements OnInit
                   this.pieData[0]["data"]=[];
                   for (let i = 0; i < this.InputModels.length; i++)
                     {
-                      if (this.PData!=null)
+                      if (this.pieData!=null)
                         {
                           this.pieData[0]["data"].push
                           (
                             {
                               name: this.InputModels[i]["QHPRNO"],
                               value: this.InputModels[i]["occurrence"],
-                              id: 'ca',
+                             // id: 'ca',
                               tooltip: this.InputModels[i]["QHPRNO"]+' <b>{{percent}}</b>'
                             }
                           )

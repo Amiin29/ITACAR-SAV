@@ -50,6 +50,8 @@ export class UpdateRDVComponent implements OnInit
 
   GetRdvByID(val): Promise<any>
   {
+
+
     return new Promise((resolve, reject) => {
       let params = new HttpParams();
       params = params.append('id', val);
@@ -91,6 +93,7 @@ export class UpdateRDVComponent implements OnInit
       const response=this.http.put('http://172.16.0.43:8081/rdv/'+this.id,this.rdv,{headers:headers}).toPromise().then(
         res => { 
           resolve(res);
+          window.location.reload();
         },msg => { // Error
           reject(msg);
           }

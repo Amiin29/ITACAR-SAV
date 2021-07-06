@@ -85,6 +85,7 @@ export class AddRdvComponent implements OnInit
           { // Success 
             console.log(res)
             resolve(res);
+            window.location.reload();
           },msg => 
             { // Error
               reject(msg);

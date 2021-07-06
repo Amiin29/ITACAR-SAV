@@ -39,7 +39,7 @@ export class VehiculeComponent extends CoreBase implements OnInit {
   hasSelected: boolean;
   test = false;
   i=0
-  constructor(private mycolor:ColorService,private toastService:SohoToastService,private VehiculeServiceService : VehiculeServiceService,private WDC:WizardDemoComponent,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService) {
+  constructor(private mycolor:ColorService,private toastService:SohoToastService,private VehiculeServiceService : VehiculeServiceService,private WDC:WizardDemoComponent,private modalService: SohoModalDialogService,private miService: MIService,private miService2: MIService, private userService: UserService, private messageService: SohoMessageService,private WizardDemoComponent:WizardDemoComponent) {
    super('VehiculeComponent');
       this.initGrid();
     }
@@ -173,6 +173,9 @@ export class VehiculeComponent extends CoreBase implements OnInit {
          this.VehiculeServiceService.SetSERN(selected['LISERN'])
          this.VehiculeServiceService.SetCodeVehicule(selected['LIITNO'])
 
+          }
+          else{
+            this.WizardDemoComponent.ifvehiculeSelected(false)
           }
       }
       ModalAddVhehicule() {

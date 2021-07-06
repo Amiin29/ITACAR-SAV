@@ -42,11 +42,11 @@ export class AddVehiculeComponent implements OnInit {
          (document.getElementById("sendbutton") as HTMLButtonElement).disabled=true
             this.GetModelsVehicul();
             this.CUNO=this.VSService.GetCustomerNumber();
-            this.chassis = new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(11), Validators.maxLength(11),Validators.required]);
+            this.chassis = new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(17), Validators.maxLength(17),Validators.required]);
             this.matricule = new FormControl('', [Validators.pattern('[0-9][0-9][0-9]TU[0-9][0-9][0-9][0-9]'), Validators.minLength(9), Validators.maxLength(9),Validators.required]);
             this.myForm = new FormGroup
                ({
-                  'chassis': new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(11), Validators.maxLength(11),Validators.required]),
+                  'chassis': new FormControl('', [Validators.pattern('[A-Z0-9]*'), Validators.minLength(17), Validators.maxLength(17),Validators.required]),
                   'matricule':new FormControl('', [Validators.pattern('[0-9][0-9][0-9]TU[0-9][0-9][0-9][0-9]'), Validators.minLength(9), Validators.maxLength(9),Validators.required]),
                });
       }
@@ -104,6 +104,9 @@ export class AddVehiculeComponent implements OnInit {
       inputRecord.setString('SERN', this.Vinnumber);     
       inputRecord.setString('RFIA', this.Numserie);
       inputRecord.setString('FACI', 'BB1');
+      inputRecord.setString('STAT', '20');
+      inputRecord.setString('ALI', this.ValueOfModelSelected);
+
       inputRecord.setString('CMDD', newanne);
       request.record = inputRecord;
       request.record = inputRecord;
@@ -143,4 +146,3 @@ export class AddVehiculeComponent implements OnInit {
             this.toastService.show({ draggable: true, title: 'Ajout', message: 'Problème d ajout Véhicule' });
          }
 }
-
